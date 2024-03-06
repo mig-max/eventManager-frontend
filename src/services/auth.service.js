@@ -24,6 +24,7 @@ class AuthService {
     };
 
     signup = (requestBody) => {
+        console.log(requestBody);
         return this.api.post("/auth/signup", requestBody);
     };
 
