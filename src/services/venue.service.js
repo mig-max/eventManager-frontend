@@ -16,29 +16,29 @@ class VenuesService {
         });
     }
 
-    // POST /api/venues
+    // POST /venues
     createVenue = (requestBody) => {
-        return this.api.post("/api/venues", requestBody);
+        return this.api.post("/venues", requestBody);
     };
 
-    // GET /api/venues
+    // GET /venues
     getAllVenues = () => {
-        return this.api.get("/api/venues");
+        return this.api.get("/venues");
     };
 
-    // GET /api/venues/:venueId
+    // GET /venues/:venueId
     getVenue = (venueId) => {
-        return this.api.put(`/api/venues/${venueId}`);
+        return this.api.put(`/venues/${venueId}`);
     };
 
-    // PUT /api/venues/:venueId
+    // PUT /venues/:venueId
     updateVenue = (venueId, requestBody) => {
-        return this.api.put(`/api/projects/${venueId}`, requestBody);
+        return this.api.put(`/projects/${venueId}`, requestBody);
     };
 
-    // DELETE /api/venues/:venueId
+    // DELETE /venues/:venueId
     deleteVenue = (venueId) => {
-        return this.api.delete(`/api/venues/${venueId}`);
+        return this.api.delete(`/venues/${venueId}`);
     };
 }
 

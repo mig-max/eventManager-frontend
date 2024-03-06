@@ -18,29 +18,29 @@ class EventsService {
     }
     
 
-      // POST /api/events
+      // POST /events
       createEvent = (requestBody) => {
-        return this.api.post("/api/events", requestBody);
+        return this.api.post("/events", requestBody);
       };
 
-      // GET /api/events
+      // GET /events
       getAllEvents = () => {
-        return this.api.get("/api/events");
+        return this.api.get("/events");
       };
 
-      // GET /api/events/:eventId
+      // GET /events/:eventId
       getEvent = (eventId) => {
-        return this.api.get(`/api/events/${eventId}`);
+        return this.api.get(`/events/${eventId}`);
       };
 
-      // PUT /api/events/:eventId
+      // PUT /events/:eventId
       updateEvent = (eventId, requestBody) => {
-        return this.api.put(`/api/projects/${eventId}`, requestBody);
+        return this.api.put(`/projects/${eventId}`, requestBody);
       };
 
-      //DELETE /api/events/:eventId
+      //DELETE /events/:eventId
       deleteEvent = (eventId) => {
-        return this.api/delete(`/api/events/${eventId}`);
+        return this.api/delete(`/events/${eventId}`);
       };
     }
 
