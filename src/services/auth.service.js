@@ -28,7 +28,7 @@ class AuthService {
     };
 
     verify = () => {
-        return this.api.post("/auth/verify");
+        return this.api.get("/auth/verify");
     };
 
     logout = () => {
