@@ -18,20 +18,20 @@ function LoginPage() {
     const handleLoginSubmit = (e) => {
         e.preventDefault();
         const requestBody = { email, password };
-        console.log(requestBody)
+        console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
 
         authService
             .login(requestBody)
             .then((response) => {
-                navigate('/');
-                console.log("JWT token", response.data.authToken);
+                navigate('/profile');
+                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
 
                 storeToken(response.data.authToken);
                 authenticateUser();
                 
             })
             .catch((error) => {
-                const errorDescription = error.response.data.message;
+                const errorDescription = error.response?.data?.message || "An unknown error occurred";
                 setErrorMessage(errorDescription);
             });
     };
