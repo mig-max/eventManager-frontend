@@ -25,15 +25,15 @@ function AuthProviderWrapper(props) {
             .verify()
             .then((response) => {
                 // if the token is valid
-                 setIsLoggedIn(true);
-                 setUser(user);
-                 setLoading(false);
-             })
+                setIsLoggedIn(true);
+                setUser(user);
+                setLoading(false);
+            })
             .catch((error) => {
                 // if the token is invalid
-                 setIsLoggedIn(false);
-                 setUser(null);
-                 setLoading(false);
+                setIsLoggedIn(false);
+                setUser(null);
+                setLoading(false);
             });
 
         } else {
