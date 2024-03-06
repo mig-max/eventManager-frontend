@@ -3,7 +3,7 @@ import axios from "axios";
 class VenuesService {
     constructor() {
         this.api = axios.create({
-            baseURL: import.meta.env.API_URL || "http://localhost:5005",
+            baseURL: import.meta.env.VITE_API_URL || "http://localhost:5005",
         });
         this.api.interceptors.request.use((config) => {
             const storedToken = localStorage.getItem("authToken");
@@ -33,7 +33,7 @@ class VenuesService {
 
     // PUT /api/venues/:venueId
     updateVenue = (venueId, requestBody) => {
-        return this.api.put(`/api/projects/${venueId} `);
+        return this.api.put(`/api/projects/${venueId}`, requestBody);
     };
 
     // DELETE /api/venues/:venueId
