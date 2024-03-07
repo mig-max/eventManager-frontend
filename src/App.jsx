@@ -8,6 +8,7 @@ import EventListPage from "./pages/EventListPage";
 import VenuePage from "./pages/VenuePage";
 import VenueDetailsPage from "./pages/VenueDetailsPage";
 import AddVenue from "./components/AddVenue";
+import EditVenue from "./pages/EditVenuePage";
 
 function App() {
  
@@ -25,6 +26,7 @@ function App() {
         <Route path='/venues' element={<VenuePage/>} />
         <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />
         <Route path='/addvenue' element={<AddVenue/>} />
+        <Route path='/venues/:venueId/edit' element={<EditVenue/>} />
      </Routes>
     </>
   )

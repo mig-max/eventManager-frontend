@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import VenueCard from "../components/VenueCard";
+import EditVenuePage from "./EditVenuePage";
 
 
 function VenueDetailsPage(props) {
@@ -38,6 +39,7 @@ function VenueDetailsPage(props) {
 
 
         <button onClick={() => navigate(`/venues`)}>All Venues</button>
+        <button onClick={() => navigate(`/venues/${venueId}/edit`)}>Edit</button>
         <button onClick={() => navigate(`/`)}>Home</button>
 
         

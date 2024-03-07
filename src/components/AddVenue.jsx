@@ -11,7 +11,7 @@ function AddVenue(props) {
   const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
-  function handleSubmit(event) {
+  function handleFormSubmit(event) {
     event.preventDefault();
 
     //  const {eventId} = props; // later for add the events to the venue
@@ -50,7 +50,7 @@ function AddVenue(props) {
     <div>
       <h1>Add New Venue</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label>Name: </label>
           <input
