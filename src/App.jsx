@@ -9,6 +9,7 @@ import VenuePage from "./pages/VenuePage";
 import VenueDetailsPage from "./pages/VenueDetailsPage";
 import AddVenue from "./components/AddVenue";
 import EditVenue from "./pages/EditVenuePage";
+import IsLoggedIn from "./components/isLoggedIn";
 
 function App() {
  
@@ -21,7 +22,7 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/signup' element={<SignupPage/>} />
         <Route path='/login' element={<LoginPage/>} />
-        <Route path='/profile' element={<ProfilePage/>} />
+        <Route path='/profile' element={<IsLoggedIn><ProfilePage /></IsLoggedIn>} />
         <Route path="/events" element={ <EventListPage/> } />
         <Route path='/venues' element={<VenuePage/>} />
         <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />

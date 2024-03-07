@@ -19,6 +19,12 @@ class AuthService {
         });          
     }
 
+    // Check if user is logged in
+    isLoggedIn() {
+    const authToken = localStorage.getItem("authToken");
+    return !!authToken; // Returns true if authToken exists, false otherwise
+  }
+
     login = (requestBody) => {
         return this.api.post("/auth/login", requestBody);
     };
