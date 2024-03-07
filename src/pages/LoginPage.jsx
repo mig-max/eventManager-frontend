@@ -8,25 +8,33 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(undefined);
 
+
+
     const navigate = useNavigate();
 
     const { storeToken, authenticateUser } = useContext(AuthContext);
 
-    const handleEmail = (e) => setEmail(e.target.value);
-    const handlePassword = (e) => setPassword(e.target.value);
+    const handleEmail = (event) => setEmail(event.target.value);
+    const handlePassword = (event) => setPassword(event.target.value);
 
-    const handleLoginSubmit = (e) => {
-        e.preventDefault();
+    const handleLoginSubmit = (event) => {
+        event.preventDefault();
         const requestBody = { email, password };
         console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
-
+    
         authService
             .login(requestBody)
             .then((response) => {
-                navigate('/profile');
-                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
+                const {userId} = response.data;
 
                 storeToken(response.data.authToken);
+
+                localStorage.setItem(`userId`, userId);
+                navigate(`/users/${userId}`); // Navigate to the user profile page
+                //navigate(`/venues`)
+                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
+    
+               
                 authenticateUser();
                 
             })
@@ -35,7 +43,6 @@ function LoginPage() {
                 setErrorMessage(errorDescription);
             });
     };
-
     return (
         <div className="LoginPage">
             <h1>Login</h1>
@@ -45,6 +52,7 @@ function LoginPage() {
                 <input 
                     type="email" 
                     name="email" 
+                    placeholder="your@email.com"
                     value={email} 
                     onChange={handleEmail}
                 />
@@ -53,6 +61,7 @@ function LoginPage() {
                 <input
                     type="password"
                     name="password"
+                    placeholder="**********"
                     value={password}
                     onChange={handlePassword}
                 />

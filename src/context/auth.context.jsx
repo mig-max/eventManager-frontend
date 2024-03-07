@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import authService from "../services/auth.service";
 
@@ -7,8 +9,10 @@ function AuthProviderWrapper(props) {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isOwner, setIsOwner] = useState(false);
+    const [IsloggedIn, setIsLoggedIn] = useState(false);
+    const [IsOwner, setIsOwner] = useState(false);
+    const [IsAnon, setIsAnon] = useState(false);
+  
 
 
     const storeToken = (token) => {
@@ -64,8 +68,9 @@ function AuthProviderWrapper(props) {
             value={{
                 user,
                 loading,
-                isLoggedIn,
-                isOwner,
+                IsloggedIn,
+                IsOwner,
+                IsAnon,
                 logOutUser,
                 storeToken
             }}

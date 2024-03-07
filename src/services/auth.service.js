@@ -26,12 +26,22 @@ class AuthService {
   }
 
     login = (requestBody) => {
-        return this.api.post("/auth/login", requestBody);
+        return this.api.post("/auth/login", requestBody)
+            .then(response => {
+                const authToken = response.data.authToken;
+                localStorage.setItem("authToken", authToken);
+                return response;
+            })
     };
 
     signup = (requestBody) => {
         console.log(requestBody);  // DON'T FORGET TO DELETE LATER //////
-        return this.api.post("/auth/signup", requestBody);
+        return this.api.post("/auth/signup", requestBody)
+            .then(response => {
+                const authToken = response.data.authToken;
+                localStorage.setItem("authToken", authToken);
+                return response;
+            })
     };
 
     verify = () => {
