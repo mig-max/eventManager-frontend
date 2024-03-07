@@ -7,7 +7,11 @@ function VenueSummary({venue}) {
 
         <div>
             <h2>{venue.name}</h2>
-            <p>{venue.venueType}</p>
+
+            {venue.imageUrl && 
+            <img src={venue.imageUrl} 
+            alt={venue.name} />}
+            
         </div>
     )
 }

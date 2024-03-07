@@ -4,9 +4,9 @@ import venuesService from "../services/venue.service";
 
 function AddVenue(props) {
   const [name, setName] = useState("");
-  const [venueType, setVenueType] = useState("");
+  const [venueType, setVenueType] = useState("Outdoor");
   const [address, setAddress] = useState("");
-  const [capacity, setCapacity] = useState(0);
+  const [capacity, setCapacity] = useState(1);
   const [isFoodAvailable, setIsFoodAvailable] = useState(false);
   const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -71,8 +71,8 @@ function AddVenue(props) {
             value={venueType}
             onChange={(event) => setVenueType(event.target.value)}
           >
-            <option value="Outdoors">Outdoors</option>
-            <option value="Indoors">Indoors</option>
+            <option value="Outdoor">Outdoor</option>
+            <option value="Indoor">Indoor</option>
             <option value="Other">Other</option>
           </select>
         </div>
@@ -93,7 +93,7 @@ function AddVenue(props) {
           <input
             type="number"
             name="capacity"
-            min="0"
+            min="1"
             value={capacity}
             onChange={(event) => setCapacity(event.target.value)}
           />
