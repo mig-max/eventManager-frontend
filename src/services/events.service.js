@@ -35,7 +35,7 @@ class EventsService {
 
       // PUT /events/:eventId
       updateEvent = (eventId, requestBody) => {
-        return this.api.put(`/projects/${eventId}`, requestBody);
+        return this.api.put(`/events/${eventId}`, requestBody);
       };
 
       //DELETE /events/:eventId
