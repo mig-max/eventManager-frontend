@@ -28,12 +28,12 @@ class VenuesService {
 
     // GET /venues/:venueId
     getVenue = (venueId) => {
-        return this.api.put(`/venues/${venueId}`);
+        return this.api.get(`/venues/${venueId}`);
     };
 
     // PUT /venues/:venueId
     updateVenue = (venueId, requestBody) => {
-        return this.api.put(`/projects/${venueId}`, requestBody);
+        return this.api.put(`/venues/${venueId}`, requestBody);
     };
 
     // DELETE /venues/:venueId
