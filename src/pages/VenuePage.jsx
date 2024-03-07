@@ -14,7 +14,6 @@ function VenuePage() {
         venuesService
             .getAllVenues()
             .then((response) => {
-                console.log(response.data);
                 setVenues(response.data);
                 setLoading(false);
             })
