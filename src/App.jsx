@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
+import EventListPage from "./pages/EventListPage";
 
 function App() {
  
@@ -17,6 +18,7 @@ function App() {
         <Route path='/signup' element={<SignupPage/>} />
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/profile' element={<ProfilePage/>} />
+        <Route path="/events" element={ <EventListPage/> } />
      </Routes>
     </>
   )
