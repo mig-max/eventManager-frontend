@@ -2,94 +2,139 @@
 import { useState } from "react";
 import venuesService from "../services/venue.service";
 
-
 function AddVenue(props) {
+  const [name, setName] = useState("");
+  const [venueType, setVenueType] = useState("");
+  const [address, setAddress] = useState("");
+  const [capacity, setCapacity] = useState(0);
+  const [isFoodAvailable, setIsFoodAvailable] = useState(false);
+  const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
-    const [name, setName] = useState("");
-    const [venueType, setVenueType] = useState("");
-    const [address, setAddress] = useState("");
-    const [capacity, setCapacity] = useState(0);
-    const [isFoodAvailable, setIsFoodAvailable] = useState(false);
-    const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
-    const [imageUrl, setImageUrl] = useState("");
-
-    function handleSubmit(event){
-        event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
     //  const {eventId} = props; // later for add the events to the venue
 
-        const requestBody = {
-            name,
-            venueType,
-            address,
-            capacity,
-            isFoodAvailable,
-            isDrinksAvailable,
-            imageUrl,
-        // eventId // later for add the events to the venue
-        }
+    const requestBody = {
+      name,
+      venueType,
+      address,
+      capacity,
+      isFoodAvailable,
+      isDrinksAvailable,
+      imageUrl,
+      // eventId // later for add the events to the venue
+    };
 
-        venuesService.createVenue(requestBody)
-            .then((response) => {
-                console.log(response);
-                setName("")
-                setVenueType("")
-                setAddress("")
-                setCapacity(0)
-                setIsFoodAvailable(false)
-                setIsDrinksAvailable(false)
-                setImageUrl("")
+    venuesService
+      .createVenue(requestBody)
+      .then((response) => {
+        console.log(response);
+        setName("");
+        setVenueType("");
+        setAddress("");
+        setCapacity(0);
+        setIsFoodAvailable(false);
+        setIsDrinksAvailable(false);
+        setImageUrl("");
 
-                props.refreshVenues();
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        props.refreshVenues();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
+  return (
+    <div>
+      <h1>Add New Venue</h1>
 
-        }
-    
-
-    return (
+      <form onSubmit={handleSubmit}>
         <div>
-            <h1>Add New Venue</h1>
-
-            <form onSubmit={handleSubmit}></form>
-                <div>
-                    <label>Name: </label>
-                    <input type="text" name="name" value={name} onChange={(event) => setName(event.target.value)}/>
-                </div>
-                <div>
-                    <label>Venue Type: </label>
-                    <input type="text" name="venueType" value={venueType} onChange={(event) => setVenueType(event.target.value)}/>
-                </div>
-                <div>
-                    <label>Address: </label>
-                    <input type="text" name="address" value={address} onChange={(event) => setAddress(event.target.value)}/>
-                </div>
-                <div>
-                    <label>Capacity: </label>
-                    <input type="number" name="capacity" value={capacity} onChange={(event) => setCapacity(event.target.value)}/>
-                </div>
-                <div>
-                    <label>Is Food Available: </label>
-                    <input type="checkbox" name="isFoodAvailable" checked={isFoodAvailable} onChange={(event) => setIsFoodAvailable(event.target.checked)}/>
-                </div>
-                <div>
-                    <label>Is Drinks Available: </label>
-                    <input type="checkbox" name="isDrinksAvailable" checked={isDrinksAvailable} onChange={(event) => setIsDrinksAvailable(event.target.checked)}/>
-                </div>
-                <div>
-                    <label>Image URL: </label>
-                    <input type="text" name="imageUrl" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)}/>
-                </div>
-                
-                <button type="submit">Add Venue</button>
-
-
+          <label>Name: </label>
+          <input
+            required
+            type="text"
+            name="name"
+            placeholder="Venue Name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
         </div>
-    );
-}
 
+        <div>
+          <label>Venue Type: </label>
+          <select
+            required
+            name="venueType"
+            value={venueType}
+            onChange={(event) => setVenueType(event.target.value)}
+          >
+            <option value="Outdoors">Outdoors</option>
+            <option value="Indoors">Indoors</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Address: </label>
+          <input
+            required
+            type="text"
+            name="address"
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Capacity: </label>
+          <input
+            type="number"
+            name="capacity"
+            min="0"
+            value={capacity}
+            onChange={(event) => setCapacity(event.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Is Food Available: </label>
+          <input
+            required
+            type="checkbox"
+            name="isFoodAvailable"
+            checked={isFoodAvailable}
+            onChange={(event) => setIsFoodAvailable(event.target.checked)}
+          />
+        </div>
+
+        <div>
+          <label>Is Drinks Available: </label>
+          <input
+            required
+            type="checkbox"
+            name="isDrinksAvailable"
+            checked={isDrinksAvailable}
+            onChange={(event) => setIsDrinksAvailable(event.target.checked)}
+          />
+        </div>
+
+        <div>
+          <label>Image URL: </label>
+          <input
+            type="url"
+            name="imageUrl"
+            value={imageUrl}
+            onChange={(event) => setImageUrl(event.target.value)}
+          />
+        </div>
+
+        <button type="submit">Add Venue</button>
+      </form>
+    </div>
+  );
+}
 
 export default AddVenue;

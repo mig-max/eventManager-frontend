@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
-import VenueCard from "../components/VenueCard";
 import venuesService from "../services/venue.service";
+import VenueCard from "../components/VenueCard";
+
 
 function VenuePage() {
 

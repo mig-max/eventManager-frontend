@@ -6,6 +6,8 @@ import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 import EventListPage from "./pages/EventListPage";
 import VenuePage from "./pages/VenuePage";
+import VenueDetailsPage from "./pages/VenueDetailsPage";
+import AddVenue from "./components/AddVenue";
 
 function App() {
  
@@ -21,6 +23,8 @@ function App() {
         <Route path='/profile' element={<ProfilePage/>} />
         <Route path="/events" element={ <EventListPage/> } />
         <Route path='/venues' element={<VenuePage/>} />
+        <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />
+        <Route path='/addvenue' element={<AddVenue/>} />
      </Routes>
     </>
   )

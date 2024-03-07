@@ -44,7 +44,7 @@ h1 {
 
 }
 
-input {
+input, select {
 	appearance: auto;
 	background-color: #a9a9a9;
 	box-sizing: border-box;
