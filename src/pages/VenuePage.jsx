@@ -40,6 +40,8 @@ function VenuePage() {
                 <VenueCard key={venue._id} venue={venue} />
             ))
         )}
+
+ 
         </div>
     );
 }
