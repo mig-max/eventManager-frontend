@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {useState, useEffect} from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import VenueCard from "../components/VenueCard";
 
@@ -11,6 +11,8 @@ function VenueDetailsPage(props) {
     const { venueId } = useParams();
 
     const [venue, setVenue] = useState(null);
+
+    const navigate = useNavigate();
 
 
     const getVenue = () => {
@@ -35,9 +37,8 @@ function VenueDetailsPage(props) {
         {venue && <VenueCard venue={venue} />}
 
 
-        <Link to={`/venues`}>
-        <button>Back</button>
-        </Link>
+        <button onClick={() => navigate(`/venues`)}>All Venues</button>
+        <button onClick={() => navigate(`/`)}>Home</button>
 
         
 

@@ -20,6 +20,7 @@ function EventListPage() {
     };
 
     useEffect(() => {
+        setLoading(true);
         getAllEvents();
     }, []);
 
@@ -27,14 +28,14 @@ function EventListPage() {
         <div className="EventListPage">
         <h1>Events Page</h1>
 
-            {loading ? (
-                <p>Loading...</p> 
-            ) : (
-                events.map((event) => (
-                    <EventCard key={event._id} {...event} />
-                ))
-            )}
-        </div>
+        {loading ? (
+            <p>Loading...</p>
+        ) : (
+            events.map((event) => (
+                <EventCard key={event._id} {...event} />
+            ))
+        )}
+    </div>
     )
 }
 
