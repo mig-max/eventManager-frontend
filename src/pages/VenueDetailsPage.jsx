@@ -51,7 +51,7 @@ function VenueDetailsPage(props) {
 
         <button onClick={() => navigate(`/venues`)}>All Venues</button>
         <button onClick={() => navigate(`/venues/${venueId}/edit`)}>Edit</button>
-        <button onClick={() => navigate(`/venues/${venueId}`)}>Delete</button>
+        <button onClick={deleteVenue}>Delete Venue</button>
         <button onClick={() => navigate(`/`)}>Home</button>
 
         
