@@ -1,18 +1,50 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import venuesService from "../services/venue.service";
+import VenueCard from "./VenueCard";
 
-function EventCard ( {title, eventType, description, time, isEighteen, venue, _id} ) {
+function EventCard({ event }) {
+
+    const [venue, setVenue] = useState([]);
+    const { eventId } = useParams();
+
+    useEffect(() => {
+
+        const getVenues = async () => {
+            try {
+                const response = await venuesService.getAllVenues();
+                const filteredVenues = response.data.filter((venue) => venue.event && venue.event._id === eventId);
+                setVenue(filteredVenues);
+            } catch (error) {
+                console.error("Error fetching venues:", error);
+            }
+        };
+        
+        getVenues();
+    }, [eventId]);
 
     return (
-        <div className="EventCard_card">
-            <Link to={`/events/${_id}`}>
-                <h3>{title}</h3>
-                <h3>{eventType}</h3>
-                <h3>{description}</h3>
-            </Link>
+        <div className="event-card">
+
+            {/* Event information */}
+            <h2>{event.title}</h2>
+            <p>Type of event: {event.description}</p>
+            <p>Date and time: {event.time}</p>
+
+            {event.isEighteen && (
+                <strong>Age restriction: 18+</strong>
+            )}
+
+              {/* Venues */}
+              <h3>Venue:</h3>
+              {venue.map((venue) => (
+                <VenueCard key={venue._id} venue={venue}/>
+              ))}
+           
 
         </div>
-    )
+    );
 }
 
 export default EventCard;

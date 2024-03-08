@@ -42,7 +42,29 @@ function LoginPage() {
                 console.log(error)
                 //const errorDescription = error.response.data.message || "An unknown error occurred";
                 //setErrorMessage(errorDescription);
+                console.log("Response:", response); 
+                if (response.data && response.data.authToken) {
+                    const { userId } = response.data;
+                    storeToken(response.data.authToken);
+                    localStorage.setItem(`userId`, userId);
+
+                    authenticateUser();
+                    
+                    //navigate("/")
+                    
+                   navigate(`/users/${userId}`); // Navigate to the user profile page
+                } else {
+                    throw new Error("Unexpected response format");
+                }
+            })
+            .catch((error) => {
+                let errorDescription = "An error occurred during login.";
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorDescription = error.response.data.message;
+                }
+                setErrorMessage(errorDescription);
             });
+            
     };
     return (
         <div className="LoginPage">

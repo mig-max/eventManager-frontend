@@ -25,14 +25,15 @@ class AuthService {
     return !!authToken; // Returns true if authToken exists, false otherwise
   }
 
-    login = (requestBody) => {
-        return this.api.post("/auth/login", requestBody)
-            .then(response => {
-                const authToken = response.data.authToken;
-                localStorage.setItem("authToken", authToken);
-                return response;
-            })
-    };
+  login = (requestBody) => {
+    return this.api.post("/auth/login", requestBody)
+        .then(response => {
+            console.log("Response:", response); 
+            const authToken = response.data.authToken;
+            localStorage.setItem("authToken", authToken);
+            return response;
+        })
+};
 
     signup = (requestBody) => {
         console.log(requestBody);  // DON'T FORGET TO DELETE LATER //////

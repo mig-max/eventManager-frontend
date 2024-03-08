@@ -56,19 +56,8 @@ function EditVenue() {
             });
     };
 
-    const deleteVenue = () => {
-        venuesService
-            .deleteVenue(venueId)
-            .then((response) => {
-                navigate("/venues");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
     return (
-        <div className="EditVenuePage">
+        <div className="edit-venue">
         <h1>Edit Venue Page</h1>
 
         <form onSubmit={handleFormSubmit}>
@@ -154,7 +143,7 @@ function EditVenue() {
 
            <button onClick={handleFormSubmit}>Save Changes</button>
            <button onClick={() => navigate(`/venues/${venueId}`)}>Cancel</button>
-           <button onClick={deleteVenue}>Delete Venue</button>
+        
          
            
         </form>
