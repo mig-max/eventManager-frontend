@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import UserCard from "../components/UserCard";
 
 function ProfilePage() {
     const { user } = useContext(AuthContext); 
@@ -11,7 +10,8 @@ function ProfilePage() {
 
     return (
         <div className="UserPage">
-            <UserCard user={user}/>
+            <h1>Welcome, {user.name}!</h1>
+            <h1>{user.email}</h1>
         </div>
     );
 }

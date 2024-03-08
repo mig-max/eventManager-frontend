@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import VenueSummary from "../components/VenueSummary";
 
@@ -9,7 +8,7 @@ function VenuePage() {
     const [venues, setVenues] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
+
 
 
 
@@ -42,7 +41,7 @@ function VenuePage() {
                 venues.map((venue) => (
                     <div key={venue._id}>
                         <VenueSummary venue={venue} />
-                        <button onClick={() => navigate(`/venues/${venue._id}`)}>View Details</button>
+                        
                     </div>
                 ))
             )}
