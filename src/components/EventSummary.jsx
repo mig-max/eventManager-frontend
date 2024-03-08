@@ -13,13 +13,7 @@ function EventSummary({ event }) {
             <p>Type of event: {event.eventType}</p>
             <p>Date and Time: {event.time}</p>
 
-            {event.isFree && (
-                <strong>Free Event!</strong>
-            )}
-
-            {event.price && (
-                <p>Price: {event.price}</p>
-            )}
+            <p>Price: {event.isFree ? "Free" : `$${event.price}`}</p>
             
         </div>
     );

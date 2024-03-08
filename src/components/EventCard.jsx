@@ -5,6 +5,7 @@ import venuesService from "../services/venue.service";
 import VenueCard from "./VenueCard";
 
 function EventCard({ event }) {
+    console.log("Event Data:", event); 
 
     const [venue, setVenue] = useState([]);
     const { eventId } = useParams();
@@ -34,29 +35,28 @@ function EventCard({ event }) {
             <img src={event.imageUrl} alt={event.name} />
             )}
 
-            <p>Type of event: {event.eventType}</p>
-            <p>Date and Time: {event.time}</p>
+            <p>Event Type: {event.eventType.join(", ")}</p>
+            <p>Price: {event.isFree ? "Free" : `$${event.price}`}</p>
+            <p>Date: {new Date(event.time).toLocaleDateString()}</p>
             <p>About: {event.description}</p>
 
             {event.isEighteen && (
                 <strong>Age restriction: 18+</strong>
             )}
 
-            {event.isFree && (
-                <strong>Free Event!</strong>
+                {/* Venue */}
+
+            <p>Venue Name: {event.venue.name}</p>
+            <p>Venue Address: {event.venue.address}</p>
+
+            {event.venue.imageUrl && (
+                <img src={event.venue.imageUrl} alt={event.venue.name} />
             )}
 
-            {event.price && (
-                <p>Price: {event.price}</p>
-            )}
-            
+            {/* Map and Google Maps API */}
+         
+            {/* Buttons for adding to favorites */}
 
-              {/* Venues */}
-              <h3>Venue:</h3>
-              {venue.map((venue) => (
-                <VenueCard key={venue._id} venue={venue}/>
-              ))}
-           
 
         </div>
     );
