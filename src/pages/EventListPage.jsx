@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import EventSummary from "../components/EventSummary";
 import eventsService from "../services/events.service";
-import { useNavigate } from "react-router-dom";
+
 
 function EventListPage() {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+   
 
     const getAllEvents = () => {
         eventsService
@@ -35,7 +35,6 @@ function EventListPage() {
                 events.map((event) => (
                     <div key={event._id}>
                         <EventSummary event={event} />
-                        <button onClick={() => navigate(`/events/${event._id}`)}>View Details</button>
                     </div>
                 ))
             )}

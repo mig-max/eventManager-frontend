@@ -8,15 +8,19 @@ function UserCard ({ user }) {
 
 
     return (
-        <div className="user-card">
+        <div className="avatar">
+        <div className="w-24 mask mask-squircle">
         <img src={user.avatar} alt="User Avatar" />
+      
         <h2>{user.name}</h2>
         <p>Username: {user.username}</p>
         <p>Email: {user.email}</p>
         {/* add more info  */}
+        </div>
         </div>
 
     )
 } 
 
 export default UserCard;
+

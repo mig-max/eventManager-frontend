@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 import  { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import eventsService from "../services/events.service";
-import EventCard from "./EventCard"; 
+//import EventCard from "./EventCard"; 
 
 function VenueCard({ venue }) {
 
   const [events, setEvents] = useState([]);
   const { venueId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getEvents = async () => {
@@ -45,19 +47,15 @@ function VenueCard({ venue }) {
       <p>Food available to buy</p>
       )}
 
-      
-      <p>Address: {venue.address}</p>
+         {/* Map and Google Maps API */}
 
-      {/* Events */}
-    
-      {events.length > 0 && (
-        <div>
-          <h3>Events at this venue:</h3>
-          {events.map((event) => (
-            <EventCard key={event._id} event={event} />
-          ))}
-        </div>
-      )}
+      <div>
+        <h3>Events at this venue:</h3>
+        {events.map((event) => (
+          <button onClick={() => navigate(`/events/${event._id}`)} key={event._id}>{event.title}</button>
+       ))}
+      </div>
+      
       
     </div>
   );

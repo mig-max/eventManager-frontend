@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import venuesService from "../services/venue.service";
-import VenueCard from "./VenueCard";
+//import VenueCard from "./VenueCard";
 
 function EventCard({ event }) {
     console.log("Event Data:", event); 
 
-    const [venue, setVenue] = useState([]);
+    const [venues, setVenues] = useState([]);
     const { eventId } = useParams();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -16,7 +19,7 @@ function EventCard({ event }) {
             try {
                 const response = await venuesService.getAllVenues();
                 const filteredVenues = response.data.filter((venue) => venue.event && venue.event._id === eventId);
-                setVenue(filteredVenues);
+                setVenues(filteredVenues);
             } catch (error) {
                 console.error("Error fetching venues:", error);
             }
@@ -43,19 +46,26 @@ function EventCard({ event }) {
             {event.isEighteen && (
                 <strong>Age restriction: 18+</strong>
             )}
+                {/* Buttons for adding to favorites */}
+
+           {/*  {Auth.loggedIn() && (
+                <button
+                    onClick={() => handleFavoriteClick(event._id)}
+                >
+                    Add to Favorites
+                </button>  */}
+    
 
                 {/* Venue */}
 
             <p>Venue Name: {event.venue.name}</p>
             <p>Venue Address: {event.venue.address}</p>
+            <button onClick={() => navigate(`/venues/${event.venue._id}`)}>Venue Details</button>
 
-            {event.venue.imageUrl && (
-                <img src={event.venue.imageUrl} alt={event.venue.name} />
-            )}
-
-            {/* Map and Google Maps API */}
+           
          
-            {/* Buttons for adding to favorites */}
+         
+        
 
 
         </div>
