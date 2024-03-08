@@ -13,6 +13,7 @@ function VenueCard({ venue }) {
         <p>Drinks Available: {venue.isDrinksAvailable ? 'Yes' : 'No'}</p>
         <p>Address: {venue.address}</p>
       </div>
+      
     </div>
   );
 }

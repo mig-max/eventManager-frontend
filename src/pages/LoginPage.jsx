@@ -8,34 +8,47 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(undefined);
 
+
+
     const navigate = useNavigate();
 
     const { storeToken, authenticateUser } = useContext(AuthContext);
 
-    const handleEmail = (e) => setEmail(e.target.value);
-    const handlePassword = (e) => setPassword(e.target.value);
+    const handleEmail = (event) => setEmail(event.target.value);
+    const handlePassword = (event) => setPassword(event.target.value);
 
-    const handleLoginSubmit = (e) => {
-        e.preventDefault();
+    const handleLoginSubmit = (event) => {
+        event.preventDefault();
         const requestBody = { email, password };
         console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
-
+    
         authService
             .login(requestBody)
             .then((response) => {
-                navigate('/profile');
-                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
+                console.log("Response:", response); 
+                if (response.data && response.data.authToken) {
+                    const { userId } = response.data;
+                    storeToken(response.data.authToken);
+                    localStorage.setItem(`userId`, userId);
 
-                storeToken(response.data.authToken);
-                authenticateUser();
-                
+                    authenticateUser();
+                    
+                    //navigate("/")
+                    
+                   navigate(`/users/${userId}`); // Navigate to the user profile page
+                } else {
+                    throw new Error("Unexpected response format");
+                }
             })
             .catch((error) => {
-                const errorDescription = error.response?.data?.message || "An unknown error occurred";
+                let errorDescription = "An error occurred during login.";
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorDescription = error.response.data.message;
+                }
                 setErrorMessage(errorDescription);
             });
+            
     };
-
     return (
         <div className="LoginPage">
             <h1>Login</h1>
@@ -45,6 +58,7 @@ function LoginPage() {
                 <input 
                     type="email" 
                     name="email" 
+                    placeholder="your@email.com"
                     value={email} 
                     onChange={handleEmail}
                 />
@@ -53,6 +67,7 @@ function LoginPage() {
                 <input
                     type="password"
                     name="password"
+                    placeholder="**********"
                     value={password}
                     onChange={handlePassword}
                 />

@@ -51,18 +51,29 @@ function SignupPage() {
 
       <form onSubmit={handleSignupSubmit}>
         <label>Email:</label>
-        <input type="text" name="email" value={email} onChange={handleEmail} />
+        <input 
+          type="text" 
+          name="email" 
+          placeholder="your@email.com"
+          value={email} 
+          onChange={handleEmail} />
 
         <label>Password:</label>
         <input
           type="password"
           name="password"
+          placeholder="******"
           value={password}
           onChange={handlePassword}
         />
 
         <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
+        <input 
+          type="text" 
+          name="name" 
+          placeholder="Your name"
+          value={name} 
+          onChange={handleName} />
 
         <button type="submit" disabled={loading}>
           Sign Up

@@ -9,55 +9,53 @@ function AuthProviderWrapper(props) {
     const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
-
+    const [isAnon, setIsAnon] = useState(false);
 
     const storeToken = (token) => {
         localStorage.setItem("authToken", token);
     };
 
-
     const authenticateUser = () => {
         const storedToken = localStorage.getItem("authToken");
-
+    
         if (storedToken) {
-            
             authService
             .verify()
             .then((response) => {
-                // if the token is valid
+                // If the token is valid, set user state and login status
+                setUser(response.data.user); // Assuming response contains user data
                 setIsLoggedIn(true);
-                setUser(user);
                 setLoading(false);
             })
             .catch((error) => {
-                // if the token is invalid
+                // If token verification fails, set login status to false
                 setIsLoggedIn(false);
                 setUser(null);
                 setLoading(false);
+                console.error("Token verification failed:", error);
             });
-
         } else {
-            // if the token is unavailable
+            // If token is unavailable, set login status to false
             setIsLoggedIn(false);
             setUser(null);
             setLoading(false);
         }
     };
+    
 
     const removeToken = () => {
-        // remove the token from the local storage after logout
         localStorage.removeItem("authToken");
     };
 
     const logOutUser = () => {
         removeToken();
-        authenticateUser();
+        setIsLoggedIn(false);
+        setUser(null);
     };
 
     useEffect(() => {
         authenticateUser();
     }, []);
-
 
     return (
         <AuthContext.Provider
@@ -66,6 +64,7 @@ function AuthProviderWrapper(props) {
                 loading,
                 isLoggedIn,
                 isOwner,
+                isAnon,
                 logOutUser,
                 storeToken
             }}
@@ -73,10 +72,6 @@ function AuthProviderWrapper(props) {
             {props.children}
         </AuthContext.Provider>
     );
-
-    
 }
 
-
-
-export { AuthProviderWrapper, AuthContext};
+export { AuthProviderWrapper, AuthContext };
