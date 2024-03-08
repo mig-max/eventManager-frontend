@@ -5,6 +5,9 @@ import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 import EventListPage from "./pages/EventListPage";
+import AddEvent from "./components/AddEvent";
+
+
 import VenuePage from "./pages/VenuePage";
 import VenueDetailsPage from "./pages/VenueDetailsPage";
 import AddVenue from "./components/AddVenue";
@@ -22,11 +25,14 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/signup' element={<SignupPage/>} />
         <Route path='/login' element={ <LoginPage/> } />
-        <Route path="/users/:userId" element={<ProfilePage />} />
-        <Route path="/events" element={ <EventListPage/> } />
+        <Route path='/users/:userId' element={<ProfilePage />} />
+
+        <Route path='/events' element={ <EventListPage/> } />
+        <Route path='/events/add' element={<AddEvent/>} />
+
         <Route path='/venues' element={<VenuePage/>} />
         <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />
-        <Route path='/addvenue' element={<AddVenue/>} />
+        <Route path='/venues/add' element={<AddVenue/>} />
         <Route path='/venues/:venueId/edit' element={<EditVenue/>} />
      </Routes>
     </>
