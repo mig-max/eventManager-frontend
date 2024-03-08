@@ -30,17 +30,35 @@ function VenueCard({ venue }) {
 
       {/* Venue information */}
       <h2>{venue.name}</h2>
+      {venue.imageUrl && (
+        <img src={venue.imageUrl} alt={venue.name} />
+      )}
+      
       <p>Venue Type: {venue.venueType}</p>
       <p>Capacity: {venue.capacity}</p>
-      {venue.isDrinksAvailable && <p>Drinks available to buy</p>}
-      {venue.isFoodAvailable && <p>Food available to buy</p>}
+      
+      {venue.isDrinksAvailable && (
+          <p>Drinks available to buy</p>
+      )}
+
+      {venue.isFoodAvailable && (
+      <p>Food available to buy</p>
+      )}
+
+      
       <p>Address: {venue.address}</p>
 
       {/* Events */}
-      <h3>Events at this venue:</h3>
-      {events.map((event) => (
-        <EventCard key={event._id} event={event} />
-      ))}
+    
+      {events.length > 0 && (
+        <div>
+          <h3>Events at this venue:</h3>
+          {events.map((event) => (
+            <EventCard key={event._id} event={event} />
+          ))}
+        </div>
+      )}
+      
     </div>
   );
 }

@@ -29,12 +29,22 @@ function EventCard({ event }) {
 
             {/* Event information */}
             <h2>{event.title}</h2>
-            <p>Type of event: {event.description}</p>
-            <p>Date and time: {event.time}</p>
+            <p>Type of event: {event.eventType}</p>
+            <p>Date and Time: {event.time}</p>
+            <p>About: {event.description}</p>
 
             {event.isEighteen && (
                 <strong>Age restriction: 18+</strong>
             )}
+
+            {event.isFree && (
+                <strong>Free Event!</strong>
+            )}
+
+            {event.price && (
+                <p>Price: {event.price}</p>
+            )}
+            
 
               {/* Venues */}
               <h3>Venue:</h3>
