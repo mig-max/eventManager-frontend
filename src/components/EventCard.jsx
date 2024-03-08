@@ -29,6 +29,11 @@ function EventCard({ event }) {
 
             {/* Event information */}
             <h2>{event.title}</h2>
+
+            {event.imageUrl && (
+            <img src={event.imageUrl} alt={event.name} />
+            )}
+
             <p>Type of event: {event.eventType}</p>
             <p>Date and Time: {event.time}</p>
             <p>About: {event.description}</p>

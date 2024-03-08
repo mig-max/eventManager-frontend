@@ -1,9 +1,11 @@
 import {Routes, Route} from "react-router-dom";
 
-import LoginPage from './pages/LoginPage';
+
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
+
 import EventListPage from "./pages/EventListPage";
 import AddEvent from "./components/AddEvent";
 import EventDetailsPage from "./pages/EventDetailsPage";

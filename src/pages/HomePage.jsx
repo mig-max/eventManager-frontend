@@ -1,6 +1,7 @@
 import EventListPage from "./EventListPage";
 import VenuePage from "./VenuePage";
-
+import AddVenue from "../components/AddVenue";
+import AddEvent from "../components/AddEvent";
 
 function HomePage() {
     return (
@@ -9,6 +10,9 @@ function HomePage() {
 
          <EventListPage />
          <VenuePage />
+
+         <AddVenue />
+         <AddEvent />
 
  
 

@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
+import eventsService from "../services/events.service";
 
 function AddVenue(props) {
   const [name, setName] = useState("");
@@ -11,10 +13,24 @@ function AddVenue(props) {
   const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [events, setEvents] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    eventsService
+      .getAllEvents()
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   function handleFormSubmit(event) {
     event.preventDefault();
-
-    //  const {eventId} = props; // later for add the events to the venue
 
     const requestBody = {
       name,
@@ -24,7 +40,7 @@ function AddVenue(props) {
       isFoodAvailable,
       isDrinksAvailable,
       imageUrl,
-      // eventId // later for add the events to the venue
+      event: selectedEvent._id,
     };
 
     venuesService
@@ -51,87 +67,90 @@ function AddVenue(props) {
       <h1>Add New Venue</h1>
 
       <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Name: </label>
-          <input
-            required
-            type="text"
-            name="name"
-            placeholder="Venue Name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
+        <label>Name: </label>
+        <input
+          required
+          type="text"
+          name="name"
+          placeholder="Venue Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
 
-        <div>
-          <label>Venue Type: </label>
-          <select
-            required
-            name="venueType"
-            value={venueType}
-            onChange={(event) => setVenueType(event.target.value)}
-          >
-            <option value="Outdoor">Outdoor</option>
-            <option value="Indoor">Indoor</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+        <label>Venue Type: </label>
+        <select
+          required
+          name="venueType"
+          value={venueType}
+          onChange={(event) => setVenueType(event.target.value)}
+        >
+          <option value="Outdoor">Outdoor</option>
+          <option value="Indoor">Indoor</option>
+          <option value="Other">Other</option>
+        </select>
 
-        <div>
-          <label>Address: </label>
-          <input
-            required
-            type="text"
-            name="address"
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
-          />
-        </div>
+        <label>Address: </label>
+        <input
+          required
+          type="text"
+          name="address"
+          value={address}
+          onChange={(event) => setAddress(event.target.value)}
+        />
 
-        <div>
-          <label>Capacity: </label>
-          <input
-            type="number"
-            name="capacity"
-            min="1"
-            value={capacity}
-            onChange={(event) => setCapacity(event.target.value)}
-          />
-        </div>
+        <label>Capacity: </label>
+        <input
+          type="number"
+          name="capacity"
+          min="1"
+          value={capacity}
+          onChange={(event) => setCapacity(event.target.value)}
+        />
 
-        <div>
-          <label>Is Food Available: </label>
-          <input
-            required
-            type="checkbox"
-            name="isFoodAvailable"
-            checked={isFoodAvailable}
-            onChange={(event) => setIsFoodAvailable(event.target.checked)}
-          />
-        </div>
+        <label>Is Food Available: </label>
+        <input
+          required
+          type="checkbox"
+          name="isFoodAvailable"
+          checked={isFoodAvailable}
+          onChange={(event) => setIsFoodAvailable(event.target.checked)}
+        />
 
-        <div>
-          <label>Is Drinks Available: </label>
-          <input
-            required
-            type="checkbox"
-            name="isDrinksAvailable"
-            checked={isDrinksAvailable}
-            onChange={(event) => setIsDrinksAvailable(event.target.checked)}
-          />
-        </div>
+        <label>Is Drinks Available: </label>
+        <input
+          required
+          type="checkbox"
+          name="isDrinksAvailable"
+          checked={isDrinksAvailable}
+          onChange={(event) => setIsDrinksAvailable(event.target.checked)}
+        />
 
-        <div>
-          <label>Image URL: </label>
-          <input
-            type="url"
-            name="imageUrl"
-            value={imageUrl}
-            onChange={(event) => setImageUrl(event.target.value)}
-          />
-        </div>
+        <label>Image URL: </label>
+        <input
+          type="url"
+          name="imageUrl"
+          value={imageUrl}
+          onChange={(event) => setImageUrl(event.target.value)}
+        />
+
+        <label>Events:</label>
+        <select
+          name="event"
+          value={selectedEvent}
+          onChange={(event) => setSelectedEvent(event.target.value)}
+        >
+          {events.map((event) => ( 
+            <option key={event._id} value={event._id}>
+              {event.title}
+            </option>
+          ))}
+        </select>
+
+        <Link to="/events/add">Create New Event</Link>
 
         <button type="submit">Add Venue</button>
+
+        <button onClick={() => navigate("/")}>Cancel</button>
       </form>
     </div>
   );

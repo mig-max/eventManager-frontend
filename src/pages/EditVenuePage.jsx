@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-
+import { useNavigate, useParams, Link } from "react-router-dom"
+import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service"
 
 function EditVenue() {
@@ -13,26 +13,38 @@ function EditVenue() {
     const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
 
+    const [selectedEvent, setSelectedEvent] = useState("");
+    const [events, setEvents] = useState([]);
+
     const navigate = useNavigate();
 
     const { venueId } = useParams();
 
     useEffect(() => {
-        venuesService.getVenue(venueId)
-            .then((response) => {
-                const oneVenue = response.data;
-                setName(oneVenue.name);
-                setVenueType(oneVenue.venueType);
-                setAddress(oneVenue.address);
-                setCapacity(oneVenue.capacity);
-                setIsFoodAvailable(oneVenue.isFoodAvailable);
-                setIsDrinksAvailable(oneVenue.isDrinksAvailable);
-                setImageUrl(oneVenue.imageUrl);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, [venueId]);
+      venuesService.getVenue(venueId)
+          .then((response) => {
+              const oneVenue = response.data;
+              setName(oneVenue.name);
+              setVenueType(oneVenue.venueType);
+              setAddress(oneVenue.address);
+              setCapacity(oneVenue.capacity);
+              setIsFoodAvailable(oneVenue.isFoodAvailable);
+              setIsDrinksAvailable(oneVenue.isDrinksAvailable);
+              setImageUrl(oneVenue.imageUrl);
+              setSelectedEvent(oneVenue.event._id);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+
+      eventsService.getAllEvents()
+          .then((response) => {
+              setEvents(response.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }, [venueId]);
 
 
     const handleFormSubmit = (event) => {
@@ -44,7 +56,8 @@ function EditVenue() {
             capacity,
             isFoodAvailable,
             isDrinksAvailable,
-            imageUrl
+            imageUrl,
+            event: selectedEvent,
         };
         venuesService
             .updateVenue(venueId, requestBody)
@@ -141,18 +154,30 @@ function EditVenue() {
           />
         </div>
 
-           <button onClick={handleFormSubmit}>Save Changes</button>
-           <button onClick={() => navigate(`/venues/${venueId}`)}>Cancel</button>
+
+        <label>Events:</label>
+        <select
+          name="event"
+          value={selectedEvent}
+          onChange={(event) => setSelectedEvent(event.target.value)}
+        >
+        <option value="">Select Event</option>
+          {events.map((event) => (
+            <option key={event._id} value={event._id}>
+              {event.title}
+            </option>
+          ))}
+        </select>
+
+        <Link to="/events/add">Create New Event</Link>
+
+        <button onClick={handleFormSubmit}>Save Changes</button>
+        <button onClick={() => navigate(`/venues/${venueId}`)}>Cancel</button>
         
-         
-           
         </form>
         </div>
-    )
+    );
 }
-
-
-
 
 
 export default EditVenue;
