@@ -27,14 +27,13 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/signup' element={<SignupPage/>} />
         <Route path='/login' element={ <LoginPage/> } />
+        <Route path="/user" element={<ProfilePage />} />
+        <Route path="/events" element={ <EventListPage/> } />
         <Route path='/users/:userId' element={<ProfilePage />} />
-
         <Route path='/events' element={ <EventListPage/> } />
         <Route path='/events/:eventId' element={<EventDetailsPage/>} />
         <Route path='/events/add' element={<AddEvent/>} />
         <Route path='/events/:eventId/edit' element={<EditEvent/>} />
-        
-
         <Route path='/venues' element={<VenuePage/>} />
         <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />
         <Route path='/venues/add' element={<AddVenue/>} />

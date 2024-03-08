@@ -25,6 +25,7 @@ function AuthProviderWrapper(props) {
                 // If the token is valid, set user state and login status
                 setUser(response.data.user); // Assuming response contains user data
                 setIsLoggedIn(true);
+                setUser(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -60,6 +61,7 @@ function AuthProviderWrapper(props) {
     return (
         <AuthContext.Provider
             value={{
+                authenticateUser,
                 user,
                 loading,
                 isLoggedIn,
