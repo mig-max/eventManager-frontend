@@ -25,22 +25,23 @@ function LoginPage() {
         authService
             .login(requestBody)
             .then((response) => {
-                const {userId} = response.data;
-
+                //const {_id} = response.data;
                 storeToken(response.data.authToken);
-
-                localStorage.setItem(`userId`, userId);
-                navigate(`/users/${userId}`); // Navigate to the user profile page
+                authenticateUser();
+                navigate(`/user`);
+                //localStorage.setItem(`userId`, _id);
+                 // Navigate to the user profile page
                 //navigate(`/venues`)
                 console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
     
                
-                authenticateUser();
+               
                 
             })
             .catch((error) => {
-                const errorDescription = error.response?.data?.message || "An unknown error occurred";
-                setErrorMessage(errorDescription);
+                console.log(error)
+                //const errorDescription = error.response.data.message || "An unknown error occurred";
+                //setErrorMessage(errorDescription);
             });
     };
     return (
