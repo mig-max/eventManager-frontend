@@ -6,6 +6,8 @@ import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 import EventListPage from "./pages/EventListPage";
 import AddEvent from "./components/AddEvent";
+import EventDetailsPage from "./pages/EventDetailsPage";
+import EditEvent from "./pages/EditEventPage";
 
 
 import VenuePage from "./pages/VenuePage";
@@ -28,7 +30,10 @@ function App() {
         <Route path='/users/:userId' element={<ProfilePage />} />
 
         <Route path='/events' element={ <EventListPage/> } />
+        <Route path='/events/:eventId' element={<EventDetailsPage/>} />
         <Route path='/events/add' element={<AddEvent/>} />
+        <Route path='/events/:eventId/edit' element={<EditEvent/>} />
+        
 
         <Route path='/venues' element={<VenuePage/>} />
         <Route path='/venues/:venueId' element={<VenueDetailsPage/>} />

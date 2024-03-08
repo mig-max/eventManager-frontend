@@ -40,7 +40,7 @@ class EventsService {
 
       //DELETE /events/:eventId
       deleteEvent = (eventId) => {
-        return this.api/delete(`/events/${eventId}`);
+        return this.api.delete(`/events/${eventId}`);
       };
     }
 

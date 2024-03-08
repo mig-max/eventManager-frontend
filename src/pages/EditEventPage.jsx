@@ -1,49 +1,59 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import eventsService from "../services/events.service";
-//import moment from 'moment';
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
-function AddEvent(props) {
+import eventsService from "../services/events.service"
+
+function EditEvent() {
+
     const [title, setTitle] = useState("");
     const [eventType, setEventType] = useState("");
     const [description, setDescription] = useState("");
     const [time, setTime] = useState("");
     const [isEighteen, setIsEighteen] = useState(false);
-    const [venue, setVenue] = useState("");
 
-    
+    const navigate = useNavigate();
+
+    const { eventId } = useParams();
+
+    useEffect(() => {
+        eventsService.getEvent(eventId)
+            .then((response)    => {
+                const oneEvent = response.data;
+                setTitle(oneEvent.title);
+                setEventType(oneEvent.eventType);
+                setDescription(oneEvent.description);
+                setTime(oneEvent.time);
+                setIsEighteen(oneEvent.isEighteen);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [eventId]) 
+
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        //const selectedDate = new Date(e.target.elements.time.value);
         const requestBody = {
             title,
-            eventType: [eventType],
+            eventType,
             description,
             time,
             isEighteen
         };
-    
-
-    eventsService.createEvent(requestBody)
-        .then((response) => {
-            setTitle("");
-            setEventType("Concert");
-            setDescription("");
-            setTime("");
-            setIsEighteen(false);
-
-            props.refreshEvents();
-        })
-        .catch((error) => console.log(error));
+        eventsService
+            .updateEvent(eventId, requestBody)
+            .then((response) => {
+                navigate(`/events/${eventId}`);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
 
-
     return (
-        <div className="AddEvent">
-            <h3>Add Event</h3>
-
+        <div className="edit-event">
+            <h1>Edit Event</h1>
             <form onSubmit={handleFormSubmit}>
                 <label>Title:</label>
                 <input
@@ -94,7 +104,13 @@ function AddEvent(props) {
                     value={isEighteen}
                     onChange={(event) => setIsEighteen(event.target.checked)}
                 />
-                <button type="submit">Submit</button>
+                <button onClick={handleFormSubmit}>Save Changes</button>
+                <button onClick={() => navigate(`/venues/${eventId}`)}>Cancel</button>
+              
+
+
+
+
             </form>
 
         </div>
@@ -102,4 +118,4 @@ function AddEvent(props) {
 
 }
 
-export default AddEvent;
+export default EditEvent;
