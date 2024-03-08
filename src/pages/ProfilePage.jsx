@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 import UserCard from "../components/UserCard";
 import authService from "../services/auth.service";
 import userService from "../services/user.service";
 
 function ProfilePage() {
-    
+    const { authToken } = useContext(AuthContext);
     const { userId } = useParams();
-    console.log("userId:", userId); // Check if userId is correctly obtained
+    const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-
         const getUser = (userId) => {
             console.log("Fetching user with userId:", userId);
             userService.getUser(userId)
@@ -25,6 +25,7 @@ function ProfilePage() {
                 })
                 .catch((error) => {
                     console.error("Error fetching user:", error);
+                    setError("Error fetching user data.");
                     setLoading(false);
                 });
         };
@@ -40,11 +41,10 @@ function ProfilePage() {
             getUser(userId);
         } else {
             console.error("No userId provided");
+            setError("No user ID provided.");
             setLoading(false);
         }
     }, [userId, navigate]);
-
-    
 
     const handleLogout = () => {
         authService.logout();
@@ -57,16 +57,20 @@ function ProfilePage() {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <div>
-                    {user ? (
-                        <>
-                            <UserCard user={user} />
-                        </>
+                <>
+                    {error ? (
+                        <p>{error}</p>
                     ) : (
-                        <p>No user found</p>
+                        <div>
+                            {user ? (
+                                <UserCard user={user} />
+                            ) : (
+                                <p>No user found</p>
+                            )}
+                            <button onClick={handleLogout}>Logout</button>
+                        </div>
                     )}
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
+                </>
             )}
         </div>
     );

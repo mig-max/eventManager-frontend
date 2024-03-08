@@ -25,23 +25,29 @@ function LoginPage() {
         authService
             .login(requestBody)
             .then((response) => {
-                const {userId} = response.data;
+                console.log("Response:", response); 
+                if (response.data && response.data.authToken) {
+                    const { userId } = response.data;
+                    storeToken(response.data.authToken);
+                    localStorage.setItem(`userId`, userId);
 
-                storeToken(response.data.authToken);
-
-                localStorage.setItem(`userId`, userId);
-                navigate(`/users/${userId}`); // Navigate to the user profile page
-                //navigate(`/venues`)
-                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
-    
-               
-                authenticateUser();
-                
+                    authenticateUser();
+                    
+                    //navigate("/")
+                    
+                   navigate(`/users/${userId}`); // Navigate to the user profile page
+                } else {
+                    throw new Error("Unexpected response format");
+                }
             })
             .catch((error) => {
-                const errorDescription = error.response?.data?.message || "An unknown error occurred";
+                let errorDescription = "An error occurred during login.";
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorDescription = error.response.data.message;
+                }
                 setErrorMessage(errorDescription);
             });
+            
     };
     return (
         <div className="LoginPage">
