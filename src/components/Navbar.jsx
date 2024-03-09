@@ -1,3 +1,7 @@
+import {Link} from "react-router-dom"
+//import { useContext } from "react";
+//import { AuthContext } from "../context/auth.context";
+
 
 function Navbar() {
   return (
@@ -10,7 +14,7 @@ function Navbar() {
       <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li><a>Item 1</a></li>
         <li>
-          <a>My Events:</a>
+          <a>My Slaps:</a>
           <ul className="p-2">
             <li><a>Posted</a></li>
             <li><a>Wishes</a></li>
@@ -19,12 +23,18 @@ function Navbar() {
         <li><a>Item 3</a></li>
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">EventKick</a>
+    <Link to="/"> 
+    <a className="btn btn-ghost text-xl">EventSlap</a>
+    </Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
+      <Link to="/login"> 
       <li><a>Login</a></li>
-      <li><a>Sign In</a></li>
+      </Link>
+      <Link to="/signup"> 
+      <li><a>Sign Up</a></li>
+      </Link>
       <li>
         <details>
           <summary>My Events</summary>
@@ -34,9 +44,26 @@ function Navbar() {
           </ul>
         </details>
       </li>
+      <Link to="/events"> 
       <li><a>Events</a></li>
+      </Link>
+      <Link to="/venues"> 
       <li><a>Venues</a></li>
+      </Link>
       <li><a>Free Events</a></li>
+      <li>
+        <details>
+          <summary>Add</summary>
+          <ul className="p-2">
+          <Link to="/events/add"> 
+            <li><a>Events</a></li>
+            </Link>
+            <Link to="/venues/add"> 
+            <li><a>Venues</a></li>
+            </Link>
+          </ul>
+        </details>
+      </li>
     </ul>
   </div>
   <div className="navbar-end">
