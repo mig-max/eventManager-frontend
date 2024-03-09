@@ -7,6 +7,11 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  //extra fields
+  const [username, setUsername] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [about, setAbout] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,6 +26,16 @@ function SignupPage() {
   const handleName = (event) => {
     setName(event.target.value);
   };
+  //extra fields
+  const handleUsername = (event) => {
+    setUsername(event.target.value);
+  }
+  const handleAvatar = (event) => {
+    setAvatar(event.target.value);
+  }
+  const handleAbout = (event) => {
+    setAbout(event.target.value);
+  }
 
   const handleSignupSubmit = (event) => {
     event.preventDefault();
@@ -31,6 +46,9 @@ function SignupPage() {
       email: email,
       password: password,
       name: name,
+      username: username,
+      avatar: avatar,
+      about: about,
     };
 
     authService
@@ -83,6 +101,39 @@ function SignupPage() {
           placeholder="Your name"
           value={name} 
           onChange={handleName} />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+          </label>
+
+          <label className="input input-bordered flex items-center gap-">
+        Username:
+        <input 
+          type="text" 
+          name="username" 
+          placeholder="Your username"
+          value={username} 
+          onChange={handleUsername} />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+          </label>
+
+          <label className="input input-bordered flex items-center gap-">
+        Avatar:
+        <input 
+          type="text" 
+          name="avatar" 
+          placeholder="Your avatar"
+          value={avatar} 
+          onChange={handleAvatar} />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+          </label>
+
+          <label className="input input-bordered flex items-center gap-">
+        About:
+        <input 
+          type="text" 
+          name="about" 
+          placeholder="About you"
+          value={about} 
+          onChange={handleAbout} />
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
           </label>
 
