@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
-import HomePage from './pages/HomePage';
+
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
 
+import HomePage from './pages/HomePage';
 import EventListPage from "./pages/EventListPage";
 import AddEvent from "./components/AddEvent";
 import EventDetailsPage from "./pages/EventDetailsPage";
@@ -18,6 +19,8 @@ import EditVenue from "./pages/EditVenuePage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+import IsLoggedIn from "./components/IsLoggedIn";
+import IsAnon from "./components/IsAnon";
 
 function App() {
   return (
@@ -28,18 +31,18 @@ function App() {
       <Routes>
 
         <Route path='/' element={<HomePage />} />
-        <Route path='/signup' element={<SignupPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path="/user" element={<ProfilePage />} />
-        <Route path='/users/:userId' element={<ProfilePage />} />
+        <Route path='/signup' element={ <IsAnon> <SignupPage/> </IsAnon>} />
+        <Route path='/login' element={ <IsAnon>  <LoginPage/> </IsAnon> } />
+        <Route path="/user" element={ <IsLoggedIn> <ProfilePage/> </IsLoggedIn> } />
+      
         <Route path='/events' element={<EventListPage />} />
-        <Route path='/events/add' element={<AddEvent />} />
-        <Route path='/events/:eventId' element={<EventDetailsPage />} />
-        <Route path='/events/:eventId/edit' element={<EditEvent />} />
+        <Route path='/events/add' element={<IsLoggedIn> <AddEvent/> </IsLoggedIn> } />
+        <Route path='/events/:eventId' element={ <EventDetailsPage/> } />
+        <Route path='/events/:eventId/edit' element={ <IsLoggedIn> <EditEvent/> </IsLoggedIn>} />
         <Route path='/venues' element={<VenuePage />} />
-        <Route path='/venues/add' element={<AddVenue />} />
+        <Route path='/venues/add' element={<IsLoggedIn> <AddVenue /> </IsLoggedIn> } />
         <Route path='/venues/:venueId' element={<VenueDetailsPage />} />
-        <Route path='/venues/:venueId/edit' element={<EditVenue />} />
+        <Route path='/venues/:venueId/edit' element={ <IsLoggedIn> <EditVenue /> </IsLoggedIn> } />
 
       </Routes>
 

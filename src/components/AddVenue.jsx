@@ -4,18 +4,16 @@ import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
 
-function AddVenue(props) {
+function AddVenue() {
   const [name, setName] = useState("");
   const [venueType, setVenueType] = useState("Outdoor");
   const [address, setAddress] = useState("");
-  const [capacity, setCapacity] = useState(1);
+  const [capacity, setCapacity] = useState(2); 
   const [isFoodAvailable, setIsFoodAvailable] = useState(false);
   const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-
   const [selectedEvent, setSelectedEvent] = useState("");
   const [events, setEvents] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +30,11 @@ function AddVenue(props) {
   function handleFormSubmit(event) {
     event.preventDefault();
 
+    if (!selectedEvent) {
+      alert("Please select an event");
+      return;
+    }
+
     const requestBody = {
       name,
       venueType,
@@ -40,7 +43,7 @@ function AddVenue(props) {
       isFoodAvailable,
       isDrinksAvailable,
       imageUrl,
-      event: selectedEvent._id,
+      event: selectedEvent,
     };
 
     venuesService
@@ -48,14 +51,14 @@ function AddVenue(props) {
       .then((response) => {
         console.log(response);
         setName("");
-        setVenueType("");
+        setVenueType("Outdoor");
         setAddress("");
-        setCapacity(0);
+        setCapacity(2);
         setIsFoodAvailable(false);
         setIsDrinksAvailable(false);
         setImageUrl("");
-
-        props.refreshVenues();
+        setSelectedEvent("");
+        navigate("/venues");
       })
       .catch((error) => {
         console.log(error);
@@ -94,6 +97,7 @@ function AddVenue(props) {
           required
           type="text"
           name="address"
+          placeholder="Venue Address"
           value={address}
           onChange={(event) => setAddress(event.target.value)}
         />
@@ -102,14 +106,15 @@ function AddVenue(props) {
         <input
           type="number"
           name="capacity"
-          min="1"
+          placeholder="2"
+          min="2"
+          step="1"
           value={capacity}
           onChange={(event) => setCapacity(event.target.value)}
         />
 
         <label>Is Food Available: </label>
         <input
-          required
           type="checkbox"
           name="isFoodAvailable"
           checked={isFoodAvailable}
@@ -118,7 +123,6 @@ function AddVenue(props) {
 
         <label>Is Drinks Available: </label>
         <input
-          required
           type="checkbox"
           name="isDrinksAvailable"
           checked={isDrinksAvailable}
@@ -139,7 +143,8 @@ function AddVenue(props) {
           value={selectedEvent}
           onChange={(event) => setSelectedEvent(event.target.value)}
         >
-          {events.map((event) => ( 
+          <option value="">Select Event</option>
+          {events.map((event) => (
             <option key={event._id} value={event._id}>
               {event.title}
             </option>
