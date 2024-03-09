@@ -37,10 +37,12 @@ function Navbar() {
       </Link>
       <li>
         <details>
-          <summary>My Events</summary>
-          <ul className="p-2">
-            <li><a>Posted</a></li>
-            <li><a>Wishes</a></li>
+          <summary>My Slaps</summary>
+          <ul className="p-2 text-align: center">
+            <li><a>Profile</a></li>
+            <li><a>Events</a></li>
+            <li><a>Venues</a></li>
+            <li><a>Favorites</a></li>
           </ul>
         </details>
       </li>

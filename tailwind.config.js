@@ -8,7 +8,7 @@ export default {
     'node_modules/react-daisyui/dist/**/*.js',
   ],
   
-  plugins: [require('daisyui')],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
 
   daisyui: {
     themes: ["garden", "coffee", "dim"],
