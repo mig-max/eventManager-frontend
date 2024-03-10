@@ -1,23 +1,19 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Button } from 'react-daisyui';
-import authService from "../services/auth.service";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook from react-router-dom
+import { useNavigate } from "react-router-dom"; 
 
 function ProfilePage() {
-    const { user, setUser } = useContext(AuthContext); // Assuming you have setUser function in your context
-    const navigate = useNavigate(); // Initialize navigate function using useNavigate hook
+    const { user, logOutUser } = useContext(AuthContext); 
+
+    const [isLoggingOut, setIsLoggingOut] = useState(false); 
+
+    const navigate = useNavigate(); 
+
 
     const handleLogout = () => {
-        authService.logout() // Call the logout function from your authentication service
-            .then(() => {
-                setUser(null); // Clear the user context
-                navigate("/"); // Redirect the user to the login page using navigate function
-            })
-            .catch(error => {
-                console.error("Logout error:", error);
-                // Handle logout error if needed
-            });
+        logOutUser();
+        navigate("/"); 
     };
 
     if (!user) {
@@ -31,7 +27,7 @@ function ProfilePage() {
                 <h2 className="text-lg font-semibold mb-2">Email:</h2>
                 <p>{user.email}</p>
             </div>
-            {/* Additional user details */}
+    
             {user.username && (
                 <div className="mb-4">
                     <h2 className="text-lg font-semibold mb-2">Username:</h2>
@@ -50,9 +46,13 @@ function ProfilePage() {
                     <p>{user.about}</p>
                 </div>
             )}
-            {/* Add a button to log out */}
-            <Button className="btn btn-active btn-primary" onClick={handleLogout}>
-                Logout
+         
+            <Button
+                className="btn btn-active btn-primary"
+                onClick={handleLogout}
+                disabled={isLoggingOut} 
+            >
+                {isLoggingOut ? "Logging Out..." : "Logout"}
             </Button>
         </div>
     );

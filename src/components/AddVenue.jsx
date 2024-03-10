@@ -1,14 +1,24 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
+import {
+  Box,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Button,
+  Select,
+  Spacer,
+} from "@chakra-ui/react";
 
 function AddVenue() {
   const [name, setName] = useState("");
   const [venueType, setVenueType] = useState("");
   const [address, setAddress] = useState("");
-  const [capacity, setCapacity] = useState(2); 
+  const [capacity, setCapacity] = useState(2);
   const [isFoodAvailable, setIsFoodAvailable] = useState(false);
   const [isDrinksAvailable, setIsDrinksAvailable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -66,99 +76,125 @@ function AddVenue() {
   }
 
   return (
-    <div>
+    <Box
+      mt={8}
+      mx="auto"
+      p={8}
+      maxW="500px"
+      borderWidth="1px"
+      borderRadius="lg"
+      boxShadow="lg"
+      bgColor="white"
+    >
       <h1>Add New Venue</h1>
 
       <form onSubmit={handleFormSubmit}>
-        <label>Name: </label>
-        <input
-          required
-          type="text"
-          name="name"
-          placeholder="Venue Name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
+        <VStack spacing={4} align="stretch">
+          <FormControl>
+            <FormLabel>Name</FormLabel>
+            <Input
+              required
+              type="text"
+              name="name"
+              placeholder="Venue Name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Venue Type: </label>
-        <select
-          required
-          name="venueType"
-          value={venueType}
-          onChange={(event) => setVenueType(event.target.value)}
-        >
-          <option value="" disabled>Select Venue type:</option>
-          <option value="Indoor">Indoor</option>
-          <option value="Outdoor">Outdoor</option>
-          <option value="Other">Other</option>
-        </select>
+          <FormControl>
+            <FormLabel>Venue Type</FormLabel>
+            <Select
+              required
+              name="venueType"
+              value={venueType}
+              onChange={(event) => setVenueType(event.target.value)}
+            >
+              <option value="">Select Venue type</option>
+              <option value="Indoor">Indoor</option>
+              <option value="Outdoor">Outdoor</option>
+              <option value="Other">Other</option>
+            </Select>
+          </FormControl>
 
-        <label>Address: </label>
-        <input
-          required
-          type="text"
-          name="address"
-          placeholder="Venue Address"
-          value={address}
-          onChange={(event) => setAddress(event.target.value)}
-        />
+          <FormControl>
+            <FormLabel>Address</FormLabel>
+            <Input
+              required
+              type="text"
+              name="address"
+              placeholder="Venue Address"
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Capacity: </label>
-        <input
-          type="number"
-          name="capacity"
-          placeholder="2"
-          min="2"
-          step="1"
-          value={capacity}
-          onChange={(event) => setCapacity(event.target.value)}
-        />
+          <FormControl>
+            <FormLabel>Capacity</FormLabel>
+            <Input
+              type="number"
+              name="capacity"
+              placeholder="2"
+              min="2"
+              step="1"
+              value={capacity}
+              onChange={(event) => setCapacity(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Is Food Available: </label>
-        <input
-          type="checkbox"
-          name="isFoodAvailable"
-          checked={isFoodAvailable}
-          onChange={(event) => setIsFoodAvailable(event.target.checked)}
-        />
+          <FormControl>
+            <FormLabel>Is Food Available</FormLabel>
+            <Checkbox
+              name="isFoodAvailable"
+              isChecked={isFoodAvailable}
+              onChange={(event) => setIsFoodAvailable(event.target.checked)}
+            />
+          </FormControl>
 
-        <label>Is Drinks Available: </label>
-        <input
-          type="checkbox"
-          name="isDrinksAvailable"
-          checked={isDrinksAvailable}
-          onChange={(event) => setIsDrinksAvailable(event.target.checked)}
-        />
+          <FormControl>
+            <FormLabel>Is Drinks Available</FormLabel>
+            <Checkbox
+              name="isDrinksAvailable"
+              isChecked={isDrinksAvailable}
+              onChange={(event) => setIsDrinksAvailable(event.target.checked)}
+            />
+          </FormControl>
 
-        <label>Image URL: </label>
-        <input
-          type="url"
-          name="imageUrl"
-          value={imageUrl}
-          onChange={(event) => setImageUrl(event.target.value)}
-        />
+          <FormControl>
+            <FormLabel>Image URL</FormLabel>
+            <Input
+              type="url"
+              name="imageUrl"
+              value={imageUrl}
+              onChange={(event) => setImageUrl(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Events:</label>
-        <select
-          name="event"
-          value={selectedEvent}
-          onChange={(event) => setSelectedEvent(event.target.value)}
-        >
-          <option value="" disabled>Select Event:</option>
-          {events.map((event) => (
-            <option key={event._id} value={event._id}>
-              {event.title}
-            </option>
-          ))}
-        </select>
+          <FormControl>
+            <FormLabel>Events</FormLabel>
+            <Select
+              name="event"
+              value={selectedEvent}
+              onChange={(event) => setSelectedEvent(event.target.value)}
+            >
+              <option value="">Select Event</option>
+              {events.map((event) => (
+                <option key={event._id} value={event._id}>
+                  {event.title}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
 
-        <Link to="/events/add">Create New Event</Link>
+          <Link to="/events/add">Create New Event</Link>
 
-        <button type="submit">Add Venue</button>
+          <Spacer />
 
-        <button onClick={() => navigate("/")}>Cancel</button>
+          <Button type="submit">Add Venue</Button>
+          <Button onClick={() => navigate("/")}>Cancel</Button>
+        </VStack>
       </form>
-    </div>
+    </Box>
   );
 }
 

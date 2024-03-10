@@ -1,9 +1,21 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
+import {
+  Box,
+  VStack,
+  HStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  Select,
+  Checkbox,
+  Button,
+  Spacer,
+} from "@chakra-ui/react";
 
 function AddEvent() {
   const { eventId } = useParams();
@@ -16,17 +28,15 @@ function AddEvent() {
   const [isFree, setIsFree] = useState(false);
   const [price, setPrice] = useState(1);
   const [imageUrl, setImageUrl] = useState("");
-
   const [selectedVenue, setSelectedVenue] = useState("");
-  const [venues, setVenue] = useState([]);
-
+  const [venues, setVenues] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     venuesService
       .getAllVenues()
       .then((response) => {
-        setVenue(response.data);
+        setVenues(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +50,6 @@ function AddEvent() {
           setTitle(event.title);
           setEventType(event.eventType[0]);
           setDescription(event.description);
-          // Set the initial state of time to the current value of event's date
           setTime(event.time);
           setIsEighteen(event.isEighteen);
           setIsFree(event.isFree);
@@ -54,7 +63,6 @@ function AddEvent() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    //const selectedDate = new Date(e.target.elements.time.value);
     const requestBody = {
       title,
       eventType: [eventType],
@@ -64,7 +72,7 @@ function AddEvent() {
       isFree,
       imageUrl,
       price,
-      venue: selectedVenue._id,
+      venue: selectedVenue,
     };
 
     eventsService
@@ -84,113 +92,145 @@ function AddEvent() {
   };
 
   return (
-    <div className="AddEvent">
+    <Box
+      mt={8}
+      mx="auto"
+      p={8}
+      maxW="500px"
+      borderWidth="1px"
+      borderRadius="lg"
+      boxShadow="lg"
+      bgColor="white"
+    >
       <h1>{eventId ? "Edit Event" : "Add Event"}</h1>
 
       <form onSubmit={handleFormSubmit}>
-        <label>Title:</label>
-        <input
-          required
-          type="text"
-          name="title"
-          placeholder="Enter title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
+        <VStack spacing={4} align="stretch">
+          <FormControl>
+            <FormLabel>Title</FormLabel>
+            <Input
+              required
+              type="text"
+              name="title"
+              placeholder="Enter title"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Event type:</label>
-        <select
-          required
-          name="eventType"
-          value={eventType}
-          onChange={(event) => setEventType(event.target.value)}
-        >
-          <option value="">Select event type</option>
-          <option value="Concert">Concert</option>
-          <option value="Exhibition">Exhibition</option>
-          <option value="Market">Market</option>
-          <option value="Party">Party</option>
-          <option value="Theatre">Theatre</option>
-          <option value="Other">Other</option>
-        </select>
+          <FormControl>
+            <FormLabel>Event Type</FormLabel>
+            <Select
+              required
+              name="eventType"
+              value={eventType}
+              onChange={(event) => setEventType(event.target.value)}
+            >
+              <option value="">Select event type</option>
+              <option value="Concert">Concert</option>
+              <option value="Exhibition">Exhibition</option>
+              <option value="Market">Market</option>
+              <option value="Party">Party</option>
+              <option value="Theatre">Theatre</option>
+              <option value="Other">Other</option>
+            </Select>
+          </FormControl>
 
-        <label>Description:</label>
-        <input
-          required
-          type="text"
-          name="description"
-          placeholder="Enter description"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          
-        />
+          <FormControl>
+            <FormLabel>Description</FormLabel>
+            <Textarea
+              required
+              name="description"
+              placeholder="Enter description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Date:</label>
-        <input
-          required
-          type="date"
-          name="time"
-          value={time}
-          onChange={(event) => setTime(event.target.value)}
-        />
+          <FormControl>
+            <FormLabel>Date</FormLabel>
+            <Input
+              required
+              type="date"
+              name="time"
+              value={time}
+              onChange={(event) => setTime(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Is eighteen:</label>
-        <input
-          type="checkbox"
-          name="isEighteen"
-          value={isEighteen}
-          onChange={(event) => setIsEighteen(event.target.checked)}
-        />
+          <FormControl>
+            <FormLabel>Is Eighteen</FormLabel>
+            <Checkbox
+              colorScheme="blue"
+              name="isEighteen"
+              isChecked={isEighteen}
+              onChange={(event) => setIsEighteen(event.target.checked)}
+            />
+          </FormControl>
 
-        <label>Is Free:</label>
-        <input
-          type="checkbox"
-          name="isFree"
-          value={isFree}
-          onChange={(event) => setIsFree(event.target.checked)}
-        />
+          <FormControl>
+            <FormLabel>Is Free</FormLabel>
+            <Checkbox
+              colorScheme="blue"
+              name="isFree"
+              isChecked={isFree}
+              onChange={(event) => setIsFree(event.target.checked)}
+            />
+          </FormControl>
 
-        <label>Price:</label>
-        <input
-          type="number"
-          name="price"
-          placeholder="1"
-          min="1"
-          step=".50"
-          value={price}
-          onChange={(event) => setPrice(event.target.value)}
-        />
+          {!isFree && (
+            <FormControl>
+              <FormLabel>Price</FormLabel>
+              <Input
+                type="number"
+                name="price"
+                placeholder="1"
+                min="1"
+                step=".50"
+                value={price}
+                onChange={(event) => setPrice(event.target.value)}
+              />
+            </FormControl>
+          )}
 
-        <label>Image URL:</label>
-        <input
-          type="text"
-          name="imageUrl"
-          value={imageUrl}
-          onChange={(event) => setImageUrl(event.target.value)}
-        />
+          <FormControl>
+            <FormLabel>Image URL</FormLabel>
+            <Input
+              type="text"
+              name="imageUrl"
+              value={imageUrl}
+              onChange={(event) => setImageUrl(event.target.value)}
+            />
+          </FormControl>
 
-        <label>Venue:</label>
-        <select
-          name="venue"
-          value={selectedVenue}
-          onChange={(event) => setSelectedVenue(event.target.value)}
-          required
-        >
-         <option value="">Selec Venue</option>
-          {venues.map((venue) => (
-            <option key={venue._id} value={venue._id}>
-              {venue.name}
-            </option>
-          ))}
-        </select>
+          <FormControl>
+            <FormLabel>Venue</FormLabel>
+            <Select
+              name="venue"
+              value={selectedVenue}
+              onChange={(event) => setSelectedVenue(event.target.value)}
+              required
+            >
+              <option value="">Select Venue</option>
+              {venues.map((venue) => (
+                <option key={venue._id} value={venue._id}>
+                  {venue.name}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
 
-        <Link to="/venues/add">Create New Venue</Link>
+          <Spacer />
 
-        <button type="submit">{eventId ? "Update Event" : "Add Event"}</button>
+          <Link to="/venues/add">Create New Venue</Link>
 
-        <button onClick={() => navigate("/events")}>Cancel</button>
+          <HStack>
+            <Button type="submit">{eventId ? "Update Event" : "Add Event"}</Button>
+            <Button onClick={() => navigate("/events")}>Cancel</Button>
+          </HStack>
+        </VStack>
       </form>
-    </div>
+    </Box>
   );
 }
 

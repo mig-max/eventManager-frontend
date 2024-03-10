@@ -42,6 +42,12 @@ class EventsService {
       deleteEvent = (eventId) => {
         return this.api.delete(`/events/${eventId}`);
       };
+
+      // GET /events/date/:date
+      getEventsForDate = (date) => {
+        return this.api.get(`/events/date/${date}`);
+     };
+
     }
 
     const eventsService = new EventsService();

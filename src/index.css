@@ -8,24 +8,19 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
 
 body {
-  margin:  0 auto;
-  padding: 0 ;
-  overflow-x: hidden;
-  box-sizing: border-box;
-  background: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f0f0; /* Your desired background color */
 }
 
-/* ================================================================= */
+.slick-slider {
+  margin: 0 auto;
+}
 
-
+.slick-slide {
+  padding: 0 20px; /* Adjust the padding as needed */
+}

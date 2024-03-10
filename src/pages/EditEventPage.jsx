@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
@@ -71,112 +70,140 @@ function EditEventPage() {
   };
 
   return (
-    <div>
-      <h1>Edit Event</h1>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
+        <h1>Edit Event</h1>
+        <form onSubmit={handleFormSubmit}>
+          {/* Form inputs for editing event */}
+          <label>Title:</label>
+          <input
+            required
+            placeholder="Enter event title"
+            type="text"
+            name="title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
 
-      <form onSubmit={handleFormSubmit}>
-        {/* Form inputs for editing event */}
-        <label>Title:</label>
-        <input
-          required
-          placeholder="Enter event title"
-          type="text"
-          name="title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
+          {/* EventType */}
+          <label>Event type::</label>
+          <select
+            required
+            name="eventType"
+            value={eventType}
+            onChange={(event) => setEventType(event.target.value)}
+          >
+            <option value="">Select event type</option>
+            <option value="Concert">Concert</option>
+            <option value="Exhibition">Exhibition</option>
+            <option value="Market">Market</option>
+            <option value="Party">Party</option>
+            <option value="Theatre">Theatre</option>
+            <option value="Other">Other</option>
+          </select>
 
-        <label>Event type::</label>
-        <select
-          required
-          name="eventType"
-          value={eventType}
-          onChange={(event) => setEventType(event.target.value)}
-        >
-          <option value="">Select event type</option>
-          <option value="Concert">Concert</option>
-          <option value="Exhibition">Exhibition</option>
-          <option value="Market">Market</option>
-          <option value="Party">Party</option>
-          <option value="Theatre">Theatre</option>
-          <option value="Other">Other</option>
-        </select>
+          {/* Other form fields */}
+          {/* Description */}
+          <div>
+            <label htmlFor="description" className="block font-medium">Description:</label>
+            <input
+              type="text"
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
 
-        <label>Description:</label>
-        <input
-          type="text"
-          name="description"
-          placeholder="Enter event description"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          required
-        />
+          {/* Time */}
+          <div>
+            <label htmlFor="time" className="block font-medium">Date:</label>
+            <input
+              type="date"
+              id="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
 
-        <label>Date:</label>
-        <input
-          required
-          type="date"
-          name="time"
-          value={time}
-          onChange={(event) => setTime(event.target.value)}
-        />
+          {/* Is Eighteen */}
+          <div>
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                checked={isEighteen}
+                onChange={(e) => setIsEighteen(e.target.checked)}
+                className="form-checkbox text-blue-500 focus:ring-blue-500 h-4 w-4"
+              />
+              <span className="ml-2">Is Eighteen</span>
+            </label>
+          </div>
 
-        <label>Is eighteen:</label>
-        <input
-          type="checkbox"
-          name="isEighteen"
-          checked={isEighteen}
-          onChange={(event) => setIsEighteen(event.target.checked)}
-        />
+          {/* Is Free */}
+          <div>
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                checked={isFree}
+                onChange={(e) => setIsFree(e.target.checked)}
+                className="form-checkbox text-blue-500 focus:ring-blue-500 h-4 w-4"
+              />
+              <span className="ml-2">Is Free</span>
+            </label>
+          </div>
 
-        <label>Is Free:</label>
-        <input
-          type="checkbox"
-          name="isFree"
-          checked={isFree}
-          onChange={(event) => setIsFree(event.target.checked)}
-        />
+          {/* Price */}
+          <div>
+            <label htmlFor="price" className="block font-medium">Price:</label>
+            <input
+              type="number"
+              id="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
 
-        <label>Price:</label>
-        <input
-          type="number"
-          name="price"
-          placeholder="1"
-          min="1"
-          step=".50"
-          value={price}
-          onChange={(event) => setPrice(event.target.value)}
-        />
+          {/* Image URL */}
+          <div>
+            <label htmlFor="imageUrl" className="block font-medium">Image URL:</label>
+            <input
+              type="text"
+              id="imageUrl"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
-        <label>Image URL:</label>
-        <input
-          type="text"
-          name="imageUrl"
-          value={imageUrl}
-          onChange={(event) => setImageUrl(event.target.value)}
-        />
+          {/* Venue */}
+          <div>
+            <label htmlFor="venue" className="block font-medium">Venue:</label>
+            <select
+              id="venue"
+              value={selectedVenue}
+              onChange={(e) => setSelectedVenue(e.target.value)}
+              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              required
+            >
+              <option value="">Select Venue</option>
+              {venues.map((venue) => (
+                <option key={venue._id} value={venue._id}>{venue.name}</option>
+              ))}
+            </select>
+          </div>
 
-        <label>Venue:</label>
-        <select
-          name="venue"
-          value={selectedVenue}
-          onChange={(event) => setSelectedVenue(event.target.value)}
-          required
-        >
-          <option value="">Selec Venue</option>
-          {venues.map((venue) => (
-            <option key={venue._id} value={venue._id}>
-              {venue.name}
-            </option>
-          ))}
-        </select>
+          <Link to="/venues/add">Create New Venue</Link>
 
-        <Link to="/venues/add">Create New Venue</Link>
+          <button type="submit">Update Event</button>
 
-        <button type="submit">Update Event</button>
-
-        <button onClick={() => navigate("/")}>Cancel</button>
-      </form>
+          <button onClick={() => navigate("/")}>Cancel</button>
+        </form>
+      </div>
     </div>
   );
 }
