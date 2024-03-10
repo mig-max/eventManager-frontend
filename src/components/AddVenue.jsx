@@ -6,7 +6,7 @@ import eventsService from "../services/events.service";
 
 function AddVenue() {
   const [name, setName] = useState("");
-  const [venueType, setVenueType] = useState("Outdoor");
+  const [venueType, setVenueType] = useState("");
   const [address, setAddress] = useState("");
   const [capacity, setCapacity] = useState(2); 
   const [isFoodAvailable, setIsFoodAvailable] = useState(false);
@@ -87,8 +87,9 @@ function AddVenue() {
           value={venueType}
           onChange={(event) => setVenueType(event.target.value)}
         >
-          <option value="Outdoor">Outdoor</option>
+          <option value="" disabled>Select Venue type:</option>
           <option value="Indoor">Indoor</option>
+          <option value="Outdoor">Outdoor</option>
           <option value="Other">Other</option>
         </select>
 
@@ -143,7 +144,7 @@ function AddVenue() {
           value={selectedEvent}
           onChange={(event) => setSelectedEvent(event.target.value)}
         >
-          <option value="">Select Event</option>
+          <option value="" disabled>Select Event:</option>
           {events.map((event) => (
             <option key={event._id} value={event._id}>
               {event.title}

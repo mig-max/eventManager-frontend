@@ -73,7 +73,7 @@ function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to="/find-events" className="btn">Find Events</Link>
+        <Link to="/find" className="btn">Find Events</Link>
       </div>
     </div>
   );

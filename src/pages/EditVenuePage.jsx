@@ -6,7 +6,7 @@ import venuesService from "../services/venue.service";
 
 function EditVenue() {
   const [name, setName] = useState("");
-  const [venueType, setVenueType] = useState("Outdoor");
+  const [venueType, setVenueType] = useState("");
   const [address, setAddress] = useState("");
   const [capacity, setCapacity] = useState(1);
   const [isFoodAvailable, setIsFoodAvailable] = useState(false);
@@ -91,6 +91,7 @@ function EditVenue() {
             value={venueType}
             onChange={(event) => setVenueType(event.target.value)}
           >
+            <option value="" disabled>Select Venue type:</option>
             <option value="Outdoor">Outdoor</option>
             <option value="Indoor">Indoor</option>
             <option value="Other">Other</option>
@@ -159,7 +160,7 @@ function EditVenue() {
             value={selectedEvent}
             onChange={(event) => setSelectedEvent(event.target.value)}
           >
-            <option value="">Select Event</option>
+            <option value="" disabled>Select Event:</option>
             {events.map((event) => (
               <option key={event._id} value={event._id}>
                 {event.title}
