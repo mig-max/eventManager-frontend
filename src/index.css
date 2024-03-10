@@ -10,17 +10,41 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: whitesmoke
 }
 
 
-body {
-  background-color: #f0f0f0; /* Your desired background color */
-}
 
+/* light theme */
+.light-theme {
+    --bg-color: white;
+    --text-color: black;
+  }
+  
+  /* dark theme */
+  .dark-theme {
+    --bg-color: black;
+    --text-color: white;
+  }
+  
+
+  
 .slick-slider {
-  margin: 0 auto;
+  margin-top: 120px
 }
 
 .slick-slide {
-  padding: 0 20px; /* Adjust the padding as needed */
+  padding: 0 20px; 
+}
+
+.slick-arrow {
+  
+
 }

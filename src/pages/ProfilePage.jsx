@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Button } from 'react-daisyui';
@@ -5,11 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
     const { user, logOutUser } = useContext(AuthContext); 
-
     const [isLoggingOut, setIsLoggingOut] = useState(false); 
-
     const navigate = useNavigate(); 
-
 
     const handleLogout = () => {
         logOutUser();
@@ -19,6 +17,7 @@ function ProfilePage() {
     if (!user) {
         return <div>Loading...</div>;
     }
+    console.log(user);
 
     return (
         <div className="ProfilePage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">

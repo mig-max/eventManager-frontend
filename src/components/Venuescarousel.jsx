@@ -4,8 +4,24 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import VenueSummary from './VenueSummary';
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+
 
 const VenuesCarousel = ({ venues }) => {
+
+  const PrevArrow = (props) => {
+    const { onClick } = props;
+    return <FaArrowAltCircleLeft className="slick-arrow prev-arrow" onClick={onClick} />;
+  };
+
+
+  const NextArrow = (props) => {
+    const { onClick } = props;
+    return <FaArrowAltCircleRight className="slick-arrow next-arrow" onClick={onClick} />;
+  };
+
+
+
   const settings = {
     dots: true,
     infinite: true,
@@ -14,6 +30,9 @@ const VenuesCarousel = ({ venues }) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    draggable: true, 
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     responsive: [
       {
         breakpoint: 1024,

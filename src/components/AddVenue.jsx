@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
 import {
-  Box,
   VStack,
   FormControl,
   FormLabel,
@@ -76,16 +75,9 @@ function AddVenue() {
   }
 
   return (
-    <Box
-      mt={8}
-      mx="auto"
-      p={8}
-      maxW="500px"
-      borderWidth="1px"
-      borderRadius="lg"
-      boxShadow="lg"
-      bgColor="white"
-    >
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
+    
       <h1>Add New Venue</h1>
 
       <form onSubmit={handleFormSubmit}>
@@ -194,7 +186,9 @@ function AddVenue() {
           <Button onClick={() => navigate("/")}>Cancel</Button>
         </VStack>
       </form>
-    </Box>
+      </div>
+      </div>
+    
   );
 }
 

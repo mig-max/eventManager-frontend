@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
 import {
-  Box,
   VStack,
   HStack,
   FormControl,
@@ -26,7 +25,7 @@ function AddEvent() {
   const [time, setTime] = useState("");
   const [isEighteen, setIsEighteen] = useState(false);
   const [isFree, setIsFree] = useState(false);
-  const [price, setPrice] = useState(1);
+  const [price, setPrice] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
@@ -80,7 +79,7 @@ function AddEvent() {
       .then((response) => {
         console.log(response);
         setTitle("");
-        setEventType("Concert");
+        setEventType("");
         setDescription("");
         setTime("");
         setIsEighteen(false);
@@ -92,16 +91,8 @@ function AddEvent() {
   };
 
   return (
-    <Box
-      mt={8}
-      mx="auto"
-      p={8}
-      maxW="500px"
-      borderWidth="1px"
-      borderRadius="lg"
-      boxShadow="lg"
-      bgColor="white"
-    >
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
       <h1>{eventId ? "Edit Event" : "Add Event"}</h1>
 
       <form onSubmit={handleFormSubmit}>
@@ -230,7 +221,9 @@ function AddEvent() {
           </HStack>
         </VStack>
       </form>
-    </Box>
+      </div>
+      </div>
+   
   );
 }
 

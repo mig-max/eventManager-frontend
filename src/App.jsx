@@ -16,7 +16,6 @@ import EventDetailsPage from "./pages/EventDetailsPage";
 import EditEvent from "./pages/EditEventPage";
 import FreeEventsPage from "./pages/FreeEventsPage";
 
-
 import VenuePage from "./pages/VenuePage";
 import VenueDetailsPage from "./pages/VenueDetailsPage";
 import AddVenue from "./components/AddVenue";
@@ -24,7 +23,7 @@ import EditVenue from "./pages/EditVenuePage";
 
 import Navbar from "./components/Navbar";
 import FindPage from "./pages/FindPage";
-//import Footer from "./components/Footer";
+import NotFoundPage from "./pages/NotFound";
 
 import IsLoggedIn from "./components/IsLoggedIn";
 import IsAnon from "./components/IsAnon";
@@ -55,7 +54,12 @@ function App() {
 
         <Route path='/find' element={<FindPage />} />
 
+        <Route path='*' element={<NotFoundPage />} />
+
+
+
       </Routes>
+
 
       
 

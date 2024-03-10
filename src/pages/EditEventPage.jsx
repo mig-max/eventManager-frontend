@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 
 function EditEventPage() {
   const { eventId } = useParams();
@@ -13,7 +21,7 @@ function EditEventPage() {
   const [time, setTime] = useState("");
   const [isEighteen, setIsEighteen] = useState(false);
   const [isFree, setIsFree] = useState(false);
-  const [price, setPrice] = useState(1);
+  const [price, setPrice] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [selectedVenue, setSelectedVenue] = useState(""); 
   const [venues, setVenues] = useState([]);
@@ -32,8 +40,9 @@ function EditEventPage() {
         setIsFree(event.isFree);
         setPrice(event.price);
         setImageUrl(event.imageUrl);
-        setSelectedVenue(event.venue._id); // Set selectedVenue state with the event's venue id
+        setSelectedVenue(event.venue._id); 
       })
+      
       .catch((error) => console.log(error));
 
     venuesService
@@ -57,11 +66,11 @@ function EditEventPage() {
       isFree,
       price,
       imageUrl,
-      venue: selectedVenue, // Use selectedVenue directly in the request body
+      venue: selectedVenue, 
     };
 
     eventsService
-      .updateEvent(eventId, requestBody) // Use eventId for updating the event
+      .updateEvent(eventId, requestBody) 
       .then((response) => {
         console.log(response);
         navigate("/events");
@@ -74,134 +83,116 @@ function EditEventPage() {
       <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
         <h1>Edit Event</h1>
         <form onSubmit={handleFormSubmit}>
-          {/* Form inputs for editing event */}
-          <label>Title:</label>
-          <input
-            required
-            placeholder="Enter event title"
-            type="text"
-            name="title"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-
-          {/* EventType */}
-          <label>Event type::</label>
-          <select
-            required
-            name="eventType"
-            value={eventType}
-            onChange={(event) => setEventType(event.target.value)}
-          >
-            <option value="">Select event type</option>
-            <option value="Concert">Concert</option>
-            <option value="Exhibition">Exhibition</option>
-            <option value="Market">Market</option>
-            <option value="Party">Party</option>
-            <option value="Theatre">Theatre</option>
-            <option value="Other">Other</option>
-          </select>
-
-          {/* Other form fields */}
-          {/* Description */}
-          <div>
-            <label htmlFor="description" className="block font-medium">Description:</label>
-            <input
+          <FormControl>
+            <FormLabel>Title</FormLabel>
+            <Input
+              required
+              placeholder="Enter event title"
               type="text"
-              id="description"
+              name="title"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+            />
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Event Type</FormLabel>
+            <Select
+              required
+              name="eventType"
+              value={eventType}
+              onChange={(event) => setEventType(event.target.value)}
+            >
+              <option value="">Select event type</option>
+              <option value="Concert">Concert</option>
+              <option value="Exhibition">Exhibition</option>
+              <option value="Market">Market</option>
+              <option value="Party">Party</option>
+              <option value="Theatre">Theatre</option>
+              <option value="Other">Other</option>
+            </Select>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Description</FormLabel>
+            <Input
+              required
+              placeholder="Enter description"
+              type="text"
+              name="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
-              required
+              onChange={(event) => setDescription(event.target.value)}
             />
-          </div>
+          </FormControl>
 
-          {/* Time */}
-          <div>
-            <label htmlFor="time" className="block font-medium">Date:</label>
-            <input
+          <FormControl>
+            <FormLabel>Date</FormLabel>
+            <Input
+              required
               type="date"
-              id="time"
+              name="time"
               value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
-              required
+              onChange={(event) => setTime(event.target.value)}
             />
-          </div>
+          </FormControl>
 
-          {/* Is Eighteen */}
-          <div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                checked={isEighteen}
-                onChange={(e) => setIsEighteen(e.target.checked)}
-                className="form-checkbox text-blue-500 focus:ring-blue-500 h-4 w-4"
-              />
-              <span className="ml-2">Is Eighteen</span>
-            </label>
-          </div>
+          <FormControl>
+            <FormLabel>Is Eighteen</FormLabel>
+            <Checkbox
+              isChecked={isEighteen}
+              onChange={(event) => setIsEighteen(event.target.checked)}
+            />
+          </FormControl>
 
-          {/* Is Free */}
-          <div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                checked={isFree}
-                onChange={(e) => setIsFree(e.target.checked)}
-                className="form-checkbox text-blue-500 focus:ring-blue-500 h-4 w-4"
-              />
-              <span className="ml-2">Is Free</span>
-            </label>
-          </div>
+          <FormControl>
+            <FormLabel>Is Free</FormLabel>
+            <Checkbox
+              isChecked={isFree}
+              onChange={(event) => setIsFree(event.target.checked)}
+            />
+          </FormControl>
 
-          {/* Price */}
-          <div>
-            <label htmlFor="price" className="block font-medium">Price:</label>
-            <input
+          <FormControl>
+            <FormLabel>Price</FormLabel>
+            <Input
               type="number"
-              id="price"
+              name="price"
+              placeholder="0"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
-              required
+              onChange={(event) => setPrice(event.target.value)}
             />
-          </div>
+          </FormControl>
 
-          {/* Image URL */}
-          <div>
-            <label htmlFor="imageUrl" className="block font-medium">Image URL:</label>
-            <input
+          <FormControl>
+            <FormLabel>Image URL</FormLabel>
+            <Input
               type="text"
-              id="imageUrl"
+              name="imageUrl"
               value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              onChange={(event) => setImageUrl(event.target.value)}
             />
-          </div>
+          </FormControl>
 
-          {/* Venue */}
-          <div>
-            <label htmlFor="venue" className="block font-medium">Venue:</label>
-            <select
-              id="venue"
+          <FormControl>
+            <FormLabel>Venue</FormLabel>
+            <Select
+              name="venue"
               value={selectedVenue}
-              onChange={(e) => setSelectedVenue(e.target.value)}
-              className="border-gray-300 rounded-md w-full py-2 px-3 mt-1 focus:outline-none focus:border-blue-500"
+              onChange={(event) => setSelectedVenue(event.target.value)}
               required
             >
               <option value="">Select Venue</option>
               {venues.map((venue) => (
                 <option key={venue._id} value={venue._id}>{venue.name}</option>
               ))}
-            </select>
-          </div>
+            </Select>
+          </FormControl>
 
           <Link to="/venues/add">Create New Venue</Link>
 
-          <button type="submit">Update Event</button>
+          <Button type="submit">Update Event</Button>
 
-          <button onClick={() => navigate("/")}>Cancel</button>
+          <Button onClick={() => navigate("/")}>Cancel</Button>
         </form>
       </div>
     </div>
