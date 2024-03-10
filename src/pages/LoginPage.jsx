@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
+import { Input, Button } from 'react-daisyui';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -67,35 +68,37 @@ function LoginPage() {
             
     };
     return (
-        <div className="LoginPage">
-            <h1>Login</h1>
-
-            <form onSubmit={handleLoginSubmit}>
-                <label>Email:</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="your@email.com"
-                    value={email} 
-                    onChange={handleEmail}
-                />
-
-                <label>Password:</label>
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="**********"
-                    value={password}
-                    onChange={handlePassword}
-                />
-
-                <button type="submit">Login</button>
-            </form>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            <p>Do not have an account yet?</p>
-            <Link to={"/signup"}>Sign Up</Link>
-        </div>
+        
+            <div className="LoginPage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
+                <h1 className="text-2xl font-bold mb-4">Login</h1>
+    
+                <form onSubmit={handleLoginSubmit}>
+                    <label className="block mb-2">Email:</label>
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={handleEmail}
+                    />
+    
+                    <label className="block mb-2">Password:</label>
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder="**********"
+                        value={password}
+                        onChange={handlePassword}
+                    />
+    
+                    <Button type="submit" className="btn mt-4">Login</Button>
+                </form>
+    
+                {errorMessage && <p className="error-message mt-4">{errorMessage}</p>}
+    
+                <p className="mt-4">Do not have an account yet?</p>
+                <Link to="/signup" className="text-blue-500">Sign Up</Link>
+            </div>
     );
 }
 
