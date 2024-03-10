@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import eventsService from '../services/events.service';
-import EventCard from '../components/EventCard'; // Assuming you have an EventCard component
-
+import EventCard from '../components/EventCard';
 const FreeEventsPage = () => {
     const [freeEvents, setFreeEvents] = useState([]);
     const [error, setError] = useState(null);
@@ -9,7 +8,7 @@ const FreeEventsPage = () => {
     useEffect(() => {
       const fetchFreeEvents = async () => {
         try {
-          const response = await eventsService.getAllEvents(); // Fetch all events
+          const response = await eventsService.getAllEvents(); 
           const filteredEvents = response.data.filter(event => event.isFree); // Filter free events
           setFreeEvents(filteredEvents); // Update state with free events
         } catch (error) {
@@ -24,7 +23,7 @@ const FreeEventsPage = () => {
     return (
       <div>
         <h2>Free Events</h2>
-        {error && <p>Error: {error}</p>} {/* Render error message if there's an error */}
+        {error && <p>Error: {error}</p>} 
         <div>
           {freeEvents.map(event => (
             <EventCard key={event._id} event={event} /> 
