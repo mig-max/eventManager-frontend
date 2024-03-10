@@ -13,6 +13,8 @@ import EventListPage from "./pages/EventListPage";
 import AddEvent from "./components/AddEvent";
 import EventDetailsPage from "./pages/EventDetailsPage";
 import EditEvent from "./pages/EditEventPage";
+import FreeEventsPage from "./pages/FreeEventsPage";
+
 
 import VenuePage from "./pages/VenuePage";
 import VenueDetailsPage from "./pages/VenueDetailsPage";
@@ -43,6 +45,7 @@ function App() {
         <Route path='/events/add' element={<IsLoggedIn> <AddEvent/> </IsLoggedIn> } />
         <Route path='/events/:eventId' element={ <EventDetailsPage/> } />
         <Route path='/events/:eventId/edit' element={ <IsLoggedIn> <EditEvent/> </IsLoggedIn>} />
+        <Route path='/events/free' element={<FreeEventsPage />} />
         
         <Route path='/venues' element={<VenuePage />} />
         <Route path='/venues/add' element={<IsLoggedIn> <AddVenue /> </IsLoggedIn> } />

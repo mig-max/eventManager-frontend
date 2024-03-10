@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,6 +16,7 @@ function EventListPage() {
         const fetchEvents = async () => {
             try {
                 const response = await eventsService.getAllEvents();
+                console.log("Response Object:", response); // Log the entire response object for debugging
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);

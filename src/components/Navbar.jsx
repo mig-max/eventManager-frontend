@@ -116,7 +116,7 @@ function Navbar() {
             <Link to="/venues">Venues</Link>
           </li>
           <li>
-            <a>Free Events</a>
+          <Link to="/events/free">Free</Link>
           </li>
           <li>
             <details>
