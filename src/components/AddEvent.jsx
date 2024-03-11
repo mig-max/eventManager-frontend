@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
+import { useContext } from "react";
+import { AuthContext} from "../context/auth.context";
 import {
   VStack,
   HStack,
@@ -29,7 +31,11 @@ function AddEvent() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
+
   const navigate = useNavigate();
+
+  const { user } = useContext(AuthContext)
+  const userId = user._id
 
   useEffect(() => {
     venuesService
@@ -73,12 +79,13 @@ function AddEvent() {
       price,
       venue: selectedVenue,
 
-      event: eventId,
+      user: userId,
     };
 
     eventsService
       .createEvent(requestBody)
       .then((response) => {
+        console.log("userId:", userId);
         console.log(response);
         setTitle("");
         setEventType("");

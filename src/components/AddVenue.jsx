@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
+import { useContext } from "react";
+import { AuthContext} from "../context/auth.context";
 import {
   VStack,
   FormControl,
@@ -23,7 +25,11 @@ function AddVenue() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [events, setEvents] = useState([]);
+
   const navigate = useNavigate();
+
+  const { user } = useContext(AuthContext)
+  const userId = user._id
 
   useEffect(() => {
     eventsService
@@ -50,11 +56,15 @@ function AddVenue() {
       isDrinksAvailable,
       imageUrl,
       event: eventValue,
+
+    
+      user: userId,
     };
 
     venuesService
       .createVenue(requestBody)
       .then((response) => {
+        console.log("userId:", userId);
         console.log(response);
         setName("");
         setVenueType("Outdoor");
@@ -64,6 +74,7 @@ function AddVenue() {
         setIsDrinksAvailable(false);
         setImageUrl("");
         setSelectedEvent("");
+
         navigate("/venues");
       })
       .catch((error) => {

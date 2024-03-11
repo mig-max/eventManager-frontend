@@ -48,6 +48,9 @@ function EditVenue() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+
+    const eventValue = selectedEvent ? selectedEvent : null;
+
     const requestBody = {
       name,
       venueType,
@@ -56,7 +59,7 @@ function EditVenue() {
       isFoodAvailable,
       isDrinksAvailable,
       imageUrl,
-      event: selectedEvent,
+      event: eventValue,
     };
     venuesService
       .updateVenue(venueId, requestBody)
