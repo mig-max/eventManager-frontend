@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "semantic-ui-react";
 import { Box, Heading, Button, Flex, Text } from "@chakra-ui/react";
@@ -11,9 +11,28 @@ function FindPage() {
   const [results, setResults] = useState([]);
   const [value, setValue] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [eventDates, setEventDates] = useState([]); 
   const navigate = useNavigate();
 
-  // SEARCH BAR:
+  // FETCH EVENT DATES:
+  useEffect(() => {
+    fetchEventDates(); // Fetch event dates when component mounts
+  }, []);
+
+  const fetchEventDates = async () => {
+    try {
+      setLoading(true);
+      const response = await eventsService.getAllEvents();
+      const eventDates = response.data.map(event => new Date(event.date)); // Extract event dates
+      setEventDates(eventDates);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error fetching events:", error);
+      setLoading(false);
+    }
+  };
+
+  // SEARCH BAR FUNCTIONS:
   const handleSearch = async (event, data) => {
     const searchValue = data.value;
     setValue(searchValue);
@@ -21,17 +40,16 @@ function FindPage() {
     try {
       setLoading(true);
       const response = await eventsService.getAllEvents();
-      const eventNames = response.data.map((event) => ({
+      const eventNames = response.data.map(event => ({
         id: event._id,
-        title: event.title, // Only retrieve the title
+        title: event.title,
       }));
 
-      const filteredResults = eventNames.filter((event) => {
+      const filteredResults = eventNames.filter(event => {
         const eventTitle = event.title.toLowerCase();
         const searchValueLower = searchValue.toLowerCase();
         const minSimilarLetters = 3;
 
-        // Count the number of similar letters
         let similarLettersCount = 0;
         for (let i = 0; i < eventTitle.length; i++) {
           if (searchValueLower.includes(eventTitle[i])) {
@@ -63,22 +81,34 @@ function FindPage() {
     }
   };
 
-  // CALENDAR:
+  // CALENDAR FUNCTIONS:
 
-  const handleDateChange = (date) => {
-    // Convert date to UTC format
-    const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(utcDate);
-    fetchEventsForDate(utcDate.toISOString());
+  // Shows a dot in the days with events
+  const tileContent = ( {date} ) => {
+    return eventDates.some(eventDate => isSameDay(date, eventDate)) ? <div className="event-dot"/> : null;
+  }
+
+  const isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   };
 
-  // get events for the selected date
-  const fetchEventsForDate = async (date) => {   
-    console.log(date);
+  const handleDateChange = async date => {
     try {
+      const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      setSelectedDate(utcDate);
       setLoading(true);
-      await eventsService.getEventsForDate(date);  
+      const response = await eventsService.getEventsForDate(utcDate.toISOString());
       setLoading(false);
+
+      if (response.data.length > 0) {
+        navigate(`/events/${response.data[0]._id}`);
+      } else {
+        console.log("No events found for the selected date.");
+      }
     } catch (error) {
       console.log("Error fetching events:", error);
       setLoading(false);
@@ -88,7 +118,6 @@ function FindPage() {
   return (
     <>
       {/* SEARCH BAR */}
-
       <Box
         p={8}
         bg="white"
@@ -104,6 +133,7 @@ function FindPage() {
         </Heading>
         <Flex direction="column" align="center" justify="center">
           <Search
+            className="search-bar"
             fluid
             size="large"
             minCharacters={3}
@@ -114,38 +144,48 @@ function FindPage() {
             results={results}
             value={value}
             noResultsMessage=" "
-            resultRenderer={(result) => (
-              <Button
-                variant="unstyled"
-                onClick={() => handleResultSelect(null, { result })}
-                _hover={{ cursor: "pointer" }}
-              >
+            resultRenderer={result => (
+              <Button variant="link" onClick={() => handleResultSelect(null, { result })} _hover={{ cursor: "pointer" }}>
                 <Text>{result.title}</Text>
               </Button>
             )}
           />
-
-          {/* CALENDAR */}
-
+        </Flex>
+      </Box>
+      
+      {/* CALENDAR */}
+      <Box
+        p={8}
+        bg="white"
+        rounded="lg"
+        boxShadow="md"
+        mt={8}
+        maxW="xl"
+        mx="auto"
+        marginTop="100px"
+      >
+        <Flex direction="column" align="center" justify="center">
           <Calendar
             onChange={handleDateChange}
             value={selectedDate}
             className="react-calendar"
+            tileContent={tileContent}
             style={{ margin: "0 auto" }}
           />
+          {loading ? (
+            <div>Loading...</div>
+          ) : results.length > 0 ? (
+            <ul>
+              {results.map(event => (
+                <li key={event.id}>{event.title}</li>
+              ))}
+            </ul>
+          ) : (
+            <div>No events found for the selected date.</div>
+          )}
+
+
         </Flex>
-        <Box mt={4} textAlign="center">
-          <Button
-            size="lg"
-            colorScheme="green"
-            onClick={() => navigate(`/events`)}
-          >
-            All Events
-          </Button>
-          <Button size="sm" colorScheme="black" onClick={() => navigate(`/`)}>
-            Home
-          </Button>
-        </Box>
       </Box>
     </>
   );

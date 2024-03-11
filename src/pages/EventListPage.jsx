@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Heading, Center, Badge } from "@chakra-ui/react";
+import { Box, Heading, Center} from "@chakra-ui/react";
 import eventsService from "../services/events.service";
 import EventsCarousel from "../components/EventsCarousel"; // Import the EventsCarousel component
 
@@ -23,13 +23,12 @@ function EventListPage() {
     }, []);
 
     return (
+        <div className="display-container">
         <Center>
             <Box w="90%" mt={8} px={{ base: 2, md: 4 }}>
-                <Badge colorScheme="purple" mb={4}>
-                    <Heading as="h1" size="lg">
-                        Events
-                    </Heading>
-                </Badge>
+                <Heading as='h1' size='4xl' noOfLines={1}>
+                    Events
+                </Heading>
                 {loading ? (
                     <p>Loading...</p>
                 ) : (
@@ -37,6 +36,7 @@ function EventListPage() {
                 )}
             </Box>
         </Center>
+        </div>
     );
 }
 

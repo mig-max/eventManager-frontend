@@ -3,11 +3,9 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
-
 function Navbar() {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-
 
   const handleLogout = () => {
     logOutUser();
@@ -49,24 +47,24 @@ function Navbar() {
             }`}
           >
             <li>
-              <a>Item 1</a>
+              <Link to="/user">Profile</Link>
             </li>
             <li>
               <a>My Slaps:</a>
               <ul className="p-2 text-align:center">
                 <li>
-                  <a>Events</a>
+                  <Link to="/events">Events</Link>
                 </li>
                 <li>
-                  <a>Venues</a>
+                  <Link to="/venues">Venues</Link>
                 </li>
                 <li>
-                  <a>Favorites</a>
+                  <Link to="/favorites">Favorites</Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a>Item 3</a>
+            <Link to="/events/free">Free</Link>
             </li>
           </ul>
         </div>
@@ -76,7 +74,7 @@ function Navbar() {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-        {!isLoggedIn ? (
+          {!isLoggedIn ? (
             <>
               <li>
                 <Link to="/login">Login</Link>
@@ -120,35 +118,38 @@ function Navbar() {
             <Link to="/venues">Venues</Link>
           </li>
           <li>
-          <Link to="/events/free">Free</Link>
+            <Link to="/events/free">Free</Link>
           </li>
           <>
-          {isLoggedIn && (
-          <li>
-            <details>
-              <summary>Add</summary>
-              <ul className="p-2">
-                <li>
-                  <Link to="/events/add">Events</Link>
-                </li>
-                <li>
-                  <Link to="/venues/add">Venues</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
-          )}
+            {isLoggedIn && (
+              <li>
+                <details>
+                  <summary>Add</summary>
+                  <ul className="p-2">
+                    <li>
+                      <Link to="/events/add">Events</Link>
+                    </li>
+                    <li>
+                      <Link to="/venues/add">Venues</Link>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            )}
           </>
         </ul>
       </div>
       <Link to="/find" className="btn">
-          Find Events
-        </Link>
+        Find Events
+      </Link>
       <div className="navbar-end">
-        
         <label className="flex cursor-pointer gap-2">
-        <input type="checkbox" value="dim" className="toggle theme-controller"/>
-</label>
+          <input
+            type="checkbox"
+            value="dim"
+            className="toggle theme-controller"
+          />
+        </label>
       </div>
     </div>
   );

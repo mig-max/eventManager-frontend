@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*  MAIN CSS   */
 
 #root,
 html,
@@ -11,7 +12,7 @@ body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, "Lexend", 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,21 +22,50 @@ body {
 }
 
 
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  padding: 0;
+}
 
-/* light theme */
-.light-theme {
-    --bg-color: white;
-    --text-color: black;
-  }
-  
-  /* dark theme */
-  .dark-theme {
-    --bg-color: black;
-    --text-color: white;
-  }
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
   
 
-  
+}
+
+
+
+
+/*  ***************  */
+
+
+
+
+/*  EVENT & VENUE CARDS   */
+
+.card {
+  box-shadow: 0 3px 3px rgba(0,0,0,.2)
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow:0 2px 4px -1px rgba(0,0,0,.2), 
+    0 4px 5px rgba(0,0,0,.14), 
+    0 1px 10px rgba(0,0,0,.12);
+}
+
+/*  CARROUSEL  */
 .slick-slider {
   margin-top: 120px
 }
@@ -44,7 +74,66 @@ body {
   padding: 0 20px; 
 }
 
+/* CARROUSEL ARROWS  */
 .slick-arrow {
+  font-size: 2rem;
+  color: goldenrod;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1; 
+  cursor: pointer; 
+}
+
+.prev-arrow {
+  left: 20px; 
+}
+
+.next-arrow {
+  right: 20px; 
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+}
+
+
+
+
+
+/*  SEARCH BAR  */
+
+.search-bar {
+
+  border-radius: 10px;
+
+  box-shadow: 
+            0 2px 4px -1px rgba(0,0,0,.2), 
+            0 4px 5px rgba(0,0,0,.14), 
+            0 1px 10px rgba(0,0,0,.12);
   
 
+}
+
+
+
+/*  CALENDAR  */
+
+.react-calendar {
+
+  border-radius: 10px;
+ 
+  box-shadow: 
+            0 2px 4px -1px rgba(0,0,0,.2), 
+            0 4px 5px rgba(0,0,0,.14), 
+            0 1px 10px rgba(0,0,0,.12);
+  
+}
+
+.event-dot {
+  width: 12px;
+  height: 12px;
+  background-color: goldenrod; 
+  border-radius: 50%;
 }
