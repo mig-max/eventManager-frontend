@@ -17,7 +17,7 @@ function EventSummary({ event }) {
 
            
             <p>Type of event: {event.eventType}</p>
-            <p>Date and Time: {event.time}</p>
+            <p>Date: {event.date}</p>
 
             <p>Price: {event.isFree ? "Free" : `$${event.price}`}</p>
             <div className="card-actions justify-end">

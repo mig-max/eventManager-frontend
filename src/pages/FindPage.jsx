@@ -115,8 +115,8 @@ function FindPage() {
         />
       </Flex>
       <Box mt={4} textAlign="center">
-        <Button size="sm" colorScheme="blue" onClick={() => navigate(`/venues`)}>
-          All Venues
+        <Button size="sm" colorScheme="blue" onClick={() => navigate(`/events`)}>
+          All Events
         </Button>
         <Button size="sm" colorScheme="gray" onClick={() => navigate(`/`)}>
           Home

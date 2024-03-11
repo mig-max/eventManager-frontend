@@ -40,7 +40,7 @@ function EventCard({ event }) {
         Price: {event.isFree ? "Free" : `$${event.price}`}
       </Text>
       <Text fontSize="sm">
-        Date: {new Date(event.time).toLocaleDateString()}
+        Date: {new Date(event.date).toLocaleDateString()}
       </Text>
       <Text fontSize="sm">
         About: {event.description}

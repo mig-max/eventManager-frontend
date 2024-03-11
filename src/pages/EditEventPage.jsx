@@ -18,7 +18,7 @@ function EditEventPage() {
   const [title, setTitle] = useState("");
   const [eventType, setEventType] = useState("");
   const [description, setDescription] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
   const [isEighteen, setIsEighteen] = useState(false);
   const [isFree, setIsFree] = useState(false);
   const [price, setPrice] = useState(0);
@@ -35,7 +35,7 @@ function EditEventPage() {
         setEventType(event.eventType[0]);
         setDescription(event.description);
         // Set the initial state of time to the current value of event's date
-        setTime(event.time.substring(0, 10)); // Extracting only the date part
+        setDate(event.date.substring(0, 10)); // Extracting only the date part
         setIsEighteen(event.isEighteen);
         setIsFree(event.isFree);
         setPrice(event.price);
@@ -61,7 +61,7 @@ function EditEventPage() {
       title,
       eventType: [eventType],
       description,
-      time,
+      date,
       isEighteen,
       isFree,
       price,
@@ -130,9 +130,9 @@ function EditEventPage() {
             <Input
               required
               type="date"
-              name="time"
-              value={time}
-              onChange={(event) => setTime(event.target.value)}
+              name="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
             />
           </FormControl>
 

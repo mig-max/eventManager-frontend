@@ -22,7 +22,7 @@ function AddEvent() {
   const [title, setTitle] = useState("");
   const [eventType, setEventType] = useState("");
   const [description, setDescription] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
   const [isEighteen, setIsEighteen] = useState(false);
   const [isFree, setIsFree] = useState(false);
   const [price, setPrice] = useState(0);
@@ -49,7 +49,7 @@ function AddEvent() {
           setTitle(event.title);
           setEventType(event.eventType[0]);
           setDescription(event.description);
-          setTime(event.time);
+          setDate(event.date);
           setIsEighteen(event.isEighteen);
           setIsFree(event.isFree);
           setPrice(event.price);
@@ -66,12 +66,14 @@ function AddEvent() {
       title,
       eventType: [eventType],
       description,
-      time,
+      date,
       isEighteen,
       isFree,
       imageUrl,
       price,
       venue: selectedVenue,
+
+      event: eventId,
     };
 
     eventsService
@@ -81,7 +83,7 @@ function AddEvent() {
         setTitle("");
         setEventType("");
         setDescription("");
-        setTime("");
+        setDate("");
         setIsEighteen(false);
         setImageUrl("");
 
@@ -143,9 +145,9 @@ function AddEvent() {
             <Input
               required
               type="date"
-              name="time"
-              value={time}
-              onChange={(event) => setTime(event.target.value)}
+              name="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
             />
           </FormControl>
 
