@@ -39,10 +39,7 @@ function AddVenue() {
   function handleFormSubmit(event) {
     event.preventDefault();
 
-    if (!selectedEvent) {
-      alert("Please select an event");
-      return;
-    }
+    const eventValue = selectedEvent ? selectedEvent : null;
 
     const requestBody = {
       name,
@@ -52,7 +49,7 @@ function AddVenue() {
       isFoodAvailable,
       isDrinksAvailable,
       imageUrl,
-      event: selectedEvent,
+      event: eventValue,
     };
 
     venuesService
