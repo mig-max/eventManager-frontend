@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import EventSummary from './EventSummary';
 import Slider from 'react-slick'; 
 import 'slick-carousel/slick/slick.css'; 

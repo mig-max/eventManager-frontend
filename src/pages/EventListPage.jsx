@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, Center} from "@chakra-ui/react";
 import eventsService from "../services/events.service";
-import EventsCarousel from "../components/EventsCarousel"; // Import the EventsCarousel component
+import EventsCarousel from "../components/EventsCarousel"; 
 
 function EventListPage() {
     const [events, setEvents] = useState([]);
@@ -11,10 +11,10 @@ function EventListPage() {
         const fetchEvents = async () => {
             try {
                 const response = await eventsService.getAllEvents();
-                console.log("Response Object:", response); // Log the entire response object for debugging
+                console.log("Response Object:", response); 
                 setEvents(response.data);
             } catch (error) {
-                console.error("Error fetching events:", error);
+                console.log("Error fetching events:", error);
             } finally {
                 setLoading(false);
             }
