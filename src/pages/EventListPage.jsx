@@ -1,13 +1,20 @@
-
 import { useState, useEffect } from "react";
 import EventSummary from "../components/EventSummary";
 import eventsService from "../services/events.service";
-
+import { useAppContext } from "../context/appContext";
 
 function EventListPage() {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(false);
    
+    const { favorites, addToFavorites, removeFromFavorites } = useAppContext();
+
+    console.log('favorites are', favorites);
+
+    const favoritesChecker = (id) => {
+        const boolean = favorites.some((event) => event.id === id);
+        return boolean;
+    };
 
     const getAllEvents = () => {
         eventsService
@@ -20,7 +27,7 @@ function EventListPage() {
                 console.log(error);
             });
     };
-
+    
     useEffect(() => {
         setLoading(true);
         getAllEvents();
@@ -35,7 +42,18 @@ function EventListPage() {
                 events.map((event) => (
                     <div key={event._id}>
                         <EventSummary event={event} />
-                    </div>
+                    <div>
+                        { favoritesChecker(event.id) ? (
+                        
+                        <button onClick={() => removeFromFavorites(event.id)}>
+                            Remove from Favorites
+                        </button>
+                    ) : (<button onClick={() => addToFavorites(event)}>
+                    Add to Favorites
+                    </button>)}
+                         
+                    </div>    
+                 </div>
                 ))
             )}
         </div>

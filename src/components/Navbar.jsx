@@ -60,6 +60,7 @@ function Navbar() {
           </li>
           <li><Link to="/events">Events</Link></li>
           <li><Link to="/venues">Venues</Link></li>
+          <li><Link to="/favorites">Favorites</Link></li>
           <li><a>Free Events</a></li>
           <li>
             <details>

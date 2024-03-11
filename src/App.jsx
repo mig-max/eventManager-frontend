@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 
 import IsLoggedIn from "./components/IsLoggedIn";
 import IsAnon from "./components/IsAnon";
+import FavoritesPage from "./pages/FavoritesPage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path='/venues/add' element={<IsLoggedIn> <AddVenue /> </IsLoggedIn> } />
         <Route path='/venues/:venueId' element={<VenueDetailsPage />} />
         <Route path='/venues/:venueId/edit' element={ <IsLoggedIn> <EditVenue /> </IsLoggedIn> } />
+        <Route path='/favorites' element={ <FavoritesPage/> }></Route>
 
       </Routes>
 
