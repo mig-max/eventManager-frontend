@@ -70,6 +70,7 @@ function FindPage() {
   };
   
   const fetchEventsForDate = async (date) => {
+    console.log(date)
     try {
       setLoading(true);
       const response = await eventsService.getEventsForDate(date); 
