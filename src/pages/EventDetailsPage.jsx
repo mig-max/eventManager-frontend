@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import eventsService from "../services/events.service";
 import EventCard from "../components/EventCard";
+import { Button } from "@chakra-ui/react";
 
 const EventDetailsPage = () => {
   const { eventId } = useParams();
@@ -33,19 +34,43 @@ const EventDetailsPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-8">
         {event && <EventCard event={event} />}
+
         <div className="flex justify-center mt-8 space-x-4">
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={() => navigate(`/events`)}>
+          <Button
+            onClick={() => navigate(`/events`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             All Events
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={() => navigate(`/`)}>
+          </Button>
+
+          <Button
+            onClick={() => navigate("/")}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             Home
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700  focus:outline-none font-bold text-lg" onClick={() => navigate(`/events/${eventId}/edit`)}>
+          </Button>
+
+          <Button
+            onClick={() => navigate(`/events/${eventId}/edit`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             Edit
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={deleteEvent}>
-            Delete Event
-          </a>
+          </Button>
+
+          <Button
+            onClick={deleteEvent}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Delete
+          </Button>
         </div>
       </div>
     </div>

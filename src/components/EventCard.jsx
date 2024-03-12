@@ -43,8 +43,8 @@ function EventCard({ event }) {
       <Button
         px={6}
         py={3}
-        textDecoration="underline"
         fontWeight="bold"
+        className="text-fuchsia-600"
         onClick={() => navigate(`/venues/${event.venue?._id}`)}
       >
         Venue Details

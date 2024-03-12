@@ -24,7 +24,7 @@ function VenueDetailsPage(props) {
   };
   useEffect(() => {
     getVenue();
-  }, []);
+  }, [venueId]);
 
   const deleteVenue = () => {
     venuesService
@@ -39,20 +39,43 @@ function VenueDetailsPage(props) {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-    <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-8">
+      <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-8">
         {venue && <VenueCard venue={venue} />}
         <div className="flex justify-center mt-8 space-x-4">
-          <Button size="sm" colorScheme="blue" onClick={() => navigate(`/venues`)}>
+          <Button
+            onClick={() => navigate(`/venues`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             All Venues
           </Button>
-          <Button size="sm" colorScheme="teal" onClick={() => navigate(`/venues/${venueId}/edit`)}>
+
+          <Button
+            onClick={() => navigate("/")}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Home
+          </Button>
+
+          <Button
+            onClick={() => navigate(`/venues/${venueId}/edit`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             Edit
           </Button>
-          <Button size="sm" colorScheme="red" onClick={deleteVenue}>
+
+          <Button
+            onClick={deleteVenue}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             Delete Venue
-          </Button>
-          <Button size="sm" colorScheme="gray" onClick={() => navigate(`/`)}>
-            Home
           </Button>
         </div>
       </div>
