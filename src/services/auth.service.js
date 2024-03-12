@@ -5,7 +5,7 @@ class AuthService {
 
     constructor() {
         this.api = axios.create({
-            baseURL: import.meta.env.VITE_API_URL || "http://localhost:5005",
+            baseURL: import.meta.env.VITE_API_URL 
         });
         // Set JWT token in the headers for every request
         this.api.interceptors.request.use((config) => {
