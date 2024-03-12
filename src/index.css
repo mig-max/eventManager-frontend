@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/*
+
+* {
+  outline: 2px red solid;
+}
+
+*/
+
 /*  MAIN CSS   */
 
 #root,
