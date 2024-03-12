@@ -38,8 +38,8 @@ function VenueDetailsPage(props) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-8">
         {venue && <VenueCard venue={venue} />}
         <div className="flex justify-center mt-8 space-x-4">
           <Button size="sm" colorScheme="blue" onClick={() => navigate(`/venues`)}>

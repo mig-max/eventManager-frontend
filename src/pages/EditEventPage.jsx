@@ -23,7 +23,7 @@ function EditEventPage() {
   const [isFree, setIsFree] = useState(false);
   const [price, setPrice] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
-  const [selectedVenue, setSelectedVenue] = useState(""); 
+  const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
 
   useEffect(() => {
@@ -40,9 +40,8 @@ function EditEventPage() {
         setIsFree(event.isFree);
         setPrice(event.price);
         setImageUrl(event.imageUrl);
-        setSelectedVenue(event.venue._id); 
+        setSelectedVenue(event.venue._id);
       })
-      
       .catch((error) => console.log(error));
 
     venuesService
@@ -66,11 +65,11 @@ function EditEventPage() {
       isFree,
       price,
       imageUrl,
-      venue: selectedVenue, 
+      venue: selectedVenue,
     };
 
     eventsService
-      .updateEvent(eventId, requestBody) 
+      .updateEvent(eventId, requestBody)
       .then((response) => {
         console.log(response);
         navigate("/events");
@@ -79,10 +78,13 @@ function EditEventPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1>Edit Event</h1>
-        <form onSubmit={handleFormSubmit}>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-3xl w-full bg-white rounded-lg shadow-md p-8">
+        <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
+        <form
+          onSubmit={handleFormSubmit}
+          className="grid grid-cols-2 gap-x-4 space-y-4"
+        >
           <FormControl>
             <FormLabel>Title</FormLabel>
             <Input
@@ -139,6 +141,7 @@ function EditEventPage() {
           <FormControl>
             <FormLabel>Is Eighteen</FormLabel>
             <Checkbox
+              cursor="pointer"
               isChecked={isEighteen}
               onChange={(event) => setIsEighteen(event.target.checked)}
             />
@@ -147,6 +150,8 @@ function EditEventPage() {
           <FormControl>
             <FormLabel>Is Free</FormLabel>
             <Checkbox
+              colorScheme="red"
+              cursor={"pointer"}
               isChecked={isFree}
               onChange={(event) => setIsFree(event.target.checked)}
             />
@@ -183,16 +188,38 @@ function EditEventPage() {
             >
               <option value="">Select Venue</option>
               {venues.map((venue) => (
-                <option key={venue._id} value={venue._id}>{venue.name}</option>
+                <option key={venue._id} value={venue._id}>
+                  {venue.name}
+                </option>
               ))}
             </Select>
           </FormControl>
 
-          <Link to="/venues/add">Create New Venue</Link>
+          <div className="col-span-2">
+            <Link
+              to="/venues/add"
+              className="text-fuchsia-900 opacity-70 font-bold"
+            >
+              Create New Venue
+            </Link>
+          </div>
 
-          <Button type="submit">Update Event</Button>
+          <Button
+            type="submit"
+            colorScheme="blue"
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Update Event
+          </Button>
 
-          <Button onClick={() => navigate("/")}>Cancel</Button>
+          <Button
+            onClick={() => navigate("/")}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Cancel
+          </Button>
         </form>
       </div>
     </div>

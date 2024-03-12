@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 import venuesService from "../services/venue.service";
-import { Box, Image, Text, Button } from "@chakra-ui/react";
 
 function EventCard({ event }) {
   const { eventId } = useParams();
@@ -26,42 +26,30 @@ function EventCard({ event }) {
   }, [eventId]);
 
   return (
-    <Box p={2} borderWidth="1px" borderRadius="md" boxShadow="md">
-      <Text fontSize="lg" fontWeight="bold" mb={2}>
-        {event.title}
-      </Text>
+    <div className="p-6 border-2 border-gray-300 rounded-md shadow-md bg-white max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold mb-2">{event.title}</h2>
       {event.imageUrl && (
-        <Image src={event.imageUrl} alt={event.name} borderRadius="md" />
+        <img src={event.imageUrl} alt={event.name} className="w-full h-48 object-cover mb-2 rounded-md" />
       )}
-      <Text fontSize="sm">
-        Event Type: {event.eventType.join(", ")}
-      </Text>
-      <Text fontSize="sm">
-        Price: {event.isFree ? "Free" : `$${event.price}`}
-      </Text>
-      <Text fontSize="sm">
-        Date: {new Date(event.date).toLocaleDateString()}
-      </Text>
-      <Text fontSize="sm">
-        About: {event.description}
-      </Text>
-      {event.isEighteen && <strong>Age restriction: 18+</strong>}
-      <Text fontSize="sm">
-        Venue Name: {event.venue?.name}
-      </Text>
-      <Text fontSize="sm">
-        Venue Address: {event.venue?.address}
-      </Text>
+      <p className="text-lg mb-2"><strong>Event Type: </strong>{event.eventType.join(", ")}</p>
+      <p className="text-lg mb-2"><strong>Date: </strong>{new Date(event.date).toLocaleDateString()}</p>
+      <p className="text-lg mb-2"><strong>About: </strong>{event.description}</p>
+      {event.isEighteen && (
+        <p className="text-lg font-bold mb-2"><strong>Age restriction: 18+</strong></p>
+      )}
+      <p className="text-lg mb-2"><strong>Venue Name: </strong>{event.venue?.name}</p>
+      <p className="text-lg mb-2"><strong>Venue Address: </strong>{event.venue?.address}</p>
+      <p className="text-lg mb-2">{event.isFree ? <span className="bg-lime-500 text-white px-2 py-1 rounded">Free</span> : `${event.price}€`}</p>
       <Button
-        mt={2}
-        size="sm"
-        colorScheme="blue"
+        px={6}
+        py={3}
+        textDecoration="underline"
+        fontWeight="bold"
         onClick={() => navigate(`/venues/${event.venue?._id}`)}
       >
         Venue Details
       </Button>
-      {/* Add button for adding to favorites */}
-    </Box>
+    </div>
   );
 }
 
