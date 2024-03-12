@@ -3,10 +3,15 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 import { Button } from 'react-daisyui';
 import { useNavigate } from "react-router-dom"; 
+//testing
+import eventsService from "../services/events.service";
+import { useEffect } from "react";
 
 function ProfilePage() {
     const { user, logOutUser } = useContext(AuthContext); 
     const [isLoggingOut, setIsLoggingOut] = useState(false); 
+    //testing
+    const [userEvents, setUserEvents] = useState([]);
     const navigate = useNavigate(); 
 
     const handleLogout = () => {
@@ -18,6 +23,22 @@ function ProfilePage() {
         return <div>Loading...</div>;
     }
     console.log(user);
+
+    //testing
+    useEffect(() => {
+        const fetchEvents = async () => {
+          try {
+            const response = await eventsService.getUserEvents(user._id);
+             console.log(user._id)
+            setUserEvents(response.data);
+          } catch (error) {
+            console.error("Error fetching user events", error);
+          }
+        };
+    
+        fetchEvents();
+      }, [user]);
+
 
     return (
         <div className="ProfilePage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
@@ -53,7 +74,21 @@ function ProfilePage() {
             >
                 {isLoggingOut ? "Logging Out..." : "Logout"}
             </Button>
-        </div>
+
+            <h2 className="text-lg font-semibold mb-2">Events Created:</h2>
+            {userEvents.length > 0 && (
+            <ul>
+                {userEvents.map((event) => (
+                <li key={event._id} className="mb-2">
+                    <h3>{event.title}</h3>
+                    <p>{event.description}</p>
+                    <img src={event.imageUrl}/>
+                </li>
+                ))}
+            </ul>
+            )}
+
+        </div>   
     );
 }
 
