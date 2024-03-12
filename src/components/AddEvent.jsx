@@ -1,25 +1,18 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
-import { useContext } from "react";
-import { AuthContext} from "../context/auth.context";
 import {
-  VStack,
-  HStack,
+  Button,
+  Checkbox,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Select,
-  Checkbox,
-  Button,
-  Spacer,
 } from "@chakra-ui/react";
 
 function AddEvent() {
-  const { eventId } = useParams();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [eventType, setEventType] = useState("");
@@ -32,11 +25,6 @@ function AddEvent() {
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
 
-  const navigate = useNavigate();
-
-  const { user } = useContext(AuthContext)
-  const userId = user._id
-
   useEffect(() => {
     venuesService
       .getAllVenues()
@@ -46,25 +34,7 @@ function AddEvent() {
       .catch((error) => {
         console.log(error);
       });
-
-    if (eventId) {
-      eventsService
-        .getEvent(eventId)
-        .then((response) => {
-          const event = response.data;
-          setTitle(event.title);
-          setEventType(event.eventType[0]);
-          setDescription(event.description);
-          setDate(event.date);
-          setIsEighteen(event.isEighteen);
-          setIsFree(event.isFree);
-          setPrice(event.price);
-          setImageUrl(event.imageUrl);
-          setSelectedVenue(event.venue._id);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [eventId]);
+  }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -75,44 +45,35 @@ function AddEvent() {
       date,
       isEighteen,
       isFree,
-      imageUrl,
       price,
+      imageUrl,
       venue: selectedVenue,
-
-      user: userId,
     };
 
     eventsService
       .createEvent(requestBody)
       .then((response) => {
-        console.log("userId:", userId);
         console.log(response);
-        setTitle("");
-        setEventType("");
-        setDescription("");
-        setDate("");
-        setIsEighteen(false);
-        setImageUrl("");
-
         navigate("/events");
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-    <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
-      <h1>{eventId ? "Edit Event" : "Add Event"}</h1>
-
-      <form onSubmit={handleFormSubmit}>
-        <VStack spacing={4} align="stretch">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-3xl w-full bg-white rounded-lg shadow-md p-8">
+        <h1 className="text-2xl font-bold mb-4">Add Event</h1>
+        <form
+          onSubmit={handleFormSubmit}
+          className="grid grid-cols-2 gap-x-4 space-y-4"
+        >
           <FormControl>
             <FormLabel>Title</FormLabel>
             <Input
               required
+              placeholder="Enter event title"
               type="text"
               name="title"
-              placeholder="Enter title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
             />
@@ -138,10 +99,11 @@ function AddEvent() {
 
           <FormControl>
             <FormLabel>Description</FormLabel>
-            <Textarea
+            <Input
               required
-              name="description"
               placeholder="Enter description"
+              type="text"
+              name="description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
             />
@@ -161,8 +123,7 @@ function AddEvent() {
           <FormControl>
             <FormLabel>Is Eighteen</FormLabel>
             <Checkbox
-              colorScheme="blue"
-              name="isEighteen"
+              cursor="pointer"
               isChecked={isEighteen}
               onChange={(event) => setIsEighteen(event.target.checked)}
             />
@@ -171,27 +132,23 @@ function AddEvent() {
           <FormControl>
             <FormLabel>Is Free</FormLabel>
             <Checkbox
-              colorScheme="blue"
-              name="isFree"
+              colorScheme="red"
+              cursor={"pointer"}
               isChecked={isFree}
               onChange={(event) => setIsFree(event.target.checked)}
             />
           </FormControl>
 
-          {!isFree && (
-            <FormControl>
-              <FormLabel>Price</FormLabel>
-              <Input
-                type="number"
-                name="price"
-                placeholder="1"
-                min="1"
-                step=".50"
-                value={price}
-                onChange={(event) => setPrice(event.target.value)}
-              />
-            </FormControl>
-          )}
+          <FormControl>
+            <FormLabel>Price</FormLabel>
+            <Input
+              type="number"
+              name="price"
+              placeholder="10"
+              value={price}
+              onChange={(event) => setPrice(event.target.value)}
+            />
+          </FormControl>
 
           <FormControl>
             <FormLabel>Image URL</FormLabel>
@@ -220,19 +177,34 @@ function AddEvent() {
             </Select>
           </FormControl>
 
-          <Spacer />
+          <div className="col-span-2">
+            <Link
+              to="/venues/add"
+              className="text-fuchsia-900 opacity-70 font-bold"
+            >
+              Create New Venue
+            </Link>
+          </div>
 
-          <Link to="/venues/add">Create New Venue</Link>
+          <Button
+            type="submit"
+            colorScheme="blue"
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Add Event
+          </Button>
 
-          <HStack>
-            <Button type="submit">{eventId ? "Update Event" : "Add Event"}</Button>
-            <Button onClick={() => navigate("/events")}>Cancel</Button>
-          </HStack>
-        </VStack>
-      </form>
+          <Button
+            onClick={() => navigate("/")}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
+            Cancel
+          </Button>
+        </form>
       </div>
-      </div>
-   
+    </div>
   );
 }
 

@@ -3,9 +3,19 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 
-function EditVenue() {
+function EditVenuePage() {
+  const { venueId } = useParams();
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [venueType, setVenueType] = useState("");
   const [address, setAddress] = useState("");
@@ -15,8 +25,6 @@ function EditVenue() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [events, setEvents] = useState([]);
-  const { venueId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     venuesService
@@ -72,116 +80,131 @@ function EditVenue() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1>Edit Venue Page</h1>
-        <form onSubmit={handleFormSubmit}>
-          <div className="mb-4">
-            <label>Name: </label>
-            <input
-              required
-              type="text"
-              name="name"
-              placeholder="Venue Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-3xl w-full bg-white rounded-lg shadow-md p-8">
+        <h1 className="text-2xl font-bold mb-4">Edit Venue</h1>
+        <form onSubmit={handleFormSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input
+                required
+                placeholder="Enter venue name"
+                type="text"
+                name="name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Venue Type</FormLabel>
+              <Select
+                required
+                name="venueType"
+                value={venueType}
+                onChange={(event) => setVenueType(event.target.value)}
+              >
+                <option value="">Select venue type</option>
+                <option value="Indoor">Indoor</option>
+                <option value="Outdoor">Outdoor</option>
+                <option value="Other">Other</option>
+              </Select>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Address</FormLabel>
+              <Input
+                required
+                placeholder="Enter venue address"
+                type="text"
+                name="address"
+                value={address}
+                onChange={(event) => setAddress(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Capacity</FormLabel>
+              <Input
+                required
+                type="number"
+                name="capacity"
+                min="1"
+                value={capacity}
+                onChange={(event) => setCapacity(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Food Available</FormLabel>
+              <Checkbox
+                isChecked={isFoodAvailable}
+                onChange={(event) => setIsFoodAvailable(event.target.checked)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Drinks Available</FormLabel>
+              <Checkbox
+                isChecked={isDrinksAvailable}
+                onChange={(event) =>
+                  setIsDrinksAvailable(event.target.checked)
+                }
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Image URL</FormLabel>
+              <Input
+                type="text"
+                name="imageUrl"
+                value={imageUrl}
+                onChange={(event) => setImageUrl(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Event</FormLabel>
+              <Select
+                name="event"
+                value={selectedEvent}
+                onChange={(event) => setSelectedEvent(event.target.value)}
+              >
+                <option value="">Select event</option>
+                {events.map((event) => (
+                  <option key={event._id} value={event._id}>
+                    {event.title}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
           </div>
 
-          <div className="mb-4">
-            <label>Venue Type: </label>
-            <select
-              required
-              name="venueType"
-              value={venueType}
-              onChange={(event) => setVenueType(event.target.value)}
+          <div className="col-span-2">
+            <Link
+              to="/events/add"
+              className="text-fuchsia-900 opacity-70 font-bold"
             >
-              <option value="" disabled>Select Venue type:</option>
-              <option value="Outdoor">Outdoor</option>
-              <option value="Indoor">Indoor</option>
-              <option value="Other">Other</option>
-            </select>
+              Create New Event
+            </Link>
           </div>
 
-          <div className="mb-4">
-            <label>Address: </label>
-            <input
-              required
-              type="text"
-              name="address"
-              placeholder="Venue Address"
-              value={address}
-              onChange={(event) => setAddress(event.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label>Capacity: </label>
-            <input
-              type="number"
-              name="capacity"
-              placeholder="Capacity"
-              min="1"
-              value={capacity}
-              onChange={(event) => setCapacity(event.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label>Is Food Available: </label>
-            <input
-              type="checkbox"
-              name="isFoodAvailable"
-              checked={isFoodAvailable}
-              onChange={(event) => setIsFoodAvailable(event.target.checked)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label>Is Drinks Available: </label>
-            <input
-              type="checkbox"
-              name="isDrinksAvailable"
-              checked={isDrinksAvailable}
-              onChange={(event) => setIsDrinksAvailable(event.target.checked)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label>Image URL: </label>
-            <input
-              type="url"
-              name="imageUrl"
-              placeholder="Image URL"
-              value={imageUrl}
-              onChange={(event) => setImageUrl(event.target.value)}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label>Events:</label>
-            <select
-              name="event"
-              value={selectedEvent}
-              onChange={(event) => setSelectedEvent(event.target.value)}
-            >
-              <option value="" disabled>Select Event:</option>
-              {events.map((event) => (
-                <option key={event._id} value={event._id}>
-                  {event.title}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <Link to="/events/add" className="mb-4">
-            Create New Event
-          </Link>
           <div className="flex justify-center space-x-4">
-            <Button type="submit" colorScheme="blue" size="sm">
-              Save Changes
+            <Button
+              type="submit"
+              colorScheme="blue"
+              className="text-fuchsia-900"
+              fontWeight="bold"
+            >
+              Update Venue
             </Button>
-            <Button onClick={() => navigate(`/venues/${venueId}`)} colorScheme="gray" size="sm">
+
+            <Button
+              onClick={() => navigate(`/venues/${venueId}`)}
+              className="text-fuchsia-900"
+              fontWeight="bold"
+            >
               Cancel
             </Button>
           </div>
@@ -191,4 +214,4 @@ function EditVenue() {
   );
 }
 
-export default EditVenue;
+export default EditVenuePage;

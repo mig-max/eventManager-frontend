@@ -117,6 +117,8 @@ function FindPage() {
 
   return (
     <>
+    <Heading as="h1" size="lg">Find events </Heading>
+
       {/* SEARCH BAR */}
       <Box
         p={8}
@@ -128,9 +130,7 @@ function FindPage() {
         mx="auto"
         marginTop="100px"
       >
-        <Heading as="h1" size="xl" mb={4} color="black" align="center">
-          Discover events
-        </Heading>
+        
         <Flex direction="column" align="center" justify="center">
           <Search
             className="search-bar"

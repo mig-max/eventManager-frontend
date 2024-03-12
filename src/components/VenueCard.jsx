@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import eventsService from "../services/events.service";
-//import EventCard from "./EventCard"; 
 
 function VenueCard({ venue }) {
-
   const [events, setEvents] = useState([]);
   const { venueId } = useParams();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,35 +25,30 @@ function VenueCard({ venue }) {
   }, [venueId]);
 
   return (
-    <div className="venue-card">
-
-      {/* Venue information */}
-      <h2>{venue.name}</h2>
+    <div className="p-6 border-2 border-gray-300 rounded-md shadow-md bg-white max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold mb-2">{venue.name}</h2>
       {venue.imageUrl && (
-        <img src={venue.imageUrl} alt={venue.name} />
-      )}
-      
-      <p>Venue Type: {venue.venueType}</p>
-      <p>Capacity: {venue.capacity}</p>
-      
-      {venue.isDrinksAvailable && (
-          <p>Drinks available to buy</p>
+        <img src={venue.imageUrl} alt={venue.name} className="mt-4 rounded-md" />
       )}
 
-      {venue.isFoodAvailable && (
-      <p>Food available to buy</p>
-      )}
-
-         {/* Map and Google Maps API */}
-
-      <div>
-        <h3>Events at this venue:</h3>
+      <p className="mt-2"><strong>Venue Type: </strong>{venue.venueType}</p>
+      <p><strong>Capacity: </strong>{venue.capacity}</p>
+        <strong>
+      {venue.isDrinksAvailable && <p>Drinks available to buy</p>}
+      {venue.isFoodAvailable && <p>Food available to buy</p>}
+        </strong>
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold">Events at this venue:</h3>
         {events.map((event) => (
-          <button onClick={() => navigate(`/events/${event._id}`)} key={event._id}>{event.title}</button>
-       ))}
+          <button
+            key={event._id}
+            onClick={() => navigate(`/events/${event._id}`)}
+            className="block mt-2 text-fuchsia-900 hover:text-fuchsia-700  font-bold py-2 px-4 rounded-md cursor-pointer"
+          >
+            {event.title}
+          </button>
+        ))}
       </div>
-      
-      
     </div>
   );
 }
