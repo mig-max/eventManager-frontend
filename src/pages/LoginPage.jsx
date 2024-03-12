@@ -29,7 +29,9 @@ function LoginPage() {
                 //const {_id} = response.data;
                 storeToken(response.data.authToken);
                 authenticateUser();
-                navigate(`/user`);
+                console.log("navigating", navigate)
+                navigate("/");
+                console.log('navigating to user page', navigate)
                 //localStorage.setItem(`userId`, _id);
                  // Navigate to the user profile page
                 //navigate(`/venues`)
@@ -41,30 +43,28 @@ function LoginPage() {
             })
             .catch((error) => {
                 console.log(error)
-                //const errorDescription = error.response.data.message || "An unknown error occurred";
+                const errorDescription = error.response.data.message; //|| "An unknown error occurred";
                 //setErrorMessage(errorDescription);
                 console.log("Response:", response); 
-                if (response.data && response.data.authToken) {
+                /*if (response.data && response.data.authToken) {
                     const { userId } = response.data;
                     storeToken(response.data.authToken);
                     localStorage.setItem(`userId`, userId);
 
                     authenticateUser();
                     
-                    //navigate("/")
-                    
-                   navigate(`/users/${userId}`); // Navigate to the user profile page
+                   //navigate(`/users/${userId}`); // Navigate to the user profile page
                 } else {
                     throw new Error("Unexpected response format");
-                }
+                }*/
             })
-            .catch((error) => {
+            /*.catch((error) => {
                 let errorDescription = "An error occurred during login.";
                 if (error.response && error.response.data && error.response.data.message) {
                     errorDescription = error.response.data.message;
                 }
                 setErrorMessage(errorDescription);
-            });
+            });*/
             
     };
 

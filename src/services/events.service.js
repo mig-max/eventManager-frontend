@@ -49,6 +49,11 @@ class EventsService {
         return this.api.get(`/events/date/${date}`);
      };
 
+     // GET /users/events/:userid
+      getUserEvents = (userId) => {
+        return this.api.get(`/users/events/${userId}`);
+      };
+
     }
 
     const eventsService = new EventsService();
