@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
@@ -21,7 +22,7 @@ function LoginPage() {
     const handleLoginSubmit = (event) => {
         event.preventDefault();
         const requestBody = { email, password };
-        console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
+        //console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
     
         authService
             .login(requestBody)
@@ -29,13 +30,13 @@ function LoginPage() {
                 //const {_id} = response.data;
                 storeToken(response.data.authToken);
                 authenticateUser();
-                console.log("navigating", navigate)
+              
                 navigate("/");
                 console.log('navigating to user page', navigate)
                 //localStorage.setItem(`userId`, _id);
                  // Navigate to the user profile page
                 //navigate(`/venues`)
-                console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
+               console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
     
                
                
@@ -43,9 +44,9 @@ function LoginPage() {
             })
             .catch((error) => {
                 console.log(error)
-                const errorDescription = error.response.data.message; //|| "An unknown error occurred";
+                const errorDescription = error.response.data.message; 
                 //setErrorMessage(errorDescription);
-                console.log("Response:", response); 
+                console.log("Error Description:", errorDescription); 
                 /*if (response.data && response.data.authToken) {
                     const { userId } = response.data;
                     storeToken(response.data.authToken);
