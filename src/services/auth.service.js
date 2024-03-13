@@ -30,7 +30,9 @@ class AuthService {
         .then(response => {
             console.log("Response:", response); 
             const authToken = response.data.authToken;
+            const userId = response.data.userId; // 
             localStorage.setItem("authToken", authToken);
+            localStorage.setItem("userId", userId) // 
             return response;
         })
 };
