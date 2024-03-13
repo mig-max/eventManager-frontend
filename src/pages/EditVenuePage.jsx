@@ -38,7 +38,7 @@ function EditVenuePage() {
         setIsFoodAvailable(oneVenue.isFoodAvailable);
         setIsDrinksAvailable(oneVenue.isDrinksAvailable);
         setImageUrl(oneVenue.imageUrl);
-        setSelectedEvent(oneVenue.event._id);
+        setSelectedEvent(oneVenue.event ? oneVenue.event._id : "");
       })
       .catch((error) => {
         console.log(error);
@@ -169,7 +169,7 @@ function EditVenuePage() {
               <Select
                 name="event"
                 value={selectedEvent}
-                onChange={(event) => setSelectedEvent(event.target.value)}
+                onChange={(venue) => setSelectedEvent(venue.target.value)}
               >
                 <option value="">Select event</option>
                 {events.map((event) => (

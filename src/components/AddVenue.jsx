@@ -47,6 +47,10 @@ function AddVenue() {
 
     const eventValue = selectedEvent ? selectedEvent : null;
 
+    const imageUrlValue =
+      imageUrl ||
+      "https://memo.thevendry.com/wp-content/uploads/2022/06/iStock-13447299461.jpg";
+
     const requestBody = {
       name,
       venueType,
@@ -54,7 +58,7 @@ function AddVenue() {
       capacity,
       isFoodAvailable,
       isDrinksAvailable,
-      imageUrl,
+      imageUrl: imageUrlValue,
       event: eventValue,
       user: userId,
     };
@@ -144,9 +148,7 @@ function AddVenue() {
                 <Checkbox
                   name="isFoodAvailable"
                   isChecked={isFoodAvailable}
-                  onChange={(event) =>
-                    setIsFoodAvailable(event.target.checked)
-                  }
+                  onChange={(event) => setIsFoodAvailable(event.target.checked)}
                 />
               </FormControl>
 
@@ -190,10 +192,33 @@ function AddVenue() {
           </div>
 
           <div className="col-span-2 flex justify-end space-x-4">
-            <Link to="/events/add">Create New Event</Link>
+            <Link
+              to="/events/add"
+              className="text-fuchsia-900 opacity-60 font-semibold cursor-pointer"
+            >
+              Create New Event
+            </Link>
             <Spacer />
-            <Button type="submit">Add Venue</Button>
-            <Button onClick={() => navigate("/")}>Cancel</Button>
+
+            <Button
+              onClick={() => navigate("/")}
+              cursor={"pointer"}
+              className="text-fuchsia-900"
+              opacity={0.5}
+              fontWeight="bold"
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              colorScheme="blue"
+              className="text-fuchsia-900"
+              fontWeight="bold"
+              cursor={"pointer"}
+            >
+              Add Venue
+            </Button>
           </div>
         </form>
       </div>

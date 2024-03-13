@@ -72,7 +72,7 @@ function EditEventPage() {
       .updateEvent(eventId, requestBody)
       .then((response) => {
         console.log(response);
-        navigate("/events");
+        navigate(`/events/${eventId}`);
       })
       .catch((error) => console.log(error));
   };
@@ -205,20 +205,23 @@ function EditEventPage() {
           </div>
 
           <Button
+            onClick={() => navigate(`/events/${eventId}`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+            opacity={0.5}
+          >
+            Cancel
+          </Button>
+
+          <Button
             type="submit"
             colorScheme="blue"
             className="text-fuchsia-900"
             fontWeight="bold"
+            cursor={"pointer"}
           >
             Update Event
-          </Button>
-
-          <Button
-            onClick={() => navigate("/")}
-            className="text-fuchsia-900"
-            fontWeight="bold"
-          >
-            Cancel
           </Button>
         </form>
       </div>

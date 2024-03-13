@@ -19,13 +19,14 @@ function AuthProviderWrapper(props) {
 
     const authenticateUser = () => {
         const storedToken = localStorage.getItem("authToken");
+        const userId = localStorage.getItem("userId"); //
     
-        if (storedToken) {
+        if (storedToken &&userId) {
             authService
             .verify()
             .then((response) => {
                 // If the token is valid, set user state and login status
-                setUser(response.data.user); // Assuming response contains user data
+                setUser({...response.data.user, _id: userId}); // Assuming response contains user data
                 setIsLoggedIn(true);
                 setUser(response.data);
                 setLoading(false);

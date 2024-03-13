@@ -24,6 +24,7 @@ function VenueCard({ venue }) {
     getEvents();
   }, [venueId]);
 
+ 
   return (
     <div className="p-6 border-2 border-gray-300 rounded-md shadow-md bg-white max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-2">{venue.name}</h2>
@@ -33,22 +34,27 @@ function VenueCard({ venue }) {
 
       <p className="mt-2"><strong>Venue Type: </strong>{venue.venueType}</p>
       <p><strong>Capacity: </strong>{venue.capacity}</p>
-        <strong>
-      {venue.isDrinksAvailable && <p>Drinks available to buy</p>}
-      {venue.isFoodAvailable && <p>Food available to buy</p>}
-        </strong>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Events at this venue:</h3>
-        {events.map((event) => (
-          <button
-            key={event._id}
-            onClick={() => navigate(`/events/${event._id}`)}
-            className="block mt-2 text-fuchsia-900 hover:text-fuchsia-700  font-bold py-2 px-4 rounded-md cursor-pointer"
-          >
-            {event.title}
-          </button>
-        ))}
-      </div>
+      <strong>
+        {venue.isDrinksAvailable && <p>Drinks available to buy</p>}
+        {venue.isFoodAvailable && <p>Food available to buy</p>}
+      </strong>
+      {events.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold underline ">Events at this venue:</h3>
+          {events.map((event) => (
+            <button
+              key={event._id}
+              onClick={() => navigate(`/events/${event._id}`)}
+              className="block mt-2 text-fuchsia-700 hover:text-fuchsia-900 font-bold py-2 px-4 rounded-md cursor-pointer"
+            >
+              {event.title}
+            </button>
+          ))}
+        </div>
+      )}
+      {events.length === 0 && (
+        <p className="mt-4">No events at this venue.</p>
+      )}
     </div>
   );
 }

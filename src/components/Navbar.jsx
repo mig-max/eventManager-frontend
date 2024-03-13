@@ -50,21 +50,19 @@ function Navbar() {
               <Link to="/user">Profile</Link>
             </li>
             <li>
-              <a>My Slaps:</a>
-              <ul className="p-2 text-align:center">
-                <li>
-                  <Link to="/events">Events</Link>
-                </li>
-                <li>
-                  <Link to="/venues">Venues</Link>
-                </li>
-                <li>
-                  <Link to="/favorites">Favorites</Link>
-                </li>
-              </ul>
+              <Link to="/events">Events</Link>
             </li>
             <li>
-            <Link to="/events/free">Free</Link>
+              <Link to="/venues">Venues</Link>
+            </li>
+            <li>
+              <Link to="/events/free">Free Events</Link>
+            </li>
+            <li>
+              <Link to="/events/add">Add Events</Link>
+            </li>
+            <li>
+              <Link to="/venues/add">Add Venues</Link>
             </li>
           </ul>
         </div>
@@ -91,8 +89,27 @@ function Navbar() {
               <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
+              <>
+                {isLoggedIn && (
+                  <li>
+                    <details>
+                      <summary>Add</summary>
+                      <ul className="p-2">
+                        <li>
+                          <Link to="/events/add">Events</Link>
+                        </li>
+                        <li>
+                          <Link to="/venues/add">Venues</Link>
+                        </li>
+                      </ul>
+                    </details>
+                  </li>
+                )}
+              </>
+              {/*
               {isLoggedIn && (
                 <li>
+                
                   <details>
                     <summary>My Slaps</summary>
                     <ul className="p-2 text-align:center">
@@ -109,8 +126,10 @@ function Navbar() {
                   </details>
                 </li>
               )}
+               */}
             </>
           )}
+
           <li>
             <Link to="/events">Events</Link>
           </li>
@@ -120,23 +139,6 @@ function Navbar() {
           <li>
             <Link to="/events/free">Free</Link>
           </li>
-          <>
-            {isLoggedIn && (
-              <li>
-                <details>
-                  <summary>Add</summary>
-                  <ul className="p-2">
-                    <li>
-                      <Link to="/events/add">Events</Link>
-                    </li>
-                    <li>
-                      <Link to="/venues/add">Venues</Link>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-            )}
-          </>
         </ul>
       </div>
       <Link to="/find" className="btn">
@@ -146,7 +148,7 @@ function Navbar() {
         <label className="flex cursor-pointer gap-2">
           <input
             type="checkbox"
-            value="dim"
+            value="acid"
             className="toggle theme-controller"
           />
         </label>

@@ -8,7 +8,6 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  //extra fields
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
   const [about, setAbout] = useState("");
@@ -27,7 +26,7 @@ function SignupPage() {
   const handleName = (event) => {
     setName(event.target.value);
   };
-  //extra fields
+
   const handleUsername = (event) => {
     setUsername(event.target.value);
   }
@@ -47,13 +46,13 @@ function SignupPage() {
       email: email,
       password: password,
       name: name,
-      username: username, // Add username field to the requestBody
-      avatar: avatar, // Add avatar field to the requestBody
-      about: about, // Add about field to the requestBody
+      username: username, 
+      avatar: avatar, 
+      about: about, 
     };
 
     authService
-      .signup(requestBody) // Pass the requestBody object
+      .signup(requestBody) 
       .then((response) => {
         setLoading(false);
         navigate("/login");

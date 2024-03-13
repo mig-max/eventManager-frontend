@@ -13,7 +13,9 @@ function EventSummary({ event }) {
                 <div className="p-4">
                     <h2 className="text-xl font-bold mb-2">{event.title}</h2>
                     <p className="text-base mb-2"><strong>Type of event: </strong>{event.eventType}</p>
-                    <p className="text-base mb-2"><strong>Date: </strong>{event.date}</p>
+                    <p className="text-base mb-2"><strong>Date: </strong>{new Date(event.date).toLocaleDateString()}</p>
+
+                    
                     <p className="text-base mb-2">
                         {event.isFree ? 
                             <span className="  bg-lime-500 text-white px-2 py-1 rounded">Free</span> 

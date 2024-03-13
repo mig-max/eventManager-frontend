@@ -1,44 +1,43 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
-import { Button } from 'react-daisyui';
-import { useNavigate } from "react-router-dom"; 
-//testing
+import { Button } from "react-daisyui";
+import { useNavigate } from "react-router-dom";
 import eventsService from "../services/events.service";
 import { useEffect } from "react";
 import UserEventsCard from "../components/UserEventsCard";
 
 function ProfilePage() {
-    const { user, logOutUser } = useContext(AuthContext); 
-    const [isLoggingOut, setIsLoggingOut] = useState(false); 
-    //testing
-    const [userEvents, setUserEvents] = useState([]);
-    const navigate = useNavigate(); 
+  const { user, logOutUser } = useContext(AuthContext);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-    const handleLogout = () => {
-        logOutUser();
-        navigate("/"); 
+  const [userEvents, setUserEvents] = useState([]);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logOutUser();
+    navigate("/");
+  };
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+  console.log(user);
+
+  //testing /////
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await eventsService.getUserEvents(user._id);
+        console.log(user._id);
+        setUserEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching user events", error);
+      }
     };
 
-    if (!user) {
-        return <div>Loading...</div>;
-    }
-    console.log(user);
-
-    //testing
-    useEffect(() => {
-        const fetchEvents = async () => {
-          try {
-            const response = await eventsService.getUserEvents(user._id);
-             console.log(user._id)
-            setUserEvents(response.data);
-          } catch (error) {
-            console.error("Error fetching user events", error);
-          }
-        };
-    
-        fetchEvents();
-      }, [user]);
+    fetchEvents();
+  }, [user]);
 
 
     return (

@@ -25,6 +25,10 @@ function AddEvent() {
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
 
+  const imageUrlValue =
+    imageUrl ||
+    "https://www.format.com/wp-content/uploads/celebrate-event-photography.jpg";
+
   useEffect(() => {
     venuesService
       .getAllVenues()
@@ -46,7 +50,7 @@ function AddEvent() {
       isEighteen,
       isFree,
       price,
-      imageUrl,
+      imageUrl: imageUrlValue,
       venue: selectedVenue,
     };
 
@@ -180,27 +184,30 @@ function AddEvent() {
           <div className="col-span-2">
             <Link
               to="/venues/add"
-              className="text-fuchsia-900 opacity-70 font-bold"
+              className="text-fuchsia-900 opacity-60 font-semibold cursor-pointer"
             >
               Create New Venue
             </Link>
           </div>
 
           <Button
+            onClick={() => navigate("/")}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            opacity={0.5}
+            fontWeight="bold"
+          >
+            Cancel
+          </Button>
+
+          <Button
             type="submit"
             colorScheme="blue"
             className="text-fuchsia-900"
             fontWeight="bold"
-          >
-            Add Event
-          </Button>
-
-          <Button
-            onClick={() => navigate("/")}
-            className="text-fuchsia-900"
-            fontWeight="bold"
-          >
-            Cancel
+            cursor={"pointer"}
+          > 
+          Add Event
           </Button>
         </form>
       </div>

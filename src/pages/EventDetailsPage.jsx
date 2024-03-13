@@ -1,24 +1,39 @@
-import { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import eventsService from "../services/events.service";
 import EventCard from "../components/EventCard";
+import { AuthContext } from "../context/auth.context";
+import { Button } from "@chakra-ui/react";
 
-const EventDetailsPage = () => {
+function EventDetailsPage(props) {
   const { eventId } = useParams();
+
+  const { user } = useContext(AuthContext);
+
+  const [isOwner, setIsOwner] = useState(false);
   const [event, setEvent] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const getEvent = async () => {
       try {
         const response = await eventsService.getEvent(eventId);
-        setEvent(response.data);
+        const oneEvent = response.data;
+        setEvent(oneEvent);
+        setIsOwner(oneEvent.author._id === user._id);
+
+        console.log("user._id:", user._id); 
+        console.log("event author:", oneEvent.author._id);
+
       } catch (error) {
         console.error("Error fetching event:", error);
       }
     };
     getEvent();
-  }, [eventId]);
+  }, [eventId, user]);
 
   const deleteEvent = async () => {
     try {
@@ -33,23 +48,51 @@ const EventDetailsPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-8">
         {event && <EventCard event={event} />}
+
         <div className="flex justify-center mt-8 space-x-4">
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={() => navigate(`/events`)}>
+          <Button
+            onClick={() => navigate(`/events`)}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             All Events
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={() => navigate(`/`)}>
+          </Button>
+
+          <Button
+            onClick={() => navigate("/")}
+            cursor={"pointer"}
+            className="text-fuchsia-900"
+            fontWeight="bold"
+          >
             Home
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700  focus:outline-none font-bold text-lg" onClick={() => navigate(`/events/${eventId}/edit`)}>
-            Edit
-          </a>
-          <a className="px-3 py-1 text-fuchsia-900 hover:text-fuchsia-700 focus:outline-none font-bold text-lg" onClick={deleteEvent}>
-            Delete Event
-          </a>
+          </Button>
+
+          {isOwner && (
+            <>
+              <Button
+                onClick={() => navigate(`/events/${eventId}/edit`)}
+                cursor={"pointer"}
+                className="text-fuchsia-900"
+                fontWeight="bold"
+              >
+                Edit
+              </Button>
+
+              <Button
+                onClick={deleteEvent}
+                cursor={"pointer"}
+                className="text-fuchsia-900"
+                fontWeight="bold"
+              >
+                Delete
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default EventDetailsPage;

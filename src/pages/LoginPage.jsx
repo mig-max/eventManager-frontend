@@ -3,104 +3,75 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
-import { Input, Button } from 'react-daisyui';
+import { Input, Button } from "react-daisyui";
 
 function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(undefined);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
+  const navigate = useNavigate();
 
+  const { storeToken, authenticateUser } = useContext(AuthContext);
 
-    const navigate = useNavigate();
+  const handleEmail = (event) => setEmail(event.target.value);
+  const handlePassword = (event) => setPassword(event.target.value);
 
-    const { storeToken, authenticateUser } = useContext(AuthContext);
+  const handleLoginSubmit = (event) => {
+    event.preventDefault();
+    const requestBody = { email, password };
+    ////////
 
-    const handleEmail = (event) => setEmail(event.target.value);
-    const handlePassword = (event) => setPassword(event.target.value);
+    authService
+      .login(requestBody)
+      .then((response) => {
+        storeToken(response.data.authToken);
+        authenticateUser();
+        navigate("/");
+        
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        console.log("Error Description:", errorDescription);
+      });
+  };
 
-    const handleLoginSubmit = (event) => {
-        event.preventDefault();
-        const requestBody = { email, password };
-        //console.log(requestBody) // DON'T FORGET TO DELETE LATER ////////
-    
-        authService
-            .login(requestBody)
-            .then((response) => {
-                //const {_id} = response.data;
-                storeToken(response.data.authToken);
-                authenticateUser();
-              
-                navigate("/");
-                console.log('navigating to user page', navigate)
-                //localStorage.setItem(`userId`, _id);
-                 // Navigate to the user profile page
-                //navigate(`/venues`)
-               console.log("JWT token", response.data.authToken);  // DON'T FORGET TO DELETE LATER ////////
-    
-               
-               
-                
-            })
-            .catch((error) => {
-                console.log(error)
-                const errorDescription = error.response.data.message; 
-                //setErrorMessage(errorDescription);
-                console.log("Error Description:", errorDescription); 
-                /*if (response.data && response.data.authToken) {
-                    const { userId } = response.data;
-                    storeToken(response.data.authToken);
-                    localStorage.setItem(`userId`, userId);
+  return (
+    <div className="LoginPage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
 
-                    authenticateUser();
-                    
-                   //navigate(`/users/${userId}`); // Navigate to the user profile page
-                } else {
-                    throw new Error("Unexpected response format");
-                }*/
-            })
-            /*.catch((error) => {
-                let errorDescription = "An error occurred during login.";
-                if (error.response && error.response.data && error.response.data.message) {
-                    errorDescription = error.response.data.message;
-                }
-                setErrorMessage(errorDescription);
-            });*/
-            
-    };
+      <form onSubmit={handleLoginSubmit}>
+        <label className="block mb-2">Email:</label>
+        <Input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={handleEmail}
+        />
 
-    return (
-        <div className="LoginPage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Login</h1>
+        <label className="block mb-2">Password:</label>
+        <Input
+          type="password"
+          name="password"
+          placeholder="**********"
+          value={password}
+          onChange={handlePassword}
+        />
 
-            <form onSubmit={handleLoginSubmit}>
-                <label className="block mb-2">Email:</label>
-                <Input
-                    type="email"
-                    name="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={handleEmail}
-                />
+        <Button type="submit" className="btn mt-4">
+          Login
+        </Button>
+      </form>
 
-                <label className="block mb-2">Password:</label>
-                <Input
-                    type="password"
-                    name="password"
-                    placeholder="**********"
-                    value={password}
-                    onChange={handlePassword}
-                />
+      {errorMessage && <p className="error-message mt-4">{errorMessage}</p>}
 
-                <Button type="submit" className="btn mt-4">Login</Button>
-            </form>
-
-            {errorMessage && <p className="error-message mt-4">{errorMessage}</p>}
-
-            <p className="mt-4">Do not have an account yet?</p>
-            <Link to="/signup" className="text-blue-500">Sign Up</Link>
-        </div>
-    );
+      <p className="mt-4">Do not have an account yet?</p>
+      <Link to="/signup" className="text-blue-500">
+        Sign Up
+      </Link>
+    </div>
+  );
 }
 
 export default LoginPage;
