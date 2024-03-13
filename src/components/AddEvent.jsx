@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
@@ -12,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 
 function AddEvent() {
-  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [eventType, setEventType] = useState("");
@@ -24,6 +24,11 @@ function AddEvent() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
+  const [fileUrl, setFileUrl] = useState("");
+  const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const navigate = useNavigate();
 
   const imageUrlValue =
     imageUrl ||
@@ -39,6 +44,24 @@ function AddEvent() {
         console.log(error);
       });
   }, []);
+
+  const handleFileUpload = (event) => {
+    setWaitingForFileUrl(true);
+    console.log("file to upload:", event.target.file);
+
+    const uploadData = new FormData();
+    uploadData.append("fileUrl", event.target.files[0]);
+
+    eventsService
+      .uploadImage(uploadData)
+      .then((response) => {
+        console.log(response);
+        setFileUrl(response.data.fileUrl);
+        setImageUrl(response.data.fileUrl);
+        setWaitingForFileUrl(false);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -58,6 +81,8 @@ function AddEvent() {
       .createEvent(requestBody)
       .then((response) => {
         console.log(response);
+        setFormSubmitted(true);
+        
         navigate("/events");
       })
       .catch((error) => console.log(error));
@@ -165,6 +190,15 @@ function AddEvent() {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Image from file</FormLabel>
+            <Input
+              type="file"
+              name="fileUrl"
+              onChange={(event) => handleFileUpload(event)}
+            />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Venue</FormLabel>
             <Select
               name="venue"
@@ -206,8 +240,13 @@ function AddEvent() {
             className="text-fuchsia-900"
             fontWeight="bold"
             cursor={"pointer"}
-          > 
-          Add Event
+            disabled={waitingForFileUrl || formSubmitted}
+          >
+            {waitingForFileUrl
+              ? "Uploading image..."
+              : formSubmitted
+              ? "Adding event..."
+              : "Add Event"}
           </Button>
         </form>
       </div>

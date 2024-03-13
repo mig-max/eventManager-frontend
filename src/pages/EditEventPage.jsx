@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
@@ -12,9 +13,6 @@ import {
 } from "@chakra-ui/react";
 
 function EditEventPage() {
-  const { eventId } = useParams();
-  const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [eventType, setEventType] = useState("");
   const [description, setDescription] = useState("");
@@ -25,6 +23,13 @@ function EditEventPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("");
   const [venues, setVenues] = useState([]);
+  const [fileUrl, setFileUrl] = useState("");
+  const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const { eventId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     eventsService
@@ -54,6 +59,24 @@ function EditEventPage() {
       });
   }, [eventId]);
 
+  const handleFileUpload = (event) => {
+    setWaitingForFileUrl(true);
+    console.log("file to upload:", event.target.file);
+
+    const uploadData = new FormData();
+    uploadData.append("fileUrl", event.target.files[0]);
+
+    eventsService
+      .uploadImage(uploadData)
+      .then((response) => {
+        console.log(response);
+        setFileUrl(response.data.fileUrl);
+        setImageUrl(response.data.fileUrl);
+        setWaitingForFileUrl(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const requestBody = {
@@ -72,6 +95,7 @@ function EditEventPage() {
       .updateEvent(eventId, requestBody)
       .then((response) => {
         console.log(response);
+        setFormSubmitted(true);
         navigate(`/events/${eventId}`);
       })
       .catch((error) => console.log(error));
@@ -179,6 +203,15 @@ function EditEventPage() {
           </FormControl>
 
           <FormControl>
+            <FormLabel>Image from file</FormLabel>
+            <Input
+              type="file"
+              name="fileUrl"
+              onChange={(event) => handleFileUpload(event)}
+            />
+          </FormControl>
+
+          <FormControl>
             <FormLabel>Venue</FormLabel>
             <Select
               name="venue"
@@ -220,8 +253,13 @@ function EditEventPage() {
             className="text-fuchsia-900"
             fontWeight="bold"
             cursor={"pointer"}
+            disabled={waitingForFileUrl || formSubmitted}
           >
-            Update Event
+            {waitingForFileUrl
+              ? "Uploading image..."
+              : formSubmitted
+              ? "Updating event..."
+              : "Update Event"}
           </Button>
         </form>
       </div>

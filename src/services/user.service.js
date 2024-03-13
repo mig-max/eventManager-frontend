@@ -26,6 +26,12 @@ class UserService {
     deleteUser = (userId) => {
         return this.api.delete(`/users/${userId}`);
     };
+
+   // POST /upload
+    uploadImage = (file) => {
+    return this.api.post("/upload", file);
+    };
+
 }
 const userService = new UserService();
 export default userService;

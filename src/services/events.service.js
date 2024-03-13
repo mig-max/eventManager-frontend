@@ -54,7 +54,14 @@ class EventsService {
         return this.api.get(`/users/events/${userId}`);
       };
 
+      // POST /upload
+      uploadImage = (file) => {
+        return this.api.post("/upload", file);
+      };
+
     }
+
+
 
     const eventsService = new EventsService();
 
