@@ -4,7 +4,7 @@
 
 
 
-/*
+/* 
 
 * {
   outline: 2px red solid;
@@ -147,3 +147,29 @@ h1 {
   background-color: #701B75; 
   border-radius: 50%;
 }
+
+/* UserEventsCard */
+
+.user-events-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.user-events-card {
+  width: 250px;
+  margin: 15px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: - 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-events-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+
+

@@ -5,6 +5,7 @@ import { Button } from "react-daisyui";
 import { useNavigate } from "react-router-dom";
 import eventsService from "../services/events.service";
 import { useEffect } from "react";
+import UserEventsCard from "../components/UserEventsCard";
 
 function ProfilePage() {
   const { user, logOutUser } = useContext(AuthContext);
@@ -38,62 +39,59 @@ function ProfilePage() {
     fetchEvents();
   }, [user]);
 
-  return (
-    <div className="ProfilePage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h1>
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Email:</h2>
-        <p>{user.email}</p>
-      </div>
 
-      {user.username && (
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">Username:</h2>
-          <p>{user.username}</p>
-        </div>
-      )}
-      {user.avatar && (
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">Avatar:</h2>
-          <img
-            src={user.avatar}
-            alt="User Avatar"
-            className="w-16 h-16 rounded-full"
-          />
-        </div>
-      )}
-      {user.about && (
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">About:</h2>
-          <p>{user.about}</p>
-        </div>
-      )}
+    return (
+        <div className="ProfilePage ">
+            <div className="flex">
+            <section className="profile p-6 bg-white shadow-md rounded-md max-w-md mx-auto mr-4">
+            <h1 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h1>
+            <div className="mb-4">
+                <h2 className="text-lg font-semibold mb-2">Email:</h2>
+                <p>{user.email}</p>
+            </div>
+    
+            {user.username && (
+                <div className="mb-4">
+                    <h2 className="text-lg font-semibold mb-2">Username:</h2>
+                    <p>{user.username}</p>
+                </div>
+            )}
+            {user.avatar && (
+                <div className="mb-4">
+                    <h2 className="text-lg font-semibold mb-2">Avatar:</h2>
+                    <img src={user.avatar} alt="User Avatar" className="w-16 h-16 rounded-full" />
+                </div>
+            )}
+            {user.about && (
+                <div className="mb-4">
+                    <h2 className="text-lg font-semibold mb-2">About:</h2>
+                    <p>{user.about}</p>
+                </div>
+            )}
+         
+            <Button
+                className="btn btn-active btn-primary"
+                onClick={handleLogout}
+                disabled={isLoggingOut} 
+            >
+                {isLoggingOut ? "Logging Out..." : "Logout"}
+            </Button>
+            </section>
 
-      <Button
-        className="btn btn-active btn-primary"
-        onClick={handleLogout}
-        disabled={isLoggingOut}
-      >
-        {isLoggingOut ? "Logging Out..." : "Logout"}
-      </Button>
-
-      {userEvents.length > 0 && (
-        <>
-          <h2 className="text-lg font-semibold mb-2">Events Created:</h2>
-
-          <ul>
-            {userEvents.map((event) => (
-              <li key={event._id} className="mb-2">
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-                <img src={event.imageUrl} />
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  );
-}
+                <section className="events p-6 bg-white shadow-md rounded-md  mx-auto">
+            <h2 className="text-lg font-semibold mb-2">My Events:</h2>
+            {userEvents.length > 0 && (
+                <div className="user-events-cards">  
+                {userEvents.map((event) => (
+                    <UserEventsCard key={event._id} event={event} /> 
+                ))}
+                </div>
+               
+             )}
+              </section>
+              </div>
+              </div>
+              
+ )}
 
 export default ProfilePage;
