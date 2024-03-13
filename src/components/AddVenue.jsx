@@ -5,6 +5,7 @@ import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
 import {
   VStack,
   FormControl,
@@ -131,10 +132,11 @@ function AddVenue() {
                 <Select
                   required
                   name="venueType"
+                  icon={<IoIosArrowDropdownCircle />}
+                  placeholder="Select venue type"
                   value={venueType}
                   onChange={(event) => setVenueType(event.target.value)}
                 >
-                  <option value="">Select Venue type</option>
                   <option value="Indoor">Indoor</option>
                   <option value="Outdoor">Outdoor</option>
                   <option value="Other">Other</option>
@@ -209,10 +211,11 @@ function AddVenue() {
                 <FormLabel>Events</FormLabel>
                 <Select
                   name="event"
+                  placeholder="Select venue"
+                  icon={<IoIosArrowDropdownCircle />}
                   value={selectedEvent}
                   onChange={(event) => setSelectedEvent(event.target.value)}
                 >
-                  <option value="">Select Event</option>
                   {events.map((event) => (
                     <option key={event._id} value={event._id}>
                       {event.title}

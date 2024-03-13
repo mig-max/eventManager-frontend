@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import "./index.css";
 
 
-// Components
-
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProfilePage from './pages/ProfilePage';
@@ -56,9 +54,9 @@ function App() {
 
         <Route path='*' element={<NotFoundPage />} />
 
-
-
       </Routes>
+
+ 
 
 
       

@@ -40,31 +40,44 @@ function Navbar() {
               />
             </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 ${
-              isUserDropdownOpen ? "block" : "hidden"
-            }`}
-          >
-            <li>
-              <Link to="/user">Profile</Link>
-            </li>
-            <li>
-              <Link to="/events">Events</Link>
-            </li>
-            <li>
-              <Link to="/venues">Venues</Link>
-            </li>
-            <li>
-              <Link to="/events/free">Free Events</Link>
-            </li>
-            <li>
-              <Link to="/events/add">Add Events</Link>
-            </li>
-            <li>
-              <Link to="/venues/add">Add Venues</Link>
-            </li>
-          </ul>
+          <ul className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 ${
+            isUserDropdownOpen ? "block" : "hidden"
+          }`}> 
+            {!isLoggedIn ? (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/user">Profile</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+                <li>
+                  <Link to="/events">Events</Link>
+                </li>
+                <li>
+                  <Link to="/venues">Venues</Link>
+                </li>
+                <li>
+                  <Link to="/events/free">Free Events</Link>
+                </li>
+                <li>
+                  <Link to="/events/add">Add Events</Link>
+                </li>
+                <li>
+                  <Link to="/venues/add">Add Venues</Link>
+                </li>
+              </>
+            )}
+          </ul> 
         </div>
         <Link to="/">
           <a className="btn btn-ghost text-xl">EventSlap</a>
@@ -106,30 +119,8 @@ function Navbar() {
                   </li>
                 )}
               </>
-              {/*
-              {isLoggedIn && (
-                <li>
-                
-                  <details>
-                    <summary>My Slaps</summary>
-                    <ul className="p-2 text-align:center">
-                      <li>
-                        <Link to="/events">Events</Link>
-                      </li>
-                      <li>
-                        <Link to="/venues">Venues</Link>
-                      </li>
-                      <li>
-                        <Link to="/favorites">Favorites</Link>
-                      </li>
-                    </ul>
-                  </details>
-                </li>
-              )}
-               */}
             </>
           )}
-
           <li>
             <Link to="/events">Events</Link>
           </li>

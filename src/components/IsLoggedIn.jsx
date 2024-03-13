@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 function IsLoggedIn({children}) {
 
-    const{isLoggedIn, isLoading, user} = useContext(AuthContext);
+    const{isLoggedIn, isLoading} = useContext(AuthContext);
 
     
     if (isLoading) return <p>Loading...</p>;

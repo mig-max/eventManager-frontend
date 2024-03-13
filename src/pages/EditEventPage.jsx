@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
 import {
   Button,
   Checkbox,
@@ -125,11 +126,12 @@ function EditEventPage() {
             <FormLabel>Event Type</FormLabel>
             <Select
               required
+              icon={<IoIosArrowDropdownCircle />}
               name="eventType"
+              placeholder="Select event type"
               value={eventType}
               onChange={(event) => setEventType(event.target.value)}
             >
-              <option value="">Select event type</option>
               <option value="Concert">Concert</option>
               <option value="Exhibition">Exhibition</option>
               <option value="Market">Market</option>
@@ -215,11 +217,12 @@ function EditEventPage() {
             <FormLabel>Venue</FormLabel>
             <Select
               name="venue"
+              placeholder="Select venue"
+              icon={<IoIosArrowDropdownCircle />}
               value={selectedVenue}
               onChange={(event) => setSelectedVenue(event.target.value)}
               required
             >
-              <option value="">Select Venue</option>
               {venues.map((venue) => (
                 <option key={venue._id} value={venue._id}>
                   {venue.name}
