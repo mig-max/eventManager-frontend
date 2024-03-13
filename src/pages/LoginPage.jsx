@@ -20,8 +20,7 @@ function LoginPage() {
   const handleLoginSubmit = (event) => {
     event.preventDefault();
     const requestBody = { email, password };
-    ////////
-
+   
     authService
       .login(requestBody)
       .then((response) => {

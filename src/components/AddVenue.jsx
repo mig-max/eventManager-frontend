@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import venuesService from "../services/venue.service";
@@ -25,6 +26,9 @@ function AddVenue() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [events, setEvents] = useState([]);
+  const [fileUrl, setFileUrl] = useState("");
+  const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,6 +45,24 @@ function AddVenue() {
         console.log(error);
       });
   }, []);
+
+  const handleFileUpload = (event) => {
+    setWaitingForFileUrl(true);
+    console.log("file to upload:", event.target.file);
+
+    const uploadData = new FormData();
+    uploadData.append("fileUrl", event.target.files[0]);
+
+    venuesService
+      .uploadImage(uploadData)
+      .then((response) => {
+        console.log(response);
+        setFileUrl(response.data.fileUrl);
+        setImageUrl(response.data.fileUrl);
+        setWaitingForFileUrl(false);
+      })
+      .catch((error) => console.log(error));
+  };
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -76,6 +98,7 @@ function AddVenue() {
         setIsDrinksAvailable(false);
         setImageUrl("");
         setSelectedEvent("");
+        setFormSubmitted(true);
 
         navigate("/venues");
       })
@@ -174,6 +197,15 @@ function AddVenue() {
               </FormControl>
 
               <FormControl>
+                <FormLabel>Image from file</FormLabel>
+                <Input
+                  type="file"
+                  name="fileUrl"
+                  onChange={(event) => handleFileUpload(event)}
+                />
+              </FormControl>
+
+              <FormControl>
                 <FormLabel>Events</FormLabel>
                 <Select
                   name="event"
@@ -216,8 +248,13 @@ function AddVenue() {
               className="text-fuchsia-900"
               fontWeight="bold"
               cursor={"pointer"}
+              disabled={waitingForFileUrl || formSubmitted}
             >
-              Add Venue
+              {waitingForFileUrl
+                ? "Uploading image..."
+                : formSubmitted
+                ? "Adding venue..."
+                : "Add Venue"}
             </Button>
           </div>
         </form>

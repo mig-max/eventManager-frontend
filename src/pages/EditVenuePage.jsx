@@ -13,9 +13,6 @@ import {
 } from "@chakra-ui/react";
 
 function EditVenuePage() {
-  const { venueId } = useParams();
-  const navigate = useNavigate();
-
   const [name, setName] = useState("");
   const [venueType, setVenueType] = useState("");
   const [address, setAddress] = useState("");
@@ -25,6 +22,13 @@ function EditVenuePage() {
   const [imageUrl, setImageUrl] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [events, setEvents] = useState([]);
+  const [fileUrl, setFileUrl] = useState("");
+  const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const { venueId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     venuesService
@@ -54,6 +58,24 @@ function EditVenuePage() {
       });
   }, [venueId]);
 
+  const handleFileUpload = (event) => {
+    setWaitingForFileUrl(true);
+    console.log("file to upload:", event.target.file);
+
+    const uploadData = new FormData();
+    uploadData.append("fileUrl", event.target.files[0]);
+
+    venuesService
+      .uploadImage(uploadData)
+      .then((response) => {
+        console.log(response);
+        setFileUrl(response.data.fileUrl);
+        setImageUrl(response.data.fileUrl);
+        setWaitingForFileUrl(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
@@ -72,6 +94,8 @@ function EditVenuePage() {
     venuesService
       .updateVenue(venueId, requestBody)
       .then((response) => {
+        console.log(response);
+        setFormSubmitted(true);
         navigate(`/venues/${venueId}`);
       })
       .catch((error) => {
@@ -148,9 +172,7 @@ function EditVenuePage() {
               <FormLabel>Drinks Available</FormLabel>
               <Checkbox
                 isChecked={isDrinksAvailable}
-                onChange={(event) =>
-                  setIsDrinksAvailable(event.target.checked)
-                }
+                onChange={(event) => setIsDrinksAvailable(event.target.checked)}
               />
             </FormControl>
 
@@ -161,6 +183,15 @@ function EditVenuePage() {
                 name="imageUrl"
                 value={imageUrl}
                 onChange={(event) => setImageUrl(event.target.value)}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Image from file</FormLabel>
+              <Input
+                type="file"
+                name="fileUrl"
+                onChange={(event) => handleFileUpload(event)}
               />
             </FormControl>
 
@@ -192,20 +223,26 @@ function EditVenuePage() {
 
           <div className="flex justify-center space-x-4">
             <Button
-              type="submit"
-              colorScheme="blue"
-              className="text-fuchsia-900"
-              fontWeight="bold"
-            >
-              Update Venue
-            </Button>
-
-            <Button
               onClick={() => navigate(`/venues/${venueId}`)}
               className="text-fuchsia-900"
               fontWeight="bold"
             >
               Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              colorScheme="blue"
+              className="text-fuchsia-900"
+              fontWeight="bold"
+              cursor={"pointer"}
+              disabled={waitingForFileUrl || formSubmitted}
+            >
+              {waitingForFileUrl
+                ? "Uploading image..."
+                : formSubmitted
+                ? "Updating venue..."
+                : "Update Venue"}
             </Button>
           </div>
         </form>

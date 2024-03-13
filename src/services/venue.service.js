@@ -40,6 +40,12 @@ class VenuesService {
     deleteVenue = (venueId) => {
         return this.api.delete(`/venues/${venueId}`);
     };
+
+   // POST /upload
+    uploadImage = (file) => {
+    return this.api.post("/upload", file);
+    };
+
 }
 
 const venuesService = new VenuesService();

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import authService from "../services/auth.service";
+import userService from "../services/user.service";
 import { Input, Button } from 'react-daisyui';
 
 function SignupPage() {
@@ -11,11 +12,33 @@ function SignupPage() {
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
   const [about, setAbout] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [fileUrl, setFileUrl] = useState("");
+  const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+
 
   const navigate = useNavigate();
+
+  const handleFileUpload = (event) => {
+    setWaitingForFileUrl(true);
+    console.log("file to upload:", event.target.file);
+
+    const uploadData = new FormData();
+    uploadData.append("fileUrl", event.target.files[0]);
+
+    userService
+      .uploadImage(uploadData)
+      .then((response) => {
+        console.log(response);
+        setFileUrl(response.data.fileUrl);
+
+        setAvatar(response.data.fileUrl); 
+        setWaitingForFileUrl(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -49,6 +72,7 @@ function SignupPage() {
       username: username, 
       avatar: avatar, 
       about: about, 
+      fileUrl: avatar //
     };
 
     authService
@@ -100,6 +124,16 @@ function SignupPage() {
 
         <Input
             type="text"
+            name="about"
+            placeholder="About you"
+            value={about}
+            onChange={handleAbout}
+            label="About:"
+            icon="bx bx-info-circle"
+           />
+
+        <Input
+            type="text"
             name="username"
             placeholder="Your username"
             value={username}
@@ -111,22 +145,20 @@ function SignupPage() {
         <Input
             type="text"
             name="avatar"
-            placeholder="Your avatar"
+            placeholder="Your avatar Url"
             value={avatar}
             onChange={handleAvatar}
             label="Avatar:"
             icon="bx bx-image"
         />
 
-        <Input
-            type="text"
-            name="about"
-            placeholder="About you"
-            value={about}
-            onChange={handleAbout}
-            label="About:"
-            icon="bx bx-info-circle"
-        />
+
+            <Input
+              type="file"
+              name="fileUrl"
+              placeholder="Or image from file"
+              onChange={(event) => handleFileUpload(event)}
+            />
 
         <Button type="submit" className="btn mt-4" disabled={loading}>
             {loading ? 'Signing Up...' : 'Sign Up'}
