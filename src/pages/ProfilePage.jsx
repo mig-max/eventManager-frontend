@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 //testing
 import eventsService from "../services/events.service";
 import { useEffect } from "react";
+import UserEventsCard from "../components/UserEventsCard";
 
 function ProfilePage() {
     const { user, logOutUser } = useContext(AuthContext); 
@@ -41,7 +42,9 @@ function ProfilePage() {
 
 
     return (
-        <div className="ProfilePage p-6 bg-white shadow-md rounded-md max-w-md mx-auto">
+        <div className="ProfilePage ">
+            <div className="flex">
+            <section className="profile p-6 bg-white shadow-md rounded-md max-w-md mx-auto mr-4">
             <h1 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h1>
             <div className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Email:</h2>
@@ -74,22 +77,22 @@ function ProfilePage() {
             >
                 {isLoggingOut ? "Logging Out..." : "Logout"}
             </Button>
+            </section>
 
-            <h2 className="text-lg font-semibold mb-2">Events Created:</h2>
+                <section className="events p-6 bg-white shadow-md rounded-md  mx-auto">
+            <h2 className="text-lg font-semibold mb-2">My Events:</h2>
             {userEvents.length > 0 && (
-            <ul>
+                <div className="user-events-cards">  
                 {userEvents.map((event) => (
-                <li key={event._id} className="mb-2">
-                    <h3>{event.title}</h3>
-                    <p>{event.description}</p>
-                    <img src={event.imageUrl}/>
-                </li>
+                    <UserEventsCard key={event._id} event={event} /> 
                 ))}
-            </ul>
-            )}
-
-        </div>   
-    );
-}
+                </div>
+               
+             )}
+              </section>
+              </div>
+              </div>
+              
+ )}
 
 export default ProfilePage;
