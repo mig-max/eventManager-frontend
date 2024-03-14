@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Textarea
 } from "@chakra-ui/react";
 
 function EditEventPage() {
@@ -143,11 +144,13 @@ function EditEventPage() {
 
           <FormControl>
             <FormLabel>Description</FormLabel>
-            <Input
+            <Textarea
               required
               placeholder="Enter description"
               type="text"
               name="description"
+              size='lg'
+              resize="resize"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
             />

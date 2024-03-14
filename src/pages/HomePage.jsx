@@ -10,9 +10,9 @@ function HomePage() {
             <div className="hero-overlay bg-opacity-60"></div>
             <div className="hero-content text-left text-neutral-content">
                 <div className="max-w-md">
-                    <h1 className="mb-5 text-5xl font-bold">Find your perfect event</h1>
+                    <h1 className="mb-5 text-5xl font-bold text-left">Find your<br/> perfect event</h1>
                     <Link to={"/events"}>
-                    <button className="btn btn-primary">Find a event</button>
+                    <button className="btn btn-primary">Find an event</button>
                     </Link>
                 </div>
             </div>

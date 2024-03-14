@@ -17,7 +17,7 @@ const UserEventsCard = ({ event }) => {
                 fontWeight="bold"
                 className="text-fuchsia-600"
                 style={{ paddingTop: '10px' }}
-                onClick={() => navigate(`/venues/${event.venue?._id}`)}
+                onClick={() => navigate(`/events/${event._id}`)}
             >
                 Event Details
             </Button>
