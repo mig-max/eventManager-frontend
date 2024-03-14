@@ -111,8 +111,8 @@ function EditEventPage() {
           onSubmit={handleFormSubmit}
           className="grid grid-cols-2 gap-x-4 space-y-4"
         >
-          <FormControl>
-            <FormLabel>Title</FormLabel>
+          <FormControl isRequired>
+            <FormLabel >Title</FormLabel>
             <Input
               required
               placeholder="Enter event title"
@@ -123,7 +123,7 @@ function EditEventPage() {
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Event Type</FormLabel>
             <Select
               required
@@ -142,8 +142,8 @@ function EditEventPage() {
             </Select>
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Description</FormLabel>
+          <FormControl isRequired>
+            <FormLabel >Description</FormLabel>
             <Textarea
               required
               placeholder="Enter description"
@@ -156,7 +156,7 @@ function EditEventPage() {
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Date</FormLabel>
             <Input
               required

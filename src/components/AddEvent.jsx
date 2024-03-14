@@ -98,7 +98,7 @@ function AddEvent() {
           onSubmit={handleFormSubmit}
           className="grid grid-cols-2 gap-x-4 space-y-4"
         >
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Title</FormLabel>
             <Input
               required
@@ -110,7 +110,7 @@ function AddEvent() {
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Event Type</FormLabel>
             <Select
               required
@@ -129,7 +129,7 @@ function AddEvent() {
             </Select>
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Description</FormLabel>
             <Textarea
               required
@@ -143,7 +143,7 @@ function AddEvent() {
             />
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>Date</FormLabel>
             <Input
               required
