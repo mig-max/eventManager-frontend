@@ -54,12 +54,12 @@ function VenueCard({ venue }) {
           ))}
         </div>
       )}
-      {events.length === 0 && (
-        <p className="mt-4">No events at this venue.</p>
-      )}
       {venue.latitude && venue.longitude && ( 
         <Maps latitude={venue.latitude} longitude={venue.longitude} />
     )}
+    {events.length === 0 && (
+        <p className="mt-4">No events at this venue.</p>
+      )}
     </div>
   );
 }
