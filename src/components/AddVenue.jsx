@@ -29,6 +29,8 @@ function AddVenue() {
   const [events, setEvents] = useState([]);
   const [fileUrl, setFileUrl] = useState("");
   const [waitingForFileUrl, setWaitingForFileUrl] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const navigate = useNavigate();
@@ -84,6 +86,8 @@ function AddVenue() {
       imageUrl: imageUrlValue,
       event: eventValue,
       user: userId,
+      latitude,
+      longitude,
     };
 
     venuesService
@@ -99,6 +103,8 @@ function AddVenue() {
         setIsDrinksAvailable(false);
         setImageUrl("");
         setSelectedEvent("");
+        setLatitude(null);
+        setLongitude(null);
         setFormSubmitted(true);
 
         navigate("/venues");
@@ -169,7 +175,7 @@ function AddVenue() {
               </FormControl>
 
               <FormControl>
-                <FormLabel>Is Food Available</FormLabel>
+                <FormLabel>Food Available</FormLabel>
                 <Checkbox
                   name="isFoodAvailable"
                   isChecked={isFoodAvailable}
@@ -178,7 +184,7 @@ function AddVenue() {
               </FormControl>
 
               <FormControl>
-                <FormLabel>Is Drinks Available</FormLabel>
+                <FormLabel>Drinks Available</FormLabel>
                 <Checkbox
                   name="isDrinksAvailable"
                   isChecked={isDrinksAvailable}
@@ -204,6 +210,28 @@ function AddVenue() {
                   type="file"
                   name="fileUrl"
                   onChange={(event) => handleFileUpload(event)}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Latitude</FormLabel>
+                <Input
+                  type="number"
+                  name="Latitude"
+                  placeholder="Latitude"
+                  value={latitude}
+                  onChange={(event) => setLatitude(event.target.value)}
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Longitutde</FormLabel>
+                <Input
+                  type="number"
+                  name="Longitude"
+                  placeholder="Longitude"
+                  value={longitude}
+                  onChange={(event) => setLongitude(event.target.value)}
                 />
               </FormControl>
 

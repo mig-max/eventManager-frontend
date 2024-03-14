@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import eventsService from "../services/events.service";
+import Maps from "./Maps";
 
 function VenueCard({ venue }) {
   const [events, setEvents] = useState([]);
@@ -26,7 +27,7 @@ function VenueCard({ venue }) {
 
  
   return (
-    <div className="p-6 border-2 border-gray-300 rounded-md shadow-md bg-white max-w-xl mx-auto">
+    <div className="flex flex-col p-6 border-2 border-gray-300 rounded-md shadow-md bg-white max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-2">{venue.name}</h2>
       {venue.imageUrl && (
         <img src={venue.imageUrl} alt={venue.name} className="mt-4 rounded-md" />
@@ -55,6 +56,9 @@ function VenueCard({ venue }) {
       {events.length === 0 && (
         <p className="mt-4">No events at this venue.</p>
       )}
+      {venue.latitude && venue.longitude && ( 
+        <Maps latitude={venue.latitude} longitude={venue.longitude} />
+    )}
     </div>
   );
 }
