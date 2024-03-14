@@ -5,7 +5,7 @@ import venuesService from "../services/venue.service";
 import eventsService from "../services/events.service";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { PiWarningCircleLight } from "react-icons/pi"
 import {
   VStack,
   FormControl,
@@ -132,7 +132,7 @@ function AddVenue() {
                 <Select
                   required
                   name="venueType"
-                  icon={<IoIosArrowDropdownCircle />}
+                  icon={<PiWarningCircleLight />}
                   placeholder="Select venue type"
                   value={venueType}
                   onChange={(event) => setVenueType(event.target.value)}
@@ -212,7 +212,7 @@ function AddVenue() {
                 <Select
                   name="event"
                   placeholder="Select venue"
-                  icon={<IoIosArrowDropdownCircle />}
+                  icon={<PiWarningCircleLight />}
                   value={selectedEvent}
                   onChange={(event) => setSelectedEvent(event.target.value)}
                 >

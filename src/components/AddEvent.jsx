@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import eventsService from "../services/events.service";
 import venuesService from "../services/venue.service";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { PiWarningCircleLight } from "react-icons/pi"
 import {
   Button,
   Checkbox,
@@ -113,7 +113,7 @@ function AddEvent() {
             <FormLabel>Event Type</FormLabel>
             <Select
               required
-              icon={<IoIosArrowDropdownCircle />}
+              icon={<PiWarningCircleLight />}
               name="eventType"
               placeholder="Select event type"
               value={eventType}
@@ -205,7 +205,7 @@ function AddEvent() {
             <Select
               name="venue"
               placeholder="Select venue"
-              icon={<IoIosArrowDropdownCircle />}
+              icon={<PiWarningCircleLight />}
               value={selectedVenue}
               onChange={(event) => setSelectedVenue(event.target.value)}
               required
