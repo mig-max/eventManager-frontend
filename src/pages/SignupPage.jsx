@@ -151,8 +151,9 @@ function SignupPage() {
             onChange={handleAbout}
             label="About:"
             icon="bx bx-info-circle"
-           />
-           </div>
+          />
+          <span className="badge-outline badge-primary">&nbsp;Optional</span>
+          </div>
 
           <div className="flex items-center mb-4">
         <span className="mr-2">
@@ -167,6 +168,7 @@ function SignupPage() {
             label="Username:"
             icon="bx bx-user"
         />
+        <span className="badge-outline badge-primary">&nbsp;Optional</span>
         </div>
 
         <div className="flex items-center mb-4">
@@ -182,6 +184,7 @@ function SignupPage() {
             label="Avatar:"
             icon="bx bx-image"
         />
+        <span className="badge-outline badge-primary">&nbsp;Optional</span>
         </div>
 
 
@@ -191,6 +194,7 @@ function SignupPage() {
               placeholder="Or image from file"
               onChange={(event) => handleFileUpload(event)}
             />
+
         <div className="mb-2">
         <Button type="submit" className="btn mt-4" disabled={loading}>
             {loading ? 'Signing Up...' : 'Sign Up'}

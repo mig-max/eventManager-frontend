@@ -115,7 +115,7 @@ function AddVenue() {
         <form onSubmit={handleFormSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <VStack spacing={4} align="stretch">
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Name</FormLabel>
                 <Input
                   required
@@ -127,7 +127,7 @@ function AddVenue() {
                 />
               </FormControl>
 
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Venue Type</FormLabel>
                 <Select
                   required
@@ -144,7 +144,7 @@ function AddVenue() {
               </FormControl>
 
               <FormControl>
-                <FormLabel>Address</FormLabel>
+                <FormLabel isRequired>Address</FormLabel>
                 <Input
                   required
                   type="text"

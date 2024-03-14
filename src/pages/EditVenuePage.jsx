@@ -110,7 +110,7 @@ function EditVenuePage() {
         <h1 className="text-2xl font-bold mb-4">Edit Venue</h1>
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Name</FormLabel>
               <Input
                 required
@@ -122,7 +122,7 @@ function EditVenuePage() {
               />
             </FormControl>
 
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Venue Type</FormLabel>
               <Select
                 required
@@ -138,7 +138,7 @@ function EditVenuePage() {
               </Select>
             </FormControl>
 
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Address</FormLabel>
               <Input
                 required
