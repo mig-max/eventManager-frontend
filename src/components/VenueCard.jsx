@@ -39,6 +39,7 @@ function VenueCard({ venue }) {
         {venue.isDrinksAvailable && <p>Drinks available to buy</p>}
         {venue.isFoodAvailable && <p>Food available to buy</p>}
       </strong>
+      <p className="text-lg mb-2"><strong>Address: </strong>{venue.address}</p>
       {events.length > 0 && (
         <div className="mt-4">
           <h3 className="text-lg font-semibold underline ">Events at this venue:</h3>

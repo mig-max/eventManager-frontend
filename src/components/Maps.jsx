@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 
 const libraries = ["places"];
 const mapContainerStyle = {
-  width: "200px", 
-  height: "150px",
+  width: "522px", 
+  height: "300px",
 };
 
 function Maps({ latitude, longitude }) {

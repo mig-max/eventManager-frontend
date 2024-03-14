@@ -15,6 +15,7 @@ import {
   Button,
   Select,
   Spacer,
+  Textarea
 } from "@chakra-ui/react";
 
 function AddVenue() {
@@ -151,9 +152,11 @@ function AddVenue() {
 
               <FormControl>
                 <FormLabel isRequired>Address</FormLabel>
-                <Input
+                <Textarea
                   required
                   type="text"
+                  size='lg'
+                  resize="resize"
                   name="address"
                   placeholder="Venue Address"
                   value={address}
