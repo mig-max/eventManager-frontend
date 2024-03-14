@@ -16,14 +16,14 @@ function FindPage() {
 
   // FETCH EVENT DATES:
   useEffect(() => {
-    fetchEventDates(); // Fetch event dates when component mounts
+    fetchEventDates(); 
   }, []);
 
   const fetchEventDates = async () => {
     try {
       setLoading(true);
       const response = await eventsService.getAllEvents();
-      const eventDates = response.data.map(event => new Date(event.date)); // Extract event dates
+      const eventDates = response.data.map(event => new Date(event.date)); 
       setEventDates(eventDates);
       setLoading(false);
     } catch (error) {
@@ -48,6 +48,7 @@ function FindPage() {
       const filteredResults = eventNames.filter(event => {
         const eventTitle = event.title.toLowerCase();
         const searchValueLower = searchValue.toLowerCase();
+        
         const minSimilarLetters = 3;
 
         let similarLettersCount = 0;
@@ -172,6 +173,9 @@ function FindPage() {
             tileContent={tileContent}
             style={{ margin: "0 auto" }}
           />
+          
+          {/*
+
           {loading ? (
             <div>Loading...</div>
           ) : results.length > 0 ? (
@@ -183,6 +187,9 @@ function FindPage() {
           ) : (
             <div>No events found for the selected date.</div>
           )}
+
+          */}
+
 
 
         </Flex>
