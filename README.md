@@ -79,3 +79,35 @@ Add the following environment variables in `.env` files:
 
 
 ## Screenshots
+
+<img width="1674" alt="Screenshot 2024-03-14 at 12 30 15" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/9390ba8d-c9d3-4e8e-871e-044fe9e50ecb">
+<img width="1674" alt="Screenshot 2024-03-14 at 12 31 44" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/5f5ee1bf-50a9-404c-b365-4b6813e86af8">
+<img width="1674" alt="Screenshot 2024-03-14 at 12 32 05" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/968a57c0-5e04-4c2e-9cce-74a38933855b">
+<img width="1674" alt="Screenshot 2024-03-14 at 12 32 21" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/2cd4263e-3d8f-49cc-8993-a59bf6d7d5a5">
+<img width="595" alt="Screenshot 2024-03-14 at 12 32 42" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/630533e2-ad05-49d4-9014-cc1d3b87268f">
+<img width="595" alt="Screenshot 2024-03-14 at 12 33 27" src="https://github.com/mig-max/eventManager-frontend/assets/96595540/9e4d0d71-feee-40bd-b810-ec0a61691cfe">
+
+
+[Live demo](https://eventslap.netlify.app)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
