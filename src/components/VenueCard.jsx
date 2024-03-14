@@ -14,7 +14,7 @@ function VenueCard({ venue }) {
       try {
         const response = await eventsService.getAllEvents();
         const filteredEvents = response.data.filter(
-          (event) => event.venue._id === venueId
+          (event) => event.venue && event.venue._id === venueId
         );
         setEvents(filteredEvents);
       } catch (error) {
