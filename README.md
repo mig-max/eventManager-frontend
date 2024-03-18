@@ -6,7 +6,7 @@ This is the Eventslap Frontend (React App) repo.
 
 ## Description
 
-Eventslap is Full-stack application using the MERN stack (MongoDB, Express, React, and Node.JS).
+Eventslap is a Full-stack application using the MERN stack (MongoDB, Express, React, and Node.JS).
 
 The backend is a REST API built with ExpressJS, MongoDB, and Mongoose.
 
